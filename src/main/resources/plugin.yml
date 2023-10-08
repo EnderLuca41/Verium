@@ -1,0 +1,14 @@
+name: Verium
+author: EnderLuca
+version: 0.0.1.0
+main: me.enderluca.verium.VeriumPlugin
+api-version: 1.20
+load: STARTUP
+
+commands:
+  timer:
+    description: Starting, stopping and pausing the timer
+    usage: /timer (start / pause / set [<seconds>] [<minutes>] [<hours>] [<days>] / sync / enable / disable)
+  reset:
+    description: Resets the world and restarts the server
+    usage: /reset (confirm)
