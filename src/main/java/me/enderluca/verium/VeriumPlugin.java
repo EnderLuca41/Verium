@@ -19,6 +19,7 @@ import java.util.logging.Logger;
 public class VeriumPlugin extends JavaPlugin {
 
     Logger logger;
+    ServerProperties serverProps;
     TimerService timer;
     WorldResetService reset;
     ChallengesService challenges;
@@ -27,28 +28,20 @@ public class VeriumPlugin extends JavaPlugin {
         logger = getLogger();
 
         logger.info("Reading server properties");
-        Properties serverProps = new Properties();
-        String levelName;
-        try {
-            serverProps.load(new FileInputStream("./server.properties"));
-            levelName = serverProps.getProperty("level-name");
-            if(levelName == null)
-                levelName = "world";
+        serverProps = new ServerProperties();
+        try{
+            serverProps.load();
         }
-        catch (FileNotFoundException ex) {
-            logger.warning("server.properties file was not found, proceeding with default properties");
-            levelName = "world";
-        }
-        catch (IOException ex){
-            logger.warning("Error while reading server.properties file, proceeding with default properties");
-            levelName = "world";
+        catch (IOException e){
+            logger.info("Could not read server.properties file, continuing with default configuration:" + e.getMessage());
+            serverProps.loadDefault();
         }
         logger.info("Done reading server properties");
 
 
         logger.log(Level.INFO, "Creating reset service");
         boolean resetScheduled = getConfig().getBoolean("reset.scheduled", false);
-        reset = new WorldResetService(logger, levelName, resetScheduled);
+        reset = new WorldResetService(logger, serverProps.getLevelName(), resetScheduled);
         logger.log(Level.INFO, "Creating reset service complete");
 
         logger.log(Level.INFO, "Creating timer");
