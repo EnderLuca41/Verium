@@ -1,9 +1,12 @@
 package me.enderluca.verium;
 
-import org.bukkit.configuration.file.FileConfiguration;
-
 public class ChallengesConfig {
-    public void save(FileConfiguration dest){
+    private boolean noCrafting;
 
+    public void setNoCrafting(boolean val){
+        noCrafting = val;
+    }
+    public boolean getNoCrafting(){
+        return noCrafting;
     }
 }
