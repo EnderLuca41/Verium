@@ -1,7 +1,9 @@
 package me.enderluca.verium;
 
+import me.enderluca.verium.commands.ChallengeCommand;
 import me.enderluca.verium.commands.ResetCommand;
 import me.enderluca.verium.commands.TimerCommand;
+import me.enderluca.verium.services.ChallengesService;
 import me.enderluca.verium.services.WorldResetService;
 import me.enderluca.verium.services.TimerService;
 
@@ -19,6 +21,7 @@ public class VeriumPlugin extends JavaPlugin {
     Logger logger;
     TimerService timer;
     WorldResetService reset;
+    ChallengesService challenges;
     @Override
     public void onEnable() {
         logger = getLogger();
@@ -54,9 +57,14 @@ public class VeriumPlugin extends JavaPlugin {
         timer = new TimerService(this, sec, timerEnabled);
         logger.log(Level.INFO, "Creating timer complete");
 
+        logger.info("Creating challenge service");
+        challenges = new ChallengesService(this, getConfig());
+        logger.info("Creating challenges service complete");
+
         logger.log(Level.INFO, "Creating commands");
         getCommand("timer").setExecutor(new TimerCommand(timer));
         getCommand("reset").setExecutor(new ResetCommand(reset));
+        getCommand("challenges").setExecutor(new ChallengeCommand(this, challenges));
         logger.log(Level.INFO, "Creating command complete");
     }
 
@@ -70,6 +78,10 @@ public class VeriumPlugin extends JavaPlugin {
         getConfig().set("timer.enabled", timerEnabled);
 
         getConfig().set("reset.scheduled", reset.isResetScheduled());
+
+        challenges.saveConfig(getConfig());
+
+        saveConfig();
 
         logger.log(Level.INFO, "Saving config complete");
     }

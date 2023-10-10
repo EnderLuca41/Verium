@@ -12,3 +12,6 @@ commands:
   reset:
     description: Resets the world and restarts the server
     usage: /reset (confirm)
+  challenges:
+    description: Shows a gui to manage the active challenges
+    usage: /challenges
