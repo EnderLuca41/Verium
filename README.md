@@ -10,3 +10,6 @@ Current supported features:
 
  - A timer that can be used with `/timer` to measure how well you performed and beat your last record 🚀
  - `/reset` to reset the current world and retry 🔁
+   
+Challenges (can be managed with `/challenges`:
+- No Crafting: Disables the use of crafting tables
