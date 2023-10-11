@@ -16,9 +16,7 @@ public class ChallengesService {
     }
 
     public void saveConfig(FileConfiguration dest){
-        Bukkit.getLogger().info("Moin");
         dest.set("challenges.nocrafting", config.getNoCrafting());
-        Bukkit.getLogger().info("Moin");
     }
 
     public void loadConfig(FileConfiguration src){
