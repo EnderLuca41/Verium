@@ -43,7 +43,7 @@ public class ChallengesInventoryListener implements Listener {
         switch (event.getRawSlot()){
             case 9:
                 player.playSound(player.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1f, 1f);
-                switchState(event.getRawSlot(), event.getInventory());
+                GuiUtil.switchState(event.getRawSlot(), event.getInventory());
                 challengesService.setNoCrafting(!challengesService.getNoCrafting());
                 break;
         }
@@ -55,23 +55,5 @@ public class ChallengesInventoryListener implements Listener {
             return;
 
         event.setCancelled(true);
-    }
-
-    /**
-     * Switches the state between disable/enable in the gui
-     */
-    private void switchState(int index, Inventory inv){
-        ItemStack item = inv.getItem(index);
-        if(item == null)
-            return;
-
-        if(GuiUtil.isEnabledItem(item)){
-            inv.setItem(index, GuiUtil.getDisabledItem());
-            return;
-        }
-
-        if(GuiUtil.isDisabledItem(item)){
-            inv.setItem(index, GuiUtil.getEnabledItem());
-        }
     }
 }
