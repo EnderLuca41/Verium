@@ -1,6 +1,7 @@
 package me.enderluca.verium.util;
 
 import me.enderluca.verium.services.ChallengesService;
+import me.enderluca.verium.services.GameRulesService;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -17,6 +18,7 @@ public final class GuiUtil {
     private GuiUtil(){}
 
     public static final String CHALLENGE_GUI_NAME = "Challenge selection";
+    public static final String GAMERULES_GUI_NAME = "Gamerules";
 
 
     private static final ItemStack enabledItemPrototype = new ItemStack(Material.GREEN_STAINED_GLASS, 1);
@@ -105,6 +107,12 @@ public final class GuiUtil {
         else
             inv.setItem(9, getDisabledItem());
 
+
+        return inv;
+    }
+
+    public static Inventory generateGameRulesGui(GameRulesService gameRules){
+        Inventory inv = Bukkit.createInventory(null, 36, GAMERULES_GUI_NAME);
 
         return inv;
     }

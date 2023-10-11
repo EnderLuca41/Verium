@@ -1,9 +1,11 @@
 package me.enderluca.verium;
 
 import me.enderluca.verium.commands.ChallengeCommand;
+import me.enderluca.verium.commands.GameRulesCommand;
 import me.enderluca.verium.commands.ResetCommand;
 import me.enderluca.verium.commands.TimerCommand;
 import me.enderluca.verium.services.ChallengesService;
+import me.enderluca.verium.services.GameRulesService;
 import me.enderluca.verium.services.WorldResetService;
 import me.enderluca.verium.services.TimerService;
 
@@ -23,6 +25,8 @@ public class VeriumPlugin extends JavaPlugin {
     TimerService timer;
     WorldResetService reset;
     ChallengesService challenges;
+    GameRulesService gameRules;
+
     @Override
     public void onEnable() {
         logger = getLogger();
@@ -54,10 +58,15 @@ public class VeriumPlugin extends JavaPlugin {
         challenges = new ChallengesService(this, getConfig());
         logger.info("Creating challenges service complete");
 
+        logger.info("Creating gamerules service");
+        gameRules = new GameRulesService(this, getConfig());
+        logger.info("Creating gamerules service complete");
+
         logger.log(Level.INFO, "Creating commands");
         getCommand("timer").setExecutor(new TimerCommand(timer));
         getCommand("reset").setExecutor(new ResetCommand(reset));
         getCommand("challenges").setExecutor(new ChallengeCommand(this, challenges));
+        getCommand("gamerules").setExecutor(new GameRulesCommand(this, gameRules));
         logger.log(Level.INFO, "Creating command complete");
     }
 
