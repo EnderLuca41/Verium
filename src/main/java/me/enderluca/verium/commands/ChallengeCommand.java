@@ -1,5 +1,6 @@
 package me.enderluca.verium.commands;
 
+import me.enderluca.verium.ChallengesGui;
 import me.enderluca.verium.listener.ChallengesInventoryListener;
 import me.enderluca.verium.services.ChallengesService;
 import me.enderluca.verium.util.GuiUtil;
@@ -14,9 +15,13 @@ import javax.annotation.Nonnull;
 
 public class ChallengeCommand implements CommandExecutor {
     private final ChallengesService challengesService;
+    private final ChallengesGui challengeGui;
+
     public ChallengeCommand(Plugin owner, ChallengesService challengesService){
         this.challengesService = challengesService;
-        Bukkit.getPluginManager().registerEvents(new ChallengesInventoryListener(challengesService), owner);
+        challengeGui = new ChallengesGui(owner, challengesService);
+
+     //   Bukkit.getPluginManager().registerEvents(new ChallengesInventoryListener(challengesService), owner);
     }
 
     @Override
@@ -27,9 +32,7 @@ public class ChallengeCommand implements CommandExecutor {
         if(!(sender instanceof Player player))
             return false;
 
-        Inventory gui = GuiUtil.generateChallengeGui(challengesService);
-
-        player.openInventory(gui);
+        challengeGui.show(player);
 
         return true;
     }

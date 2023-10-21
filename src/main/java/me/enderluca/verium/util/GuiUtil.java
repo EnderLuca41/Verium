@@ -66,15 +66,15 @@ public final class GuiUtil {
     //
 
     /**
-     * Gets the item that represents the no crafting challenge in the gui
+     * Gets the item that represents the no hunger game rule in the gui
      */
-    public static ItemStack getNoCraftingItem(){
-        ItemStack noCrafting = new ItemStack(Material.CRAFTING_TABLE, 1);
-        ItemMeta meta = noCrafting.getItemMeta();
-        meta.setDisplayName("No Crafting"); //Item cannot be air, so NullPointerException is impossible
-        meta.setLore(List.of("Disables the use of crafting tables."));
-        noCrafting.setItemMeta(meta);
-        return noCrafting;
+    public static ItemStack getNoHungerItem(){
+        ItemStack noHunger = new ItemStack(Material.APPLE, 1);
+        ItemMeta meta = noHunger.getItemMeta();
+        meta.setDisplayName("No Hunger"); //Item cannot be air, so NullPointerException is impossible
+        meta.setLore(List.of("Fills hunger bar and disables the ability to lose hunger."));
+        noHunger.setItemMeta(meta);
+        return noHunger;
     }
 
     /**
@@ -111,27 +111,5 @@ public final class GuiUtil {
         if(GuiUtil.isDisabledItem(item)){
             inv.setItem(index, GuiUtil.getEnabledItem());
         }
-    }
-
-    /**
-     * Generates a chest gui that contains the challenges to enable/disable
-     */
-    public static Inventory generateChallengeGui(ChallengesService challenges){
-        Inventory inv = Bukkit.createInventory(null, 36, CHALLENGE_GUI_NAME);
-
-        inv.setItem(0, getNoCraftingItem());
-        if(challenges.getNoCrafting())
-            inv.setItem(9, getEnabledItem());
-        else
-            inv.setItem(9, getDisabledItem());
-
-
-        return inv;
-    }
-
-    public static Inventory generateGameRulesGui(GameRulesService gameRules){
-        Inventory inv = Bukkit.createInventory(null, 36, GAMERULES_GUI_NAME);
-
-        return inv;
     }
 }
