@@ -66,6 +66,18 @@ public final class GuiUtil {
     //
 
     /**
+     * Gets the item that represents the no crafting challenge in the gui
+     */
+    public static ItemStack getNoCraftingIcon(){
+        ItemStack noCrafting = new ItemStack(Material.CRAFTING_TABLE, 1);
+        ItemMeta meta = noCrafting.getItemMeta();
+        meta.setDisplayName("No Crafting"); //Item cannot be air, so NullPointerException is impossible
+        meta.setLore(List.of("Disables the use of crafting tables."));
+        noCrafting.setItemMeta(meta);
+        return noCrafting;
+    }
+
+    /**
      * Gets the item that represents the no hunger game rule in the gui
      */
     public static ItemStack getNoHungerItem(){
