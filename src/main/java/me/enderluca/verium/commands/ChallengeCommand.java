@@ -1,14 +1,10 @@
 package me.enderluca.verium.commands;
 
 import me.enderluca.verium.ChallengesGui;
-import me.enderluca.verium.listener.ChallengesInventoryListener;
 import me.enderluca.verium.services.ChallengesService;
-import me.enderluca.verium.util.GuiUtil;
 
-import org.bukkit.Bukkit;
 import org.bukkit.command.*;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.Inventory;
 import org.bukkit.plugin.Plugin;
 
 import javax.annotation.Nonnull;
@@ -20,8 +16,6 @@ public class ChallengeCommand implements CommandExecutor {
     public ChallengeCommand(Plugin owner, ChallengesService challengesService){
         this.challengesService = challengesService;
         challengeGui = new ChallengesGui(owner, challengesService);
-
-     //   Bukkit.getPluginManager().registerEvents(new ChallengesInventoryListener(challengesService), owner);
     }
 
     @Override
