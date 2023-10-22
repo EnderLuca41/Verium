@@ -83,6 +83,8 @@ public class VeriumPlugin extends JavaPlugin {
 
         challenges.saveConfig(getConfig());
 
+        gameRules.saveConfig(getConfig());
+
         saveConfig();
 
         logger.log(Level.INFO, "Saving config complete");
