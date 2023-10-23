@@ -118,22 +118,4 @@ public final class GuiUtil {
 
         return item.equals(disabledItemPrototype);
     }
-
-    /**
-     * Switches the state between disable/enable in the gui
-     */
-    public static void switchState(int index, Inventory inv){
-        ItemStack item = inv.getItem(index);
-        if(item == null)
-            return;
-
-        if(GuiUtil.isEnabledItem(item)){
-            inv.setItem(index, GuiUtil.getDisabledItem());
-            return;
-        }
-
-        if(GuiUtil.isDisabledItem(item)){
-            inv.setItem(index, GuiUtil.getEnabledItem());
-        }
-    }
 }
