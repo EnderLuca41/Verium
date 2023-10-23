@@ -6,13 +6,19 @@ Because it is a server plugin, you can also play these challenges with your frie
 
 ## Current state
 Veriums development has just started, that's why the current supported features are very limited.
-Current supported features:
+### Current supported features:
 
  - A timer that can be used with `/timer` to measure how well you performed and beat your last record 🚀
  - `/reset` to reset the current world and retry 🔁
    
-Challenges (can be managed with `/challenges`:
-- No Crafting: Disables the use of crafting tables
+#### Challenges (can be managed with `/challenges`):
+- No Crafting: Disables the use of crafting tables 🛠️
+
+
+#### Gamerules (can be managed with `/gamerules`):
+- No hunger: disable the ability to lose hunger 🍗
+- PvP: Enabled the possibility to hit and kill other players ⚔️
+
 
 ## How to use Verium
 

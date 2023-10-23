@@ -1,18 +1,17 @@
 package me.enderluca.verium;
 
 import me.enderluca.verium.commands.ChallengeCommand;
+import me.enderluca.verium.commands.GameRulesCommand;
 import me.enderluca.verium.commands.ResetCommand;
 import me.enderluca.verium.commands.TimerCommand;
 import me.enderluca.verium.services.ChallengesService;
+import me.enderluca.verium.services.GameRulesService;
 import me.enderluca.verium.services.WorldResetService;
 import me.enderluca.verium.services.TimerService;
 
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -23,6 +22,8 @@ public class VeriumPlugin extends JavaPlugin {
     TimerService timer;
     WorldResetService reset;
     ChallengesService challenges;
+    GameRulesService gameRules;
+
     @Override
     public void onEnable() {
         logger = getLogger();
@@ -54,10 +55,15 @@ public class VeriumPlugin extends JavaPlugin {
         challenges = new ChallengesService(this, getConfig());
         logger.info("Creating challenges service complete");
 
+        logger.info("Creating gamerules service");
+        gameRules = new GameRulesService(this, getConfig());
+        logger.info("Creating gamerules service complete");
+
         logger.log(Level.INFO, "Creating commands");
         getCommand("timer").setExecutor(new TimerCommand(timer));
         getCommand("reset").setExecutor(new ResetCommand(reset));
         getCommand("challenges").setExecutor(new ChallengeCommand(this, challenges));
+        getCommand("gamerules").setExecutor(new GameRulesCommand(this, gameRules));
         logger.log(Level.INFO, "Creating command complete");
     }
 
@@ -73,6 +79,8 @@ public class VeriumPlugin extends JavaPlugin {
         getConfig().set("reset.scheduled", reset.isResetScheduled());
 
         challenges.saveConfig(getConfig());
+
+        gameRules.saveConfig(getConfig());
 
         saveConfig();
 

@@ -1,6 +1,6 @@
 name: Verium
 author: EnderLuca
-version: 0.0.2.2
+version: 0.0.3.0
 main: me.enderluca.verium.VeriumPlugin
 api-version: 1.20
 load: STARTUP
@@ -15,3 +15,6 @@ commands:
   challenges:
     description: Shows a gui to manage the active challenges
     usage: /challenges
+  gamerules:
+    description: Show a gui to manage active game rules like NoHunger, PvP, etc...
+    usage: /gamerules
