@@ -1,11 +1,10 @@
 package me.enderluca.verium.util;
 
-import me.enderluca.verium.services.ChallengesService;
-import me.enderluca.verium.services.GameRulesService;
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.entity.Item;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -80,13 +79,26 @@ public final class GuiUtil {
     /**
      * Gets the item that represents the no hunger game rule in the gui
      */
-    public static ItemStack getNoHungerItem(){
+    public static ItemStack getNoHungerIcon(){
         ItemStack noHunger = new ItemStack(Material.APPLE, 1);
         ItemMeta meta = noHunger.getItemMeta();
         meta.setDisplayName("No Hunger"); //Item cannot be air, so NullPointerException is impossible
         meta.setLore(List.of("Fills hunger bar and disables the ability to lose hunger."));
         noHunger.setItemMeta(meta);
         return noHunger;
+    }
+
+    /**
+     * Gets the item that represents the pvp game rule in the gui
+     */
+    public static ItemStack getPvpItem(){
+        ItemStack pvp = new ItemStack(Material.IRON_SWORD, 1);
+        ItemMeta meta = pvp.getItemMeta();
+        meta.setDisplayName("PvP"); //Item cannot be air, so NullPointerException is impossible
+        meta.setLore(List.of("Enables the possibility to damage other players."));
+        meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
+        pvp.setItemMeta(meta);
+        return pvp;
     }
 
     /**

@@ -13,8 +13,11 @@ public class GameRulesGui {
         invGui = new InventoryGui(owner, 36, "Gamerules");
         this.service = service;
 
-        invGui.createIcon(GuiUtil.getNoHungerItem(), 0);
+        invGui.createIcon(GuiUtil.getNoHungerIcon(), 0);
         invGui.createSwitch(service::setNoHunger, service::getNoHunger, 9);
+
+        invGui.createIcon(GuiUtil.getPvpItem(), 1);
+        invGui.createSwitch(service::setPvp, service::getPvp, 10);
     }
 
     public void show(Player player){
