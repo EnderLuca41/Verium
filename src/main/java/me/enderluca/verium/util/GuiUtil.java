@@ -38,10 +38,6 @@ public final class GuiUtil {
         return disabled;
     }
 
-    //
-    //For the next type of gui elements, we will not use prototype, since we don't have to compare them
-    //
-
     /**
      * Gets the item that represents the no crafting challenge in the gui
      */
