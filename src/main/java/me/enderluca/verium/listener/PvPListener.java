@@ -20,6 +20,9 @@ public class PvPListener implements Listener {
         if(!(event.getDamager() instanceof Player))
             return;
 
+        if(!(event.getEntity() instanceof Player))
+            return;
+
         event.setCancelled(true);
     }
 }
