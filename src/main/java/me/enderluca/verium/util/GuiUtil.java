@@ -2,8 +2,6 @@ package me.enderluca.verium.util;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
-import org.bukkit.entity.Item;
-import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -19,7 +17,7 @@ public final class GuiUtil {
     /**
      * Gets the item that symbols the enabled state
      */
-    public static ItemStack getEnabledItem(){
+    public static ItemStack getEnabledIcon(){
         ItemStack enabled = new ItemStack(Material.GREEN_STAINED_GLASS, 1);
         ItemMeta meta = enabled.getItemMeta();
         //Item cannot be air, that is why the NullPointerException is impossible
@@ -31,7 +29,7 @@ public final class GuiUtil {
     /**
      * Gets the item that symbols the disabled state
      */
-    public static ItemStack getDisabledItem(){
+    public static ItemStack getDisabledIcon(){
         ItemStack disabled = new ItemStack(Material.RED_STAINED_GLASS, 1);
         ItemMeta meta = disabled.getItemMeta();
         //Item cannot be air, that is why the NullPointerException is impossible
@@ -71,7 +69,7 @@ public final class GuiUtil {
     /**
      * Gets the item that represents the pvp game rule in the gui
      */
-    public static ItemStack getPvpItem(){
+    public static ItemStack getPvpIcon(){
         ItemStack pvp = new ItemStack(Material.IRON_SWORD, 1);
         ItemMeta meta = pvp.getItemMeta();
         meta.setDisplayName("PvP"); //Item cannot be air, so NullPointerException is impossible

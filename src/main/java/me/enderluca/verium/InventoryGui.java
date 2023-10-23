@@ -71,9 +71,9 @@ public class InventoryGui implements Listener {
         switchGetterList.put(index, getter);
 
         if(getter.get())
-            invGui.setItem(index, GuiUtil.getEnabledItem());
+            invGui.setItem(index, GuiUtil.getEnabledIcon());
         else
-            invGui.setItem(index, GuiUtil.getDisabledItem());
+            invGui.setItem(index, GuiUtil.getDisabledIcon());
 
         return true;
     }
@@ -83,9 +83,9 @@ public class InventoryGui implements Listener {
      */
     protected void switchSetState(int index, boolean state){
         if(state)
-            invGui.setItem(index, GuiUtil.getEnabledItem());
+            invGui.setItem(index, GuiUtil.getEnabledIcon());
         else
-            invGui.setItem(index, GuiUtil.getDisabledItem());
+            invGui.setItem(index, GuiUtil.getDisabledIcon());
     }
 
     protected void renderSwitches(){

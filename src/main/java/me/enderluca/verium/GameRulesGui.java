@@ -16,7 +16,7 @@ public class GameRulesGui {
         invGui.createIcon(GuiUtil.getNoHungerIcon(), 0);
         invGui.createSwitch(service::setNoHunger, service::getNoHunger, 9);
 
-        invGui.createIcon(GuiUtil.getPvpItem(), 1);
+        invGui.createIcon(GuiUtil.getPvpIcon(), 1);
         invGui.createSwitch(service::setPvp, service::getPvp, 10);
     }
 
