@@ -16,48 +16,28 @@ import java.util.List;
 public final class GuiUtil {
     private GuiUtil(){}
 
-    public static final String CHALLENGE_GUI_NAME = "Challenge selection";
-    public static final String GAMERULES_GUI_NAME = "Gamerules";
-
-
-    private static final ItemStack enabledItemPrototype = new ItemStack(Material.GREEN_STAINED_GLASS, 1);
-    private static final ItemStack disabledItemPrototype = new ItemStack(Material.RED_STAINED_GLASS, 1);
-
-    private static boolean prototypesInitialized = false;
-
-    private static void initPrototypes(){
-        if(prototypesInitialized)
-            return;
-
-        //Item cannot be air, that is why the NullPointerException is impossible
-        ItemMeta enabledMeta = enabledItemPrototype.getItemMeta();
-        enabledMeta.setDisplayName(ChatColor.BOLD + "" + ChatColor.GREEN + "Enabled");
-        enabledItemPrototype.setItemMeta(enabledMeta);
-
-        ItemMeta disabledMeta = disabledItemPrototype.getItemMeta();
-        disabledMeta.setDisplayName(ChatColor.BOLD + "" + ChatColor.RED + "Disabled");
-        disabledItemPrototype.setItemMeta(disabledMeta);
-
-
-        prototypesInitialized = true;
-    }
-
     /**
      * Gets the item that symbols the enabled state
      */
     public static ItemStack getEnabledItem(){
-        initPrototypes();
-
-        return enabledItemPrototype.clone();
+        ItemStack enabled = new ItemStack(Material.GREEN_STAINED_GLASS, 1);
+        ItemMeta meta = enabled.getItemMeta();
+        //Item cannot be air, that is why the NullPointerException is impossible
+        meta.setDisplayName(ChatColor.BOLD + "" + ChatColor.GREEN + "Enabled");
+        enabled.setItemMeta(meta);
+        return enabled;
     }
 
     /**
      * Gets the item that symbols the disabled state
      */
     public static ItemStack getDisabledItem(){
-        initPrototypes();
-
-        return disabledItemPrototype.clone();
+        ItemStack disabled = new ItemStack(Material.RED_STAINED_GLASS, 1);
+        ItemMeta meta = disabled.getItemMeta();
+        //Item cannot be air, that is why the NullPointerException is impossible
+        meta.setDisplayName(ChatColor.BOLD + "" + ChatColor.RED + "Disabled");
+        disabled.setItemMeta(meta);
+        return disabled;
     }
 
     //
@@ -99,23 +79,5 @@ public final class GuiUtil {
         meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
         pvp.setItemMeta(meta);
         return pvp;
-    }
-
-    /**
-     * Check if the passed item indicates the "enabled" state
-     */
-    public static boolean isEnabledItem(ItemStack item){
-        initPrototypes();
-
-        return item.equals(enabledItemPrototype);
-    }
-
-    /**
-     * Check if the passed item indicates the "disabled" state
-     */
-    public static boolean isDisabledItem(ItemStack item){
-        initPrototypes();
-
-        return item.equals(disabledItemPrototype);
     }
 }
