@@ -1,4 +1,4 @@
-package me.enderluca.verium;
+package me.enderluca.verium.runnable;
 
 import me.enderluca.verium.util.TimerUtil;
 import net.md_5.bungee.api.ChatMessageType;

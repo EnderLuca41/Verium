@@ -50,6 +50,15 @@ public final class GuiUtil {
         return noCrafting;
     }
 
+    public static ItemStack getWolfSurviveIcon(){
+        ItemStack wolfSurvive = new ItemStack(Material.BONE, 1);
+        ItemMeta meta = wolfSurvive.getItemMeta();
+        meta.setDisplayName("Wolf survive");
+        meta.setLore(List.of("Every player receives a pet wolf, if the wolf dies, the challenge is over", "Players cannot be more than 50 blocks apart from their wolf"));
+        wolfSurvive.setItemMeta(meta);
+        return wolfSurvive;
+    }
+
     /**
      * Gets the item that represents the no hunger game rule in the gui
      */

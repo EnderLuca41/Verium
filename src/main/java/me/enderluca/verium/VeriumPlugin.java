@@ -52,7 +52,7 @@ public class VeriumPlugin extends JavaPlugin {
         logger.log(Level.INFO, "Creating timer complete");
 
         logger.info("Creating challenge service");
-        challenges = new ChallengesService(this, getConfig());
+        challenges = new ChallengesService(this, getConfig(), timer);
         logger.info("Creating challenges service complete");
 
         logger.info("Creating gamerules service");
@@ -79,6 +79,10 @@ public class VeriumPlugin extends JavaPlugin {
         getConfig().set("reset.scheduled", reset.isResetScheduled());
 
         challenges.saveConfig(getConfig());
+
+        if(reset.isResetScheduled()){
+            challenges.cleanWorldSpecificConfig(getConfig());
+        }
 
         gameRules.saveConfig(getConfig());
 
