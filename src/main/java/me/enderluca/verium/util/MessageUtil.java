@@ -11,6 +11,35 @@ public final class MessageUtil {
     private MessageUtil(){}
 
     /**
+     * Builds the message to be sent over the message bar, that shows the timer
+     * @param seconds Total seconds of the timer
+     * @param isPaused If the timer is paused
+     */
+    public static BaseComponent[] buildTimerMessage(long seconds, boolean isPaused){
+        ComponentBuilder builder = new ComponentBuilder();
+        builder.bold(true);
+
+        if(isPaused)
+            builder.append("PAUSED ").color(ChatColor.RED);
+
+        if(seconds / (60 * 60 * 24) != 0){
+            builder.append(Long.toString(seconds / 60 / 60 / 24)).color(ColorUtil.ELECTRIC_VIOLET).append("d ").color(ColorUtil.ELECTRIC_VIOLET);
+        }
+
+        if(seconds / (60 * 60) != 0){
+            builder.append(Long.toString((seconds / 60 / 60) % 24)).color(ChatColor.DARK_PURPLE).append("h ").color(ChatColor.DARK_PURPLE);
+        }
+
+        if(seconds / 60 != 0){
+            builder.append(Long.toString((seconds / 60) % 60)).color(ColorUtil.MAGENTA).append("m ").color(ColorUtil.MAGENTA);
+        }
+
+        builder.append(Long.toString(seconds % 60)).color(ChatColor.LIGHT_PURPLE).append("s ").color(ChatColor.LIGHT_PURPLE);
+        return builder.create();
+    }
+
+
+    /**
      * Creates the broadcast message that get sent when the player and his wolf are more than 50 blocks apart
      */
     public static BaseComponent[] buildPlayerWolfToFarApart(String playerName){

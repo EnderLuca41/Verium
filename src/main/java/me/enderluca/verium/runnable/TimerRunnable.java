@@ -1,9 +1,11 @@
 package me.enderluca.verium.runnable;
 
-import me.enderluca.verium.util.TimerUtil;
+import me.enderluca.verium.util.MessageUtil;
+
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.chat.TextComponent;
+
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -23,7 +25,7 @@ public class TimerRunnable extends BukkitRunnable {
      * Broadcast the timer to all players on the spigot server
      */
     private void broadcastTimer(long seconds, boolean isPaused){
-        BaseComponent[] message = TimerUtil.buildTimerMessage(seconds, isPaused);
+        BaseComponent[] message = MessageUtil.buildTimerMessage(seconds, isPaused);
 
         for(Player p : Bukkit.getOnlinePlayers()){
             p.spigot().sendMessage(ChatMessageType.ACTION_BAR, message);
