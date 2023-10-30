@@ -26,6 +26,12 @@ public class ChallengesGui {
             invGui.createIcon(GuiUtil.getWolfSurviveIcon(), 1);
             invGui.createSwitch(wolfSurvive::setEnabled, wolfSurvive::isEnabled, 10);
         }
+
+        Challenge noFallDamage = service.getChallenge(ChallengeType.NoFallDamage);
+        if(noFallDamage != null){
+            invGui.createIcon(GuiUtil.getNoFallDamageItem(), 2);
+            invGui.createSwitch(noFallDamage::setEnabled, noFallDamage::isEnabled, 11);
+        }
     }
 
     public void show(Player player){

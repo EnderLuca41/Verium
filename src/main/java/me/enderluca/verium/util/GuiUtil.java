@@ -59,6 +59,16 @@ public final class GuiUtil {
         return wolfSurvive;
     }
 
+    public static ItemStack getNoFallDamageItem(){
+        ItemStack noFallDamage = new ItemStack(Material.IRON_BOOTS, 1);
+        ItemMeta meta = noFallDamage.getItemMeta();
+        meta.setDisplayName("No fall damage");
+        meta.setLore(List.of("If a player receives fall damage, the challenge will fail."));
+        meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
+        noFallDamage.setItemMeta(meta);
+        return noFallDamage;
+    }
+
     /**
      * Gets the item that represents the no hunger game rule in the gui
      */

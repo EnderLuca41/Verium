@@ -2,5 +2,6 @@ package me.enderluca.verium;
 
 public enum ChallengeType {
     NoCrafting,
-    WolfSurvive
+    WolfSurvive,
+    NoFallDamage
 }

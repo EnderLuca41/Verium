@@ -3,6 +3,7 @@ package me.enderluca.verium.services;
 import me.enderluca.verium.*;
 import me.enderluca.verium.interfaces.Challenge;
 import me.enderluca.verium.services.challenges.NoCraftingChallenge;
+import me.enderluca.verium.services.challenges.NoFallDamageChallenge;
 import me.enderluca.verium.services.challenges.WolfSurviveChallenge;
 
 import net.md_5.bungee.api.chat.BaseComponent;
@@ -29,6 +30,7 @@ public class ChallengesService {
 
         challenges.add(new WolfSurviveChallenge(owner, fileConfig, this::failChallenge));
         challenges.add(new NoCraftingChallenge(owner));
+        challenges.add(new NoFallDamageChallenge(owner, fileConfig, this::failChallenge));
     }
 
     public void saveConfig(FileConfiguration dest){

@@ -95,4 +95,18 @@ public final class MessageUtil {
         builder.append("\nRIP Wolfi").color(ChatColor.RED);
         return builder.create();
     }
+
+    /**
+     * Creates the broadcast message that get sent when a player receives fall damage
+     */
+    public static BaseComponent[] buildFallDamage(String playerName, long damage){
+        ComponentBuilder builder = new ComponentBuilder();
+        builder.append("Player ").color(ChatColor.RED);
+        builder.append(playerName).color(ChatColor.GOLD);
+        builder.append(" received ").color(ChatColor.RED);
+        builder.append(Long.toString(damage)).color(ChatColor.GOLD);
+        builder.append("HP").color(ChatColor.GOLD);
+        builder.append(" of fall damage").color(ChatColor.RED);
+        return builder.create();
+    }
 }
