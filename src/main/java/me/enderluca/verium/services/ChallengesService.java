@@ -29,7 +29,7 @@ public class ChallengesService {
         challenges = new ArrayList<>();
 
         challenges.add(new WolfSurviveChallenge(owner, fileConfig, this::failChallenge));
-        challenges.add(new NoCraftingChallenge(owner));
+        challenges.add(new NoCraftingChallenge(owner, fileConfig));
         challenges.add(new NoFallDamageChallenge(owner, fileConfig, this::failChallenge));
     }
 

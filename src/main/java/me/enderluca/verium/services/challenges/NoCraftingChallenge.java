@@ -17,7 +17,9 @@ public class NoCraftingChallenge implements Challenge {
     private boolean enabled;
     private boolean paused;
 
-    public NoCraftingChallenge(Plugin owner){
+    public NoCraftingChallenge(Plugin owner, FileConfiguration fileConfig){
+        loadConfig(fileConfig);
+
         Bukkit.getPluginManager().registerEvents(new NoCraftingListener(() -> enabled && !paused), owner);
     }
 
