@@ -1,7 +1,8 @@
 package me.enderluca.verium.commands;
 
-import me.enderluca.verium.GameRulesGui;
-import me.enderluca.verium.services.GameRulesService;
+import me.enderluca.verium.GamerulesGui;
+import me.enderluca.verium.services.GamerulesService;
+
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -11,10 +12,10 @@ import org.bukkit.plugin.Plugin;
 import javax.annotation.Nonnull;
 
 public class GameRulesCommand implements CommandExecutor {
-    private final GameRulesGui gameRulesGui;
+    private final GamerulesGui gamerulesGui;
 
-    public GameRulesCommand(Plugin owner, GameRulesService service){
-        gameRulesGui = new GameRulesGui(owner, service);
+    public GameRulesCommand(Plugin owner, GamerulesService service){
+        gamerulesGui = new GamerulesGui(owner, service);
     }
 
     @Override
@@ -25,7 +26,7 @@ public class GameRulesCommand implements CommandExecutor {
         if(!(sender instanceof Player player))
             return false;
 
-        gameRulesGui.show(player);
+        gamerulesGui.show(player);
 
         return true;
     }

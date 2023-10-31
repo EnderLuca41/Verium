@@ -5,7 +5,7 @@ import me.enderluca.verium.commands.GameRulesCommand;
 import me.enderluca.verium.commands.ResetCommand;
 import me.enderluca.verium.commands.TimerCommand;
 import me.enderluca.verium.services.ChallengesService;
-import me.enderluca.verium.services.GameRulesService;
+import me.enderluca.verium.services.GamerulesService;
 import me.enderluca.verium.services.WorldResetService;
 import me.enderluca.verium.services.TimerService;
 
@@ -22,7 +22,7 @@ public class VeriumPlugin extends JavaPlugin {
     TimerService timer;
     WorldResetService reset;
     ChallengesService challenges;
-    GameRulesService gameRules;
+    GamerulesService gamerules;
 
     @Override
     public void onEnable() {
@@ -51,19 +51,19 @@ public class VeriumPlugin extends JavaPlugin {
         timer = new TimerService(this, sec, timerEnabled);
         logger.log(Level.INFO, "Creating timer complete");
 
-        logger.info("Creating challenge service");
-        challenges = new ChallengesService(this, getConfig(), timer);
-        logger.info("Creating challenges service complete");
-
         logger.info("Creating gamerules service");
-        gameRules = new GameRulesService(this, getConfig());
+        gamerules = new GamerulesService(this, getConfig());
         logger.info("Creating gamerules service complete");
+        
+        logger.info("Creating challenge service");
+        challenges = new ChallengesService(this, getConfig(), timer, gamerules);
+        logger.info("Creating challenges service complete");
 
         logger.log(Level.INFO, "Creating commands");
         getCommand("timer").setExecutor(new TimerCommand(timer));
         getCommand("reset").setExecutor(new ResetCommand(reset));
         getCommand("challenges").setExecutor(new ChallengeCommand(this, challenges));
-        getCommand("gamerules").setExecutor(new GameRulesCommand(this, gameRules));
+        getCommand("gamerules").setExecutor(new GameRulesCommand(this, gamerules));
         logger.log(Level.INFO, "Creating command complete");
     }
 
@@ -80,11 +80,12 @@ public class VeriumPlugin extends JavaPlugin {
 
         challenges.saveConfig(getConfig());
 
+        gamerules.saveConfig(getConfig());
+
         if(reset.isResetScheduled()){
             challenges.cleanWorldSpecificConfig(getConfig());
+            gamerules.cleanWorldSpecificConfig(getConfig());
         }
-
-        gameRules.saveConfig(getConfig());
 
         saveConfig();
 

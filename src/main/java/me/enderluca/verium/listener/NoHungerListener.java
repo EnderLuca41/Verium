@@ -1,21 +1,22 @@
 package me.enderluca.verium.listener;
 
-import me.enderluca.verium.GameRulesConfig;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.FoodLevelChangeEvent;
 
+import java.util.function.BooleanSupplier;
+
 public class NoHungerListener implements Listener {
 
-    private final GameRulesConfig config;
+    private final BooleanSupplier isActive;
 
-    public NoHungerListener(GameRulesConfig config){
-        this.config = config;
+    public NoHungerListener(BooleanSupplier isActive){
+        this.isActive = isActive;
     }
 
     @EventHandler
     public void onFoodLevelChange(FoodLevelChangeEvent event){
-        if(!config.getNoHunger())
+        if(!isActive.getAsBoolean())
             return;
 
         event.setCancelled(true);

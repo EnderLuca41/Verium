@@ -22,9 +22,11 @@ public class ChallengesService {
     private final List<Challenge> challenges;
 
     private final TimerService timer;
+    private final GamerulesService gamerules;
 
-    public ChallengesService(Plugin owner, FileConfiguration fileConfig, TimerService timer){
+    public ChallengesService(Plugin owner, FileConfiguration fileConfig, TimerService timer, GamerulesService gamerules){
         this.timer = timer;
+        this.gamerules = gamerules;
 
         challenges = new ArrayList<>();
 
@@ -69,6 +71,8 @@ public class ChallengesService {
             p.setGameMode(GameMode.SPECTATOR);
 
         timer.pause();
+
+        gamerules.setPaused(true);
     }
 
 
