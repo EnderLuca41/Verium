@@ -30,13 +30,7 @@ public class VeriumPlugin extends JavaPlugin {
 
         logger.info("Reading server properties");
         serverProps = new ServerProperties();
-        try{
-            serverProps.load();
-        }
-        catch (IOException e){
-            logger.info("Could not read server.properties file, continuing with default configuration:" + e.getMessage());
-            serverProps.loadDefault();
-        }
+        serverProps.tryLoad();
         logger.info("Done reading server properties");
 
 
