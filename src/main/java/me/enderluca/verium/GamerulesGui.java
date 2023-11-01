@@ -25,6 +25,12 @@ public class GamerulesGui {
             invGui.createIcon(GuiUtil.getPvpIcon(), 1);
             invGui.createSwitch(pvp::setEnabled, pvp::isEnabled, 10);
         }
+
+        Gamerule uhc = service.getGamerule(GameruleType.Uhc);
+        if(uhc != null){
+            invGui.createIcon(GuiUtil.getUhcIcon(), 2);
+            invGui.createSwitch(uhc::setEnabled, uhc::isEnabled, 11);
+        }
     }
 
     public void show(Player player){

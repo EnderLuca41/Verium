@@ -1,6 +1,7 @@
 package me.enderluca.verium.util;
 
-import org.bukkit.ChatColor;
+import net.md_5.bungee.api.ChatColor;
+
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
@@ -92,5 +93,14 @@ public final class GuiUtil {
         meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
         pvp.setItemMeta(meta);
         return pvp;
+    }
+
+    public static ItemStack getUhcIcon(){
+        ItemStack uhc = new ItemStack(Material.GOLDEN_APPLE, 1);
+        ItemMeta meta = uhc.getItemMeta();
+        meta.setDisplayName(ChatColor.WHITE + "" + ChatColor.ITALIC + "UHC"); //Item cannot be air, so NullPointerException is impossible
+        meta.setLore(List.of("Disables natural regeneration of health."));
+        uhc.setItemMeta(meta);
+        return uhc;
     }
 }
