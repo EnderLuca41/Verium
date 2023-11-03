@@ -48,6 +48,7 @@ public class VeriumPlugin extends JavaPlugin {
         getCommand("challenges").setExecutor(new ChallengeCommand(this, modifications.getChallengeService()));
         getCommand("gamerules").setExecutor(new GameRulesCommand(this, modifications.getGamerulesService()));
         getCommand("pause").setExecutor(new PauseCommand(modifications));
+        getCommand("resume").setExecutor(new ResumeCommand(modifications));
         logger.log(Level.INFO, "Creating commands complete");
     }
 

@@ -21,3 +21,6 @@ commands:
   pause:
     description: Pauses all challenges
     usage: /pause
+  resume:
+    description: Resumes the challenge after it was paused or a challenge failed
+    usage: /resume
