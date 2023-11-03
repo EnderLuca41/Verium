@@ -13,11 +13,15 @@ Veriums development has just started, that's why the current supported features 
    
 #### Challenges (can be managed with `/challenges`):
 - No Crafting: Disables the use of crafting tables 🛠️
+- Wolf Survive: Every player receives a wolf that must survive at all cost 🦴
+- No Fall Damage: Receiving fall damage, even 1HP, will end the challenge 🪶
 
 
 #### Gamerules (can be managed with `/gamerules`):
 - No hunger: disable the ability to lose hunger 🍗
-- PvP: Enabled the possibility to hit and kill other players ⚔️
+- PvP: Enablea the possibility to hit and kill other players ⚔️
+- UHC: Disables natural regeneration of HP ❤️
+- UUHC: Disables every type of regeneration ❤️‍🩹
 
 
 ## How to use Verium
