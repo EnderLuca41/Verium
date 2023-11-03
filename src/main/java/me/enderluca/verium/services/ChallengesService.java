@@ -64,6 +64,16 @@ public class ChallengesService {
         }
     }
 
+    /**
+     * Resets all challenges that failed
+     */
+    public void resetFailed(){
+        for(Challenge ch : challenges){
+            if(ch.isFailed())
+                ch.reset();
+        }
+    }
+
     @Nullable
     public Challenge getChallenge(ChallengeType type){
         return challenges.stream()
