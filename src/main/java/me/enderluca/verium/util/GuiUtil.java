@@ -51,6 +51,9 @@ public final class GuiUtil {
         return noCrafting;
     }
 
+    /**
+     * Gets the item that represents the wolf survive challenge in the gui
+     */
     public static ItemStack getWolfSurviveIcon(){
         ItemStack wolfSurvive = new ItemStack(Material.BONE, 1);
         ItemMeta meta = wolfSurvive.getItemMeta();
@@ -60,6 +63,9 @@ public final class GuiUtil {
         return wolfSurvive;
     }
 
+    /**
+     * Gets the item that represents the no fall damage challenge in the gui
+     */
     public static ItemStack getNoFallDamageItem(){
         ItemStack noFallDamage = new ItemStack(Material.IRON_BOOTS, 1);
         ItemMeta meta = noFallDamage.getItemMeta();
@@ -71,7 +77,7 @@ public final class GuiUtil {
     }
 
     /**
-     * Gets the item that represents the no hunger game rule in the gui
+     * Gets the item that represents the no hunger gamerule in the gui
      */
     public static ItemStack getNoHungerIcon(){
         ItemStack noHunger = new ItemStack(Material.APPLE, 1);
@@ -83,7 +89,7 @@ public final class GuiUtil {
     }
 
     /**
-     * Gets the item that represents the pvp game rule in the gui
+     * Gets the item that represents the pvp gamerule in the gui
      */
     public static ItemStack getPvpIcon(){
         ItemStack pvp = new ItemStack(Material.IRON_SWORD, 1);
@@ -95,6 +101,10 @@ public final class GuiUtil {
         return pvp;
     }
 
+
+    /**
+     * Gets the item that represents the uhc gamerule in the gui
+     */
     public static ItemStack getUhcIcon(){
         ItemStack uhc = new ItemStack(Material.GOLDEN_APPLE, 1);
         ItemMeta meta = uhc.getItemMeta();
