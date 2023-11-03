@@ -103,4 +103,16 @@ public final class GuiUtil {
         uhc.setItemMeta(meta);
         return uhc;
     }
+
+    /**
+     * Gets the item that represents the pvp gamerule in the gui
+     */
+    public static ItemStack getUuhcIcon(){
+        ItemStack uuhc = new ItemStack(Material.ENCHANTED_GOLDEN_APPLE, 1);
+        ItemMeta meta = uuhc.getItemMeta();
+        meta.setDisplayName(ChatColor.WHITE + "" + ChatColor.ITALIC + "UUHC"); //Item cannot be air, so NullPointerException is impossible
+        meta.setLore(List.of("Disables every kind of regeneration."));
+        uuhc.setItemMeta(meta);
+        return uuhc;
+    }
 }

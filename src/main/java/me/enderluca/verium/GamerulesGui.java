@@ -31,6 +31,12 @@ public class GamerulesGui {
             invGui.createIcon(GuiUtil.getUhcIcon(), 2);
             invGui.createSwitch(uhc::setEnabled, uhc::isEnabled, 11);
         }
+
+        Gamerule uuhc = service.getGamerule(GameruleType.Uuhc);
+        if(uuhc != null){
+            invGui.createIcon(GuiUtil.getUuhcIcon(), 3);
+            invGui.createSwitch(uuhc::setEnabled, uuhc::isEnabled, 12);
+        }
     }
 
     public void show(Player player){
