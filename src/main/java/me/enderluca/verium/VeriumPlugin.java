@@ -1,9 +1,6 @@
 package me.enderluca.verium;
 
-import me.enderluca.verium.commands.ChallengeCommand;
-import me.enderluca.verium.commands.GameRulesCommand;
-import me.enderluca.verium.commands.ResetCommand;
-import me.enderluca.verium.commands.TimerCommand;
+import me.enderluca.verium.commands.*;
 import me.enderluca.verium.services.*;
 
 import org.bukkit.plugin.java.JavaPlugin;
@@ -50,7 +47,8 @@ public class VeriumPlugin extends JavaPlugin {
         getCommand("reset").setExecutor(new ResetCommand(reset));
         getCommand("challenges").setExecutor(new ChallengeCommand(this, modifications.getChallengeService()));
         getCommand("gamerules").setExecutor(new GameRulesCommand(this, modifications.getGamerulesService()));
-        logger.log(Level.INFO, "Creating command complete");
+        getCommand("pause").setExecutor(new PauseCommand(modifications));
+        logger.log(Level.INFO, "Creating commands complete");
     }
 
     @Override
