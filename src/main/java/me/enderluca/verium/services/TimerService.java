@@ -1,6 +1,6 @@
 package me.enderluca.verium.services;
 
-import me.enderluca.verium.TimerRunnable;
+import me.enderluca.verium.runnable.TimerRunnable;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitTask;
 

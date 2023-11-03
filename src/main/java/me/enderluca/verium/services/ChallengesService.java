@@ -1,33 +1,86 @@
 package me.enderluca.verium.services;
 
-import me.enderluca.verium.ChallengesConfig;
-import me.enderluca.verium.listener.NoCraftingListener;
+import me.enderluca.verium.*;
+import me.enderluca.verium.interfaces.Challenge;
+import me.enderluca.verium.services.challenges.NoCraftingChallenge;
+import me.enderluca.verium.services.challenges.NoFallDamageChallenge;
+import me.enderluca.verium.services.challenges.WolfSurviveChallenge;
+
+import net.md_5.bungee.api.chat.BaseComponent;
+
 import org.bukkit.Bukkit;
+import org.bukkit.GameMode;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
-public class ChallengesService {
-    private final ChallengesConfig config;
-    public ChallengesService(Plugin owner, FileConfiguration fileConfig){
-        config = new ChallengesConfig();
-        loadConfig(fileConfig);
+import javax.annotation.Nullable;
+import java.util.ArrayList;
+import java.util.List;
 
-        Bukkit.getPluginManager().registerEvents(new NoCraftingListener(config), owner);
+public class ChallengesService {
+    private final List<Challenge> challenges;
+
+    private final TimerService timer;
+    private final GamerulesService gamerules;
+
+    public ChallengesService(Plugin owner, FileConfiguration fileConfig, TimerService timer, GamerulesService gamerules){
+        this.timer = timer;
+        this.gamerules = gamerules;
+
+        challenges = new ArrayList<>();
+
+        challenges.add(new WolfSurviveChallenge(owner, fileConfig, this::failChallenge));
+        challenges.add(new NoCraftingChallenge(owner, fileConfig));
+        challenges.add(new NoFallDamageChallenge(owner, fileConfig, this::failChallenge));
     }
 
     public void saveConfig(FileConfiguration dest){
-        dest.set("challenges.nocrafting", config.getNoCrafting());
+        for(Challenge ch : challenges){
+            ch.saveConfig(dest);
+        }
     }
 
     public void loadConfig(FileConfiguration src){
-        config.setNoCrafting(src.getBoolean("challenges.nocrafting", false));
+        for(Challenge ch : challenges){
+            ch.loadConfig(src);
+        }
     }
 
-    public void setNoCrafting(boolean val){
-        config.setNoCrafting(val);
+    /**
+     * Clean config from world specific data
+     */
+    public void cleanWorldSpecificConfig(FileConfiguration dest){
+        for(Challenge ch : challenges){
+            ch.cleanWoldSpecificConfig(dest);
+        }
     }
 
-    public boolean getNoCrafting(){
-        return config.getNoCrafting();
+    /**
+     * Will pause all challenges, broadcast the {@code message}, put all players in vanish and pause the timer (if enabled)
+     */
+    private void failChallenge(@Nullable BaseComponent[] message){
+        for(Challenge ch : challenges){
+            ch.setPaused(true);
+        }
+
+        if(message != null)
+            Bukkit.spigot().broadcast(message);
+
+        for(Player p : Bukkit.getOnlinePlayers())
+            p.setGameMode(GameMode.SPECTATOR);
+
+        timer.pause();
+
+        gamerules.setPaused(true);
+    }
+
+
+    @Nullable
+    public Challenge getChallenge(ChallengeType type){
+        return challenges.stream()
+                .filter(ch -> ch.getType() == type)
+                .findFirst()
+                .orElse(null);
     }
 }
