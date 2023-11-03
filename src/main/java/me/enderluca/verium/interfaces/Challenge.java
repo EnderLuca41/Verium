@@ -7,7 +7,7 @@ import org.bukkit.configuration.file.FileConfiguration;
 import javax.annotation.Nullable;
 
 /**
- * Common for all challenge services to implement
+ * Common interface for all challenge services to implement
  */
 public interface Challenge {
 
