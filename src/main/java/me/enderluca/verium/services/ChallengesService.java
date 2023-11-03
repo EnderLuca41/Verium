@@ -55,6 +55,14 @@ public class ChallengesService {
         this.onFail.accept(message);
     }
 
+    /**
+     * Pauses/unpauses all the registered challenges
+     */
+    public void setPausedAll(boolean val){
+        for(Challenge ch : challenges){
+            ch.setPaused(val);
+        }
+    }
 
     @Nullable
     public Challenge getChallenge(ChallengeType type){
