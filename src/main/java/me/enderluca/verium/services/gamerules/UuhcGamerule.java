@@ -42,14 +42,14 @@ public class UuhcGamerule implements Gamerule {
 
     @Override
     public void loadConfig(FileConfiguration src) {
-        src.set("gamerules.uuhc.enabled", enabled);
-        src.set("gamerules.uuhc.paused", paused);
+        enabled = src.getBoolean("gamerules.uuhc.enabled", false);
+        paused = src.getBoolean("gamerules.uuhc.paused", false);
     }
 
     @Override
     public void saveConfig(FileConfiguration dest) {
-        enabled = dest.getBoolean("gamerules.uuhc.enabled", false);
-        paused = dest.getBoolean("gamerules.uuhc.paused", false);
+        dest.set("gamerules.uuhc.enabled", enabled);
+        dest.set("gamerules.uuhc.paused", paused);
     }
 
     @Override
