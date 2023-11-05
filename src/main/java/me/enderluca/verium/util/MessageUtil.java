@@ -116,7 +116,7 @@ public final class MessageUtil {
     /**
      *
      */
-    public static BaseComponent[] buildAllGoalsComplete(@Nullable Integer timerSeconds){
+    public static BaseComponent[] buildAllGoalsComplete(@Nullable Long timerSeconds){
         ComponentBuilder builder = new ComponentBuilder();
         builder.append("##################################################\n").color(ChatColor.GREEN);
         builder.append("All goals are completed!\n").color(ChatColor.GREEN);
