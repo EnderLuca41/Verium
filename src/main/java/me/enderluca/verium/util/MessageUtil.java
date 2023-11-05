@@ -4,6 +4,9 @@ import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.chat.ComponentBuilder;
 
+import javax.annotation.Nullable;
+import java.util.Optional;
+
 /**
  * Provides utility methods to build messages with the component builder
  */
@@ -107,6 +110,22 @@ public final class MessageUtil {
         builder.append(Long.toString(damage)).color(ChatColor.GOLD);
         builder.append("HP").color(ChatColor.GOLD);
         builder.append(" of fall damage").color(ChatColor.RED);
+        return builder.create();
+    }
+
+    /**
+     *
+     */
+    public static BaseComponent[] buildAllGoalsComplete(@Nullable Integer timerSeconds){
+        ComponentBuilder builder = new ComponentBuilder();
+        builder.append("##################################################\n").color(ChatColor.GREEN);
+        builder.append("All goals are completed!\n").color(ChatColor.GREEN);
+        if(timerSeconds != null) {
+            builder.append("Time: ").color(ChatColor.RED);
+            builder.append(buildTimerMessage(timerSeconds, false));
+        }
+        builder.append("##################################################\n").color(ChatColor.GREEN);
+
         return builder.create();
     }
 }
