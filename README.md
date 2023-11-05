@@ -19,7 +19,7 @@ Veriums development has just started, that's why the current supported features 
 
 #### Gamerules (can be managed with `/gamerules`):
 - No hunger: disable the ability to lose hunger 🍗
-- PvP: Enablea the possibility to hit and kill other players ⚔️
+- PvP: Enables the possibility to hit and kill other players ⚔️
 - UHC: Disables natural regeneration of HP ❤️
 - UUHC: Disables every type of regeneration ❤️‍🩹
 
