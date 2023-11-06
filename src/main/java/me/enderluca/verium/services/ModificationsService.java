@@ -1,5 +1,6 @@
 package me.enderluca.verium.services;
 
+import me.enderluca.verium.listener.ModificationsListener;
 import me.enderluca.verium.util.EntityUtil;
 import me.enderluca.verium.util.MessageUtil;
 import net.md_5.bungee.api.chat.BaseComponent;
@@ -32,12 +33,17 @@ public class ModificationsService {
 
     private final Plugin owner;
 
+    private boolean paused;
+
+
     public ModificationsService(Plugin owner, FileConfiguration fileConfig, TimerService timer){
         this.gamerules = new GamerulesService(owner, fileConfig);
         this.challenges = new ChallengesService(owner, fileConfig, this::onChallengeFail);
         this.goals = new GoalsService(owner, fileConfig, this::onAllGoalsComplete);
         this.timer = timer;
         this.owner = owner;
+
+        Bukkit.getPluginManager().registerEvents(new ModificationsListener(() -> paused), owner);
     }
 
     private void onChallengeFail(@Nullable BaseComponent[] message){
@@ -85,6 +91,11 @@ public class ModificationsService {
      * and pauses the timer
      */
     public void pause(){
+        if(paused)
+            return;
+
+        paused = true;
+
         timer.pause();
 
         challenges.setPausedAll(true);
@@ -101,6 +112,11 @@ public class ModificationsService {
      * and starts the timer
      */
     public void resume(){
+        if(!paused)
+            return;
+
+        paused = false;
+
         challenges.resetFailed();
 
         for(Player p : Bukkit.getOnlinePlayers()){
