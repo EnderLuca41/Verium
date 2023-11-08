@@ -1,5 +1,6 @@
 package me.enderluca.verium.services;
 
+import me.enderluca.verium.GoalType;
 import me.enderluca.verium.interfaces.Goal;
 import net.md_5.bungee.api.chat.BaseComponent;
 import org.bukkit.Bukkit;
@@ -36,5 +37,13 @@ public class GoalsService {
 
     public void setPausedAll(boolean val){
         goals.forEach(g -> g.setPaused(val));
+    }
+
+    @Nullable
+    public Goal getGoal(GoalType type){
+        return goals.stream()
+                .filter(g -> g.getType() == type)
+                .findFirst()
+                .orElse(null);
     }
 }
