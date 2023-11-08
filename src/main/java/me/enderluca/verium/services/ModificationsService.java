@@ -137,4 +137,8 @@ public class ModificationsService {
     public GamerulesService getGamerulesService(){
         return gamerules;
     }
+
+    public GoalsService getGoalsService(){
+        return goals;
+    }
 }
