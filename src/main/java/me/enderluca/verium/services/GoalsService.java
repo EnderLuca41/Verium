@@ -35,6 +35,24 @@ public class GoalsService {
         onAllGoalsComplete.run();
     }
 
+
+    public void loadConfig(FileConfiguration src){
+        for(Goal goal : goals)
+            goal.loadConfig(src);
+    }
+
+    public void saveConfig(FileConfiguration dest){
+        for(Goal goal : goals)
+            goal.loadConfig(dest);
+    }
+
+    public void clearWorldSpecificConfig(FileConfiguration dest){
+        for(Goal goal : goals)
+            goal.loadConfig(dest);
+    }
+
+
+
     public void setPausedAll(boolean val){
         goals.forEach(g -> g.setPaused(val));
     }
