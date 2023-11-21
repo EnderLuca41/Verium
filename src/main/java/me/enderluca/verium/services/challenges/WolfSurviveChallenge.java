@@ -9,6 +9,7 @@ import me.enderluca.verium.util.EntityUtil;
 import net.md_5.bungee.api.chat.BaseComponent;
 
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -80,6 +81,9 @@ public class WolfSurviveChallenge implements Challenge {
 
         enabled = val;
 
+        if(paused)
+            return;
+
         if(val){
             for(Player p : Bukkit.getOnlinePlayers()){
                 createWolf(p);
@@ -105,9 +109,31 @@ public class WolfSurviveChallenge implements Challenge {
 
     @Override
     public void setPaused(boolean val) {
-        this.paused = val;
-    }
+        if(paused == val)
+            return;
 
+        paused = val;
+
+        if(!enabled)
+           return;
+
+        if(!val){
+            for(Player p : Bukkit.getOnlinePlayers()){
+                createWolf(p);
+            }
+        }
+        else{
+            for(Map.Entry<UUID, UUID> e : wolfMap.entrySet()){
+                Entity wolf = Bukkit.getEntity(e.getValue());
+
+                if(wolf == null)
+                    continue;
+
+                wolf.remove();
+            }
+            wolfMap.clear();
+        }
+    }
     @Override
     public void reset(){
         failed = false;
@@ -132,7 +158,6 @@ public class WolfSurviveChallenge implements Challenge {
         Wolf wolf = EntityUtil.createTamedWolf("Wolfi", owner.getLocation(), owner);
         wolfMap.put(owner.getUniqueId(), wolf.getUniqueId());
     }
-
 
     @Override
     public void saveConfig(FileConfiguration dest){
