@@ -33,7 +33,7 @@ public class ModificationsService {
 
     private final Plugin owner;
 
-    private boolean paused;
+    private boolean allPaused;
 
 
     public ModificationsService(Plugin owner, FileConfiguration fileConfig, TimerService timer){
@@ -43,9 +43,9 @@ public class ModificationsService {
         this.timer = timer;
         this.owner = owner;
 
-        paused = fileConfig.getBoolean("modifications.paused", false);
+        allPaused = fileConfig.getBoolean("modifications.allpaused", false);
 
-        Bukkit.getPluginManager().registerEvents(new ModificationsListener(() -> paused), owner);
+        Bukkit.getPluginManager().registerEvents(new ModificationsListener(() -> allPaused), owner);
     }
 
     private void onChallengeFail(@Nullable BaseComponent[] message){
@@ -93,10 +93,10 @@ public class ModificationsService {
      * and pauses the timer
      */
     public void pause(){
-        if(paused)
+        if(allPaused)
             return;
 
-        paused = true;
+        allPaused = true;
 
         timer.pause();
 
@@ -114,10 +114,10 @@ public class ModificationsService {
      * and starts the timer
      */
     public void resume(){
-        if(!paused)
+        if(!allPaused)
             return;
 
-        paused = false;
+        allPaused = false;
 
         challenges.resetFailed();
 
@@ -133,7 +133,7 @@ public class ModificationsService {
     }
 
     public void loadConfig(FileConfiguration src){
-        paused = src.getBoolean("modifications.paused", true);
+        allPaused = src.getBoolean("modifications.allpaused", true);
 
         challenges.loadConfig(src);
         gamerules.loadConfig(src);
@@ -141,7 +141,7 @@ public class ModificationsService {
     }
 
     public void saveConfig(FileConfiguration dest){
-        dest.set("modifications.paused", paused);
+        dest.set("modifications.allpaused", allPaused);
 
         challenges.saveConfig(dest);
         gamerules.saveConfig(dest);
