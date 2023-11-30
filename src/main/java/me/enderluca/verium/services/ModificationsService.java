@@ -43,6 +43,8 @@ public class ModificationsService {
         this.timer = timer;
         this.owner = owner;
 
+        paused = fileConfig.getBoolean("modifications.paused", false);
+
         Bukkit.getPluginManager().registerEvents(new ModificationsListener(() -> paused), owner);
     }
 
@@ -128,6 +130,22 @@ public class ModificationsService {
         goals.setPausedAll(false);
 
         timer.start();
+    }
+
+    public void loadConfig(FileConfiguration src){
+        paused = src.getBoolean("modifications.paused", true);
+
+        challenges.loadConfig(src);
+        gamerules.loadConfig(src);
+        goals.loadConfig(src);
+    }
+
+    public void saveConfig(FileConfiguration dest){
+        dest.set("modifications.paused", paused);
+
+        challenges.saveConfig(dest);
+        gamerules.saveConfig(dest);
+        goals.loadConfig(dest);
     }
 
     public ChallengesService getChallengeService(){
