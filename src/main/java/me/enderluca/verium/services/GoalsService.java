@@ -43,12 +43,12 @@ public class GoalsService {
 
     public void saveConfig(FileConfiguration dest){
         for(Goal goal : goals)
-            goal.loadConfig(dest);
+            goal.saveConfig(dest);
     }
 
     public void clearWorldSpecificConfig(FileConfiguration dest){
         for(Goal goal : goals)
-            goal.loadConfig(dest);
+            goal.cleanWoldSpecificConfig(dest);
     }
 
 
