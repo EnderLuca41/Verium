@@ -49,11 +49,15 @@ public class VeriumPlugin extends JavaPlugin {
         getCommand("gamerules").setExecutor(new GameRulesCommand(this, modifications.getGamerulesService()));
         getCommand("pause").setExecutor(new PauseCommand(modifications));
         getCommand("resume").setExecutor(new ResumeCommand(modifications));
+        getCommand("goals").setExecutor(new GoalsCommand(this, modifications.getGoalsService()));
         logger.log(Level.INFO, "Creating commands complete");
     }
 
     @Override
     public void onDisable() {
+        logger.info("Pausing challenges, gamerules and goals");
+        modifications.pause();
+
         logger.log(Level.INFO, "Saving config");
 
         boolean timerEnabled = timer.isEnabled();
@@ -63,15 +67,12 @@ public class VeriumPlugin extends JavaPlugin {
 
         getConfig().set("reset.scheduled", reset.isResetScheduled());
 
-        modifications.getChallengeService().saveConfig(getConfig());
-
-        modifications.getGamerulesService().saveConfig(getConfig());
-
-        modifications.getGoalsService().saveConfig(getConfig());
+        modifications.saveConfig(getConfig());
 
         if(reset.isResetScheduled()){
             modifications.getChallengeService().cleanWorldSpecificConfig(getConfig());
             modifications.getGamerulesService().cleanWorldSpecificConfig(getConfig());
+            modifications.getGoalsService().clearWorldSpecificConfig(getConfig());
         }
 
         saveConfig();
