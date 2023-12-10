@@ -2,7 +2,10 @@ package me.enderluca.verium.services;
 
 import me.enderluca.verium.GoalType;
 import me.enderluca.verium.interfaces.Goal;
+import me.enderluca.verium.services.goals.KillEnderdragonGoal;
+
 import net.md_5.bungee.api.chat.BaseComponent;
+
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.Plugin;
@@ -20,14 +23,16 @@ public class GoalsService {
     public GoalsService(Plugin owner, FileConfiguration fileConfig, Runnable onAllGoalsComplete){
         this.goals = new ArrayList<>();
         this.onAllGoalsComplete = onAllGoalsComplete;
+
+        goals.add(new KillEnderdragonGoal(owner, fileConfig, this::onGoalComplete));
     }
 
-    private void onGoalComplete(@Nullable BaseComponent[] message){
-        if(message != null)
+    private void onGoalComplete(@Nullable BaseComponent[] message) {
+        if (message != null)
             Bukkit.spigot().broadcast(message);
 
-        for(Goal goal : goals){
-            if(goal.isEnabled() && !goal.isCompleted())
+        for (Goal goal : goals) {
+            if (goal.isEnabled() && !goal.isCompleted())
                 return;
         }
 

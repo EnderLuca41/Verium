@@ -3,6 +3,7 @@ package me.enderluca.verium.util;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.chat.ComponentBuilder;
+import org.bukkit.entity.Player;
 
 import javax.annotation.Nullable;
 import java.util.Optional;
@@ -114,17 +115,37 @@ public final class MessageUtil {
     }
 
     /**
-     *
+     * Creates the broadcast message that get sent when the kill enderdragon gaol is completed
+     */
+    public static BaseComponent[] buildKillEnderdragonComplete(@Nullable Player killer){
+        ComponentBuilder builder = new ComponentBuilder();
+
+        if(killer != null){
+            builder.append("The enderdragon got killed by ").color(ChatColor.GREEN);
+            builder.append(killer.getDisplayName()).color(ChatColor.DARK_GREEN);
+            builder.append("\n");
+        }
+        else{
+            builder.append("The enderdragon got killed by... uh... by nobody? What are you guys doing?\n");
+        }
+
+        builder.append("Goal complete");
+        return builder.create();
+    }
+
+    /**
+     * Creates the broadcast message that get sent when all goals are completed
      */
     public static BaseComponent[] buildAllGoalsComplete(@Nullable Long timerSeconds){
         ComponentBuilder builder = new ComponentBuilder();
-        builder.append("##################################################\n").color(ChatColor.GREEN);
+        builder.append("######################################\n").color(ChatColor.GREEN).bold(false);
         builder.append("All goals are completed!\n").color(ChatColor.GREEN);
         if(timerSeconds != null) {
             builder.append("Time: ").color(ChatColor.RED);
             builder.append(buildTimerMessage(timerSeconds, false));
+            builder.append("\n");
         }
-        builder.append("##################################################\n").color(ChatColor.GREEN);
+        builder.append("######################################\n").color(ChatColor.GREEN).bold(false);
 
         return builder.create();
     }

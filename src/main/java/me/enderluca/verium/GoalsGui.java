@@ -15,6 +15,12 @@ public class GoalsGui {
     public GoalsGui(Plugin owner, GoalsService service){
         invGui = new InventoryGui(owner, 36, "Goals");
         this.service = service;
+
+        Goal killEnderdragon = service.getGoal(GoalType.KillEnderdragon);
+        if(killEnderdragon != null){
+            invGui.createIcon(GuiUtil.getKillEnderDragonIcon(), 0);
+            invGui.createSwitch(killEnderdragon::setEnabled, killEnderdragon::isEnabled, 9);
+        }
     }
 
     public void show(Player player){

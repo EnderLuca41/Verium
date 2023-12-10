@@ -1,0 +1,38 @@
+package me.enderluca.verium.listener;
+
+import org.bukkit.entity.EnderDragon;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.EntityType;
+import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityDeathEvent;
+import org.checkerframework.checker.nullness.qual.Nullable;
+
+import java.util.function.BooleanSupplier;
+import java.util.function.Consumer;
+
+public class KillEnderdragonListener  implements Listener {
+
+    private final BooleanSupplier isActive;
+    private final Consumer<@Nullable Player> onEnderdragonDead;
+
+    public KillEnderdragonListener(BooleanSupplier isActive, Consumer<@Nullable Player> onEnderdragonDead){
+        this.isActive = isActive;
+        this.onEnderdragonDead = onEnderdragonDead;
+    }
+
+    @EventHandler
+    public void onEntityDeath(EntityDeathEvent event){
+        if(!isActive.getAsBoolean())
+            return;
+
+        Entity entity = event.getEntity();
+
+        if(entity.getType() != EntityType.ENDER_DRAGON)
+            return;
+
+        EnderDragon dragon = (EnderDragon) entity;
+        onEnderdragonDead.accept(dragon.getKiller());
+    }
+}
