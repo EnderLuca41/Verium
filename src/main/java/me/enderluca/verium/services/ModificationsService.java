@@ -145,7 +145,7 @@ public class ModificationsService {
 
         challenges.saveConfig(dest);
         gamerules.saveConfig(dest);
-        goals.loadConfig(dest);
+        goals.saveConfig(dest);
     }
 
     public ChallengesService getChallengeService(){
