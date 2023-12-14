@@ -1,22 +1,18 @@
 package me.enderluca.verium.services;
 
 import me.enderluca.verium.listener.ModificationsListener;
-import me.enderluca.verium.util.EntityUtil;
+import me.enderluca.verium.util.FireworkUtil;
 import me.enderluca.verium.util.MessageUtil;
+
 import net.md_5.bungee.api.chat.BaseComponent;
 
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.entity.Firework;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
-import org.bukkit.scheduler.BukkitRunnable;
-import org.bukkit.util.Vector;
 
 import javax.annotation.Nullable;
-import java.util.ArrayList;
-import java.util.List;
 
 //TODO: Find better name for this class
 
@@ -64,28 +60,8 @@ public class ModificationsService {
 
         Bukkit.spigot().broadcast(MessageUtil.buildAllGoalsComplete(timerSeconds));
 
-        //Relative positions from the player where fireworks should appear
-        Vector pos1 = new Vector(0, 0, 0);
-        Vector pos2 = new Vector(1, 0, 0);
-        Vector pos3 = new Vector(0, 0 , 1);
-        Vector pos4 = new Vector(1, 0, 1);
-
-        List<Firework> fireworks = new ArrayList<>();
-        for(Player p : Bukkit.getOnlinePlayers()){
-            fireworks.add(EntityUtil.createVictoryFireworkStar(p.getWorld(), p.getLocation().add(pos1)));
-            fireworks.add(EntityUtil.createVictoryFireworkBurst(p.getWorld(), p.getLocation().add(pos2)));
-            fireworks.add(EntityUtil.createVictoryFireworkCreeper(p.getWorld(), p.getLocation().add(pos3)));
-            fireworks.add(EntityUtil.createVictoryFireworkBall(p.getWorld(), p.getLocation().add(pos4)));
-        }
-
-        BukkitRunnable detonateFireworks = new BukkitRunnable() {
-            @Override
-            public void run() {
-                fireworks.forEach(Firework::detonate);
-            }
-        };
-
-        detonateFireworks.runTaskLater(owner, 40);
+        FireworkUtil.createWinFirework(Bukkit.getOnlinePlayers(), owner);
+        FireworkUtil.createWinFireworkBurst(Bukkit.getOnlinePlayers(), owner);
     }
 
     /**
