@@ -73,17 +73,20 @@ public class NoFallDamageChallenge implements Challenge {
     public void loadConfig(FileConfiguration src) {
         enabled = src.getBoolean("challenges.nofall.enabled", false);
         paused = src.getBoolean("challenges.nofall.paused", false);
+        failed = src.getBoolean("challenges.nofall.failed", false);
     }
 
     @Override
     public void saveConfig(FileConfiguration dest) {
         dest.set("challenges.nofall.enabled", enabled);
         dest.set("challenges.nofall.paused", paused);
+        dest.set("challenges.nofall.failed", failed);
     }
 
     @Override
     public void cleanWoldSpecificConfig(FileConfiguration dest) {
         dest.set("challenges.nofall.paused", false);
+        dest.set("challenges.nofall.failed", false);
     }
 
     @Override
