@@ -1,5 +1,7 @@
 package me.enderluca.verium.listener;
 
+import me.enderluca.verium.util.MessageUtil;
+import net.md_5.bungee.api.chat.BaseComponent;
 import org.bukkit.entity.EnderDragon;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
@@ -15,9 +17,9 @@ import java.util.function.Consumer;
 public class KillEnderdragonListener  implements Listener {
 
     private final BooleanSupplier isActive;
-    private final Consumer<@Nullable Player> onEnderdragonDead;
+    private final Consumer<@Nullable BaseComponent[]> onEnderdragonDead;
 
-    public KillEnderdragonListener(BooleanSupplier isActive, Consumer<@Nullable Player> onEnderdragonDead){
+    public KillEnderdragonListener(BooleanSupplier isActive, Consumer<@Nullable BaseComponent[]> onEnderdragonDead){
         this.isActive = isActive;
         this.onEnderdragonDead = onEnderdragonDead;
     }
@@ -33,6 +35,7 @@ public class KillEnderdragonListener  implements Listener {
             return;
 
         EnderDragon dragon = (EnderDragon) entity;
-        onEnderdragonDead.accept(dragon.getKiller());
+        BaseComponent[] message = MessageUtil.buildKillEnderdragonComplete(dragon.getKiller());
+        onEnderdragonDead.accept(message);
     }
 }

@@ -33,9 +33,9 @@ public class KillEnderdragonGoal implements Goal {
         Bukkit.getPluginManager().registerEvents(new KillEnderdragonListener(() -> enabled && !paused && !completed, this::onGoalComplete), owner);
     }
 
-    public void onGoalComplete(@Nullable Player killer){
+    public void onGoalComplete(@Nullable BaseComponent[] message){
         completed = true;
-        completeMessage = MessageUtil.buildKillEnderdragonComplete(killer);
+        completeMessage = message;
 
         onGoalComplete.accept(completeMessage);
     }
