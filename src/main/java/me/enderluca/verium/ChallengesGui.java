@@ -29,7 +29,7 @@ public class ChallengesGui {
 
         Challenge noFallDamage = service.getChallenge(ChallengeType.NoFallDamage);
         if(noFallDamage != null){
-            invGui.createIcon(GuiUtil.getNoFallDamageItem(), 2);
+            invGui.createIcon(GuiUtil.getNoFallDamageIcon(), 2);
             invGui.createSwitch(noFallDamage::setEnabled, noFallDamage::isEnabled, 11);
         }
     }

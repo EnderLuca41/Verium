@@ -66,7 +66,7 @@ public final class GuiUtil {
     /**
      * Gets the item that represents the no fall damage challenge in the gui
      */
-    public static ItemStack getNoFallDamageItem(){
+    public static ItemStack getNoFallDamageIcon(){
         ItemStack noFallDamage = new ItemStack(Material.IRON_BOOTS, 1);
         ItemMeta meta = noFallDamage.getItemMeta();
         meta.setDisplayName("No fall damage");
