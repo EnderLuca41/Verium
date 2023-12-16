@@ -85,7 +85,6 @@ public class NoFallDamageChallenge implements Challenge {
 
     @Override
     public void cleanWoldSpecificConfig(FileConfiguration dest) {
-        dest.set("challenges.nofall.paused", false);
         dest.set("challenges.nofall.failed", false);
     }
 
