@@ -141,6 +141,11 @@ public class WolfSurviveChallenge implements Challenge {
         if(!enabled)
             return;
 
+        if(paused){
+            wolfMap.clear();
+            return;
+        }
+
         for(Map.Entry<UUID, UUID> entry : wolfMap.entrySet()){
             Entity entity = Bukkit.getEntity(entry.getValue());
             if(entity != null)
