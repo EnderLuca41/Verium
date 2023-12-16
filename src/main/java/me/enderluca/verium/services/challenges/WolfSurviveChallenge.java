@@ -168,6 +168,7 @@ public class WolfSurviveChallenge implements Challenge {
     public void saveConfig(FileConfiguration dest){
         dest.set("challenges.wolf.enabled", enabled);
         dest.set("challenges.wolf.paused", paused);
+        dest.set("challenges.wolf.failed", failed);
         dest.set("challenges.wolf.wolfs", null);
 
         for(Map.Entry<UUID, UUID> e : wolfMap.entrySet()){
@@ -177,8 +178,10 @@ public class WolfSurviveChallenge implements Challenge {
 
     @Override
     public void loadConfig(FileConfiguration src){
-        enabled = src.getBoolean("challenges.wolf.enabled");
+        enabled = src.getBoolean("challenges.wolf.enabled", false);
         paused = src.getBoolean("challenges.wolf.paused", false);
+        failed = src.getBoolean("challenges.wolf.failed", false);
+
 
         if(!src.isSet("challenges.wolf.wolfs"))
             return;
@@ -209,6 +212,7 @@ public class WolfSurviveChallenge implements Challenge {
     public void cleanWoldSpecificConfig(FileConfiguration dest){
         dest.set("challenges.wolf.wolfs", null);
         dest.set("challenges.wolf.paused", false);
+        dest.set("challenges.wolf.failed", false);
     }
 
     @Override
