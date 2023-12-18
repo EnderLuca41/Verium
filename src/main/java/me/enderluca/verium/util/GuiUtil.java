@@ -77,6 +77,18 @@ public final class GuiUtil {
     }
 
     /**
+     * Gets the item that represents the no death challenge in the gui
+     */
+    public static ItemStack getNoDeathIcon(){
+        ItemStack noDeath = new ItemStack(Material.PLAYER_HEAD, 1);
+        ItemMeta meta = noDeath.getItemMeta();
+        meta.setDisplayName(ChatColor.WHITE + "" + ChatColor.ITALIC + "No Death"); //Item cannot be air, so NullPointerException is impossible
+        meta.setLore(List.of("If a player dies, the challenge will fail."));
+        noDeath.setItemMeta(meta);
+        return noDeath;
+    }
+
+    /**
      * Gets the item that represents the no hunger gamerule in the gui
      */
     public static ItemStack getNoHungerIcon(){
