@@ -24,3 +24,6 @@ commands:
   resume:
     description: Resumes the challenge after it was paused or a challenge failed
     usage: /resume
+  goals:
+    description: Show gui to manage the active goals
+    usage: /goals
