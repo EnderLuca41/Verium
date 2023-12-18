@@ -57,7 +57,7 @@ public final class GuiUtil {
     public static ItemStack getWolfSurviveIcon(){
         ItemStack wolfSurvive = new ItemStack(Material.BONE, 1);
         ItemMeta meta = wolfSurvive.getItemMeta();
-        meta.setDisplayName("Wolf survive");
+        meta.setDisplayName("Wolf survive"); //Item cannot be air, so NullPointerException is impossible
         meta.setLore(List.of("Every player receives a pet wolf, if the wolf dies, the challenge is over", "Players cannot be more than 50 blocks apart from their wolf"));
         wolfSurvive.setItemMeta(meta);
         return wolfSurvive;
@@ -66,14 +66,26 @@ public final class GuiUtil {
     /**
      * Gets the item that represents the no fall damage challenge in the gui
      */
-    public static ItemStack getNoFallDamageItem(){
+    public static ItemStack getNoFallDamageIcon(){
         ItemStack noFallDamage = new ItemStack(Material.IRON_BOOTS, 1);
         ItemMeta meta = noFallDamage.getItemMeta();
-        meta.setDisplayName("No fall damage");
+        meta.setDisplayName("No fall damage"); //Item cannot be air, so NullPointerException is impossible
         meta.setLore(List.of("If a player receives fall damage, the challenge will fail."));
         meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
         noFallDamage.setItemMeta(meta);
         return noFallDamage;
+    }
+
+    /**
+     * Gets the item that represents the no death challenge in the gui
+     */
+    public static ItemStack getNoDeathIcon(){
+        ItemStack noDeath = new ItemStack(Material.PLAYER_HEAD, 1);
+        ItemMeta meta = noDeath.getItemMeta();
+        meta.setDisplayName(ChatColor.WHITE + "" + ChatColor.ITALIC + "No Death"); //Item cannot be air, so NullPointerException is impossible
+        meta.setLore(List.of("If a player dies, the challenge will fail."));
+        noDeath.setItemMeta(meta);
+        return noDeath;
     }
 
     /**
@@ -124,5 +136,18 @@ public final class GuiUtil {
         meta.setLore(List.of("Disables every kind of regeneration."));
         uuhc.setItemMeta(meta);
         return uuhc;
+    }
+
+
+    /**
+     * Gets the item that represent the kill enderdragon goal in the gui
+     */
+    public static ItemStack getKillEnderDragonIcon(){
+        ItemStack killEnderdragon = new ItemStack(Material.ENDERMAN_SPAWN_EGG, 1);
+        ItemMeta meta = killEnderdragon.getItemMeta();
+        meta.setDisplayName("Kill Enderdragon");
+        meta.setLore(List.of("It does not matter how the enderdragon dies and if he was natural or a respawn."));
+        killEnderdragon.setItemMeta(meta);
+        return killEnderdragon;
     }
 }

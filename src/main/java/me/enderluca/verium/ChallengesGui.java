@@ -15,22 +15,29 @@ public class ChallengesGui {
         invGui = new InventoryGui(owner, 36, "Challenge selection");
         this.service = service;
 
+
+        Challenge noDeath = service.getChallenge(ChallengeType.NoDeath);
+        if(noDeath != null){
+            invGui.createIcon(GuiUtil.getNoDeathIcon(), 0);
+            invGui.createSwitch(noDeath::setEnabled, noDeath::isEnabled, 9);
+        }
+
         Challenge noCrafting = service.getChallenge(ChallengeType.NoCrafting);
         if(noCrafting != null) {
-            invGui.createIcon(GuiUtil.getNoCraftingIcon(), 0);
-            invGui.createSwitch(noCrafting::setEnabled, noCrafting::isEnabled, 9);
+            invGui.createIcon(GuiUtil.getNoCraftingIcon(), 1);
+            invGui.createSwitch(noCrafting::setEnabled, noCrafting::isEnabled, 10);
         }
 
         Challenge wolfSurvive = service.getChallenge(ChallengeType.WolfSurvive);
         if(wolfSurvive != null) {
-            invGui.createIcon(GuiUtil.getWolfSurviveIcon(), 1);
-            invGui.createSwitch(wolfSurvive::setEnabled, wolfSurvive::isEnabled, 10);
+            invGui.createIcon(GuiUtil.getWolfSurviveIcon(), 2);
+            invGui.createSwitch(wolfSurvive::setEnabled, wolfSurvive::isEnabled, 11);
         }
 
         Challenge noFallDamage = service.getChallenge(ChallengeType.NoFallDamage);
         if(noFallDamage != null){
-            invGui.createIcon(GuiUtil.getNoFallDamageItem(), 2);
-            invGui.createSwitch(noFallDamage::setEnabled, noFallDamage::isEnabled, 11);
+            invGui.createIcon(GuiUtil.getNoFallDamageIcon(), 3);
+            invGui.createSwitch(noFallDamage::setEnabled, noFallDamage::isEnabled, 12);
         }
     }
 

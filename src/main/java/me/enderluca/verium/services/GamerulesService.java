@@ -47,7 +47,7 @@ public class GamerulesService {
     /**
      * Pauses or unpauses all the gamerules
      */
-    public void setPaused(boolean val){
+    public void setPausedAll(boolean val){
         for(Gamerule gamerule : gamerules){
             gamerule.setPaused(val);
         }

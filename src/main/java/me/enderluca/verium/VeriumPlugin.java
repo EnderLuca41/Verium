@@ -1,13 +1,7 @@
 package me.enderluca.verium;
 
-import me.enderluca.verium.commands.ChallengeCommand;
-import me.enderluca.verium.commands.GameRulesCommand;
-import me.enderluca.verium.commands.ResetCommand;
-import me.enderluca.verium.commands.TimerCommand;
-import me.enderluca.verium.services.ChallengesService;
-import me.enderluca.verium.services.GamerulesService;
-import me.enderluca.verium.services.WorldResetService;
-import me.enderluca.verium.services.TimerService;
+import me.enderluca.verium.commands.*;
+import me.enderluca.verium.services.*;
 
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -21,8 +15,7 @@ public class VeriumPlugin extends JavaPlugin {
     ServerProperties serverProps;
     TimerService timer;
     WorldResetService reset;
-    ChallengesService challenges;
-    GamerulesService gamerules;
+    ModificationsService modifications;
 
     @Override
     public void onEnable() {
@@ -45,24 +38,26 @@ public class VeriumPlugin extends JavaPlugin {
         timer = new TimerService(this, sec, timerEnabled);
         logger.log(Level.INFO, "Creating timer complete");
 
-        logger.info("Creating gamerules service");
-        gamerules = new GamerulesService(this, getConfig());
-        logger.info("Creating gamerules service complete");
-        
-        logger.info("Creating challenge service");
-        challenges = new ChallengesService(this, getConfig(), timer, gamerules);
-        logger.info("Creating challenges service complete");
+        logger.info("Creating Modifications service to handle challenges and gamerules");
+        modifications = new ModificationsService(this, getConfig(), timer);
+        logger.info("Creating Modifications service to handle challenges and gamerules complete");
 
         logger.log(Level.INFO, "Creating commands");
         getCommand("timer").setExecutor(new TimerCommand(timer));
         getCommand("reset").setExecutor(new ResetCommand(reset));
-        getCommand("challenges").setExecutor(new ChallengeCommand(this, challenges));
-        getCommand("gamerules").setExecutor(new GameRulesCommand(this, gamerules));
-        logger.log(Level.INFO, "Creating command complete");
+        getCommand("challenges").setExecutor(new ChallengeCommand(this, modifications.getChallengeService()));
+        getCommand("gamerules").setExecutor(new GameRulesCommand(this, modifications.getGamerulesService()));
+        getCommand("pause").setExecutor(new PauseCommand(modifications));
+        getCommand("resume").setExecutor(new ResumeCommand(modifications));
+        getCommand("goals").setExecutor(new GoalsCommand(this, modifications.getGoalsService()));
+        logger.log(Level.INFO, "Creating commands complete");
     }
 
     @Override
     public void onDisable() {
+        logger.info("Pausing challenges, gamerules and goals");
+        modifications.pause();
+
         logger.log(Level.INFO, "Saving config");
 
         boolean timerEnabled = timer.isEnabled();
@@ -72,13 +67,12 @@ public class VeriumPlugin extends JavaPlugin {
 
         getConfig().set("reset.scheduled", reset.isResetScheduled());
 
-        challenges.saveConfig(getConfig());
-
-        gamerules.saveConfig(getConfig());
+        modifications.saveConfig(getConfig());
 
         if(reset.isResetScheduled()){
-            challenges.cleanWorldSpecificConfig(getConfig());
-            gamerules.cleanWorldSpecificConfig(getConfig());
+            modifications.getChallengeService().cleanWorldSpecificConfig(getConfig());
+            modifications.getGamerulesService().cleanWorldSpecificConfig(getConfig());
+            modifications.getGoalsService().clearWorldSpecificConfig(getConfig());
         }
 
         saveConfig();

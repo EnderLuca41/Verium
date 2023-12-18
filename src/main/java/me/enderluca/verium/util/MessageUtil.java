@@ -4,6 +4,10 @@ import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.chat.ComponentBuilder;
 
+import org.bukkit.entity.Player;
+
+import javax.annotation.Nullable;
+
 /**
  * Provides utility methods to build messages with the component builder
  */
@@ -107,6 +111,76 @@ public final class MessageUtil {
         builder.append(Long.toString(damage)).color(ChatColor.GOLD);
         builder.append("HP").color(ChatColor.GOLD);
         builder.append(" of fall damage").color(ChatColor.RED);
+        return builder.create();
+    }
+
+    /**
+     * Creates the death message when the no death challenge is active
+     */
+    public static BaseComponent[] buildDeathMessage(String playerName, @Nullable String originalMessage){
+        ComponentBuilder builder = new ComponentBuilder();
+
+        if(originalMessage == null){
+            return buildDefaultDeathMessage(playerName, null ,builder);
+        }
+
+        int index = originalMessage.indexOf(playerName);
+
+        if(index == -1){
+            return buildDefaultDeathMessage(playerName, originalMessage, builder);
+        }
+
+        //Color the existing message:
+        //In theory, all vanilla death message start with the players name
+        //But a custom death message may don't have this convention
+        builder.append(originalMessage.substring(0, index)).color(ChatColor.RED);
+        builder.append(playerName).color(ChatColor.GOLD);
+        builder.append(originalMessage.substring(index + 1 + playerName.length() - 1)).color(ChatColor.RED);
+        return builder.create();
+    }
+
+    private static BaseComponent[] buildDefaultDeathMessage(String playerName, @Nullable String originalMessage, ComponentBuilder builder) {
+        builder.append("Player ").color(ChatColor.RED);
+        builder.append(playerName).color(ChatColor.GOLD);
+        builder.append(" has died.\n").color(ChatColor.RED);
+        if(originalMessage != null)
+            builder.append(originalMessage).color(ChatColor.RED);
+        return builder.create();
+    }
+
+    /**
+     * Creates the broadcast message that get sent when the kill enderdragon gaol is completed
+     */
+    public static BaseComponent[] buildKillEnderdragonComplete(@Nullable Player killer){
+        ComponentBuilder builder = new ComponentBuilder();
+
+        if(killer != null){
+            builder.append("The enderdragon got killed by ").color(ChatColor.GREEN);
+            builder.append(killer.getDisplayName()).color(ChatColor.DARK_GREEN);
+            builder.append("\n");
+        }
+        else{
+            builder.append("The enderdragon got killed by... uh... by nobody? What are you guys doing?\n");
+        }
+
+        builder.append("Goal complete");
+        return builder.create();
+    }
+
+    /**
+     * Creates the broadcast message that get sent when all goals are completed
+     */
+    public static BaseComponent[] buildAllGoalsComplete(@Nullable Long timerSeconds){
+        ComponentBuilder builder = new ComponentBuilder();
+        builder.append("######################################\n").color(ChatColor.GREEN).bold(false);
+        builder.append("All goals are completed!\n").color(ChatColor.GREEN);
+        if(timerSeconds != null) {
+            builder.append("Time: ").color(ChatColor.RED);
+            builder.append(buildTimerMessage(timerSeconds, false));
+            builder.append("\n");
+        }
+        builder.append("######################################\n").color(ChatColor.GREEN).bold(false);
+
         return builder.create();
     }
 }

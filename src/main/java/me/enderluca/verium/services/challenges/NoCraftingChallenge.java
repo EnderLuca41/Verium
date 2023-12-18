@@ -75,7 +75,5 @@ public class NoCraftingChallenge implements Challenge {
     }
 
     @Override
-    public void cleanWoldSpecificConfig(FileConfiguration dest) {
-        dest.set("challenges.nocrafting.paused", null);
-    }
+    public void cleanWoldSpecificConfig(FileConfiguration dest) { }
 }

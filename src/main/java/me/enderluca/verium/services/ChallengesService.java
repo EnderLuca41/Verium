@@ -3,36 +3,33 @@ package me.enderluca.verium.services;
 import me.enderluca.verium.*;
 import me.enderluca.verium.interfaces.Challenge;
 import me.enderluca.verium.services.challenges.NoCraftingChallenge;
+import me.enderluca.verium.services.challenges.NoDeathChallenge;
 import me.enderluca.verium.services.challenges.NoFallDamageChallenge;
 import me.enderluca.verium.services.challenges.WolfSurviveChallenge;
 
 import net.md_5.bungee.api.chat.BaseComponent;
 
-import org.bukkit.Bukkit;
-import org.bukkit.GameMode;
 import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Consumer;
 
 public class ChallengesService {
     private final List<Challenge> challenges;
 
-    private final TimerService timer;
-    private final GamerulesService gamerules;
+    private final Consumer<BaseComponent[]> onFail;
 
-    public ChallengesService(Plugin owner, FileConfiguration fileConfig, TimerService timer, GamerulesService gamerules){
-        this.timer = timer;
-        this.gamerules = gamerules;
-
+    public ChallengesService(Plugin owner, FileConfiguration fileConfig, Consumer<BaseComponent[]> onChallengeFail){
+        onFail = onChallengeFail;
         challenges = new ArrayList<>();
 
-        challenges.add(new WolfSurviveChallenge(owner, fileConfig, this::failChallenge));
+        challenges.add(new WolfSurviveChallenge(owner, fileConfig, this::onFailChallenge));
         challenges.add(new NoCraftingChallenge(owner, fileConfig));
-        challenges.add(new NoFallDamageChallenge(owner, fileConfig, this::failChallenge));
+        challenges.add(new NoFallDamageChallenge(owner, fileConfig, this::onFailChallenge));
+        challenges.add(new NoDeathChallenge(owner, fileConfig, this::onFailChallenge));
     }
 
     public void saveConfig(FileConfiguration dest){
@@ -56,25 +53,28 @@ public class ChallengesService {
         }
     }
 
-    /**
-     * Will pause all challenges, broadcast the {@code message}, put all players in vanish and pause the timer (if enabled)
-     */
-    private void failChallenge(@Nullable BaseComponent[] message){
-        for(Challenge ch : challenges){
-            ch.setPaused(true);
-        }
-
-        if(message != null)
-            Bukkit.spigot().broadcast(message);
-
-        for(Player p : Bukkit.getOnlinePlayers())
-            p.setGameMode(GameMode.SPECTATOR);
-
-        timer.pause();
-
-        gamerules.setPaused(true);
+    private void onFailChallenge(@Nullable BaseComponent[] message){
+        this.onFail.accept(message);
     }
 
+    /**
+     * Pauses/unpauses all the registered challenges
+     */
+    public void setPausedAll(boolean val){
+        for(Challenge ch : challenges){
+            ch.setPaused(val);
+        }
+    }
+
+    /**
+     * Resets all challenges that failed
+     */
+    public void resetFailed(){
+        for(Challenge ch : challenges){
+            if(ch.isFailed())
+                ch.reset();
+        }
+    }
 
     @Nullable
     public Challenge getChallenge(ChallengeType type){
