@@ -15,6 +15,13 @@ public class ChallengesGui {
         invGui = new InventoryGui(owner, 36, "Challenge selection");
         this.service = service;
 
+
+        Challenge noDeath = service.getChallenge(ChallengeType.NoDeath);
+        if(noDeath != null){
+            invGui.createIcon(GuiUtil.getNoDeathIcon(), 0);
+            invGui.createSwitch(noDeath::setEnabled, noDeath::isEnabled, 9);
+        }
+
         Challenge noCrafting = service.getChallenge(ChallengeType.NoCrafting);
         if(noCrafting != null) {
             invGui.createIcon(GuiUtil.getNoCraftingIcon(), 1);
