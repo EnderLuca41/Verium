@@ -98,7 +98,7 @@ public class KillEnderdragonGoal implements Goal {
     }
 
     @Override
-    public void cleanWoldSpecificConfig(FileConfiguration dest) {
+    public void clearWoldSpecificConfig(FileConfiguration dest) {
         dest.set("goals.killenderdragon.paused", null);
         dest.set("goals.killenderdragon.completed", null);
     }

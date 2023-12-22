@@ -53,7 +53,7 @@ public class UuhcGamerule implements Gamerule {
     }
 
     @Override
-    public void cleanWoldSpecificConfig(FileConfiguration dest) {
+    public void clearWoldSpecificConfig(FileConfiguration dest) {
         dest.set("gamerules.uuhc.paused", null);
     }
 

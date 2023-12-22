@@ -69,7 +69,7 @@ public class NoHungerGamerule implements Gamerule {
     }
 
     @Override
-    public void cleanWoldSpecificConfig(FileConfiguration dest) {
+    public void clearWoldSpecificConfig(FileConfiguration dest) {
         dest.set("gamerules.nohunger.paused", null);
     }
 

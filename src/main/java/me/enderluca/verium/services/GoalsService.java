@@ -53,7 +53,7 @@ public class GoalsService {
 
     public void clearWorldSpecificConfig(FileConfiguration dest){
         for(Goal goal : goals)
-            goal.cleanWoldSpecificConfig(dest);
+            goal.clearWoldSpecificConfig(dest);
     }
 
 

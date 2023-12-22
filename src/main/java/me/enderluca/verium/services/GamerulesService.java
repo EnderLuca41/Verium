@@ -38,9 +38,9 @@ public class GamerulesService {
             gamerule.saveConfig(dest);
         }
     }
-    public void cleanWorldSpecificConfig(FileConfiguration dest){
+    public void clearWorldSpecificConfig(FileConfiguration dest){
         for(Gamerule gamerule : gamerules){
-            gamerule.cleanWoldSpecificConfig(dest);
+            gamerule.clearWoldSpecificConfig(dest);
         }
     }
 

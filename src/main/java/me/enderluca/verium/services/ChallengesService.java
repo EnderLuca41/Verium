@@ -47,9 +47,9 @@ public class ChallengesService {
     /**
      * Clean config from world specific data
      */
-    public void cleanWorldSpecificConfig(FileConfiguration dest){
+    public void clearWorldSpecificConfig(FileConfiguration dest){
         for(Challenge ch : challenges){
-            ch.cleanWoldSpecificConfig(dest);
+            ch.clearWoldSpecificConfig(dest);
         }
     }
 

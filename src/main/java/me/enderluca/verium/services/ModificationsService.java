@@ -125,8 +125,8 @@ public class ModificationsService {
     }
 
     public void clearWorldSpecificConfig(FileConfiguration dest){
-        challenges.cleanWorldSpecificConfig(dest);
-        gamerules.cleanWorldSpecificConfig(dest);
+        challenges.clearWorldSpecificConfig(dest);
+        gamerules.clearWorldSpecificConfig(dest);
         goals.clearWorldSpecificConfig(dest);
     }
 
