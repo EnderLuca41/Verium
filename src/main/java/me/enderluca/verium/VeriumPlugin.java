@@ -70,9 +70,7 @@ public class VeriumPlugin extends JavaPlugin {
         modifications.saveConfig(getConfig());
 
         if(reset.isResetScheduled()){
-            modifications.getChallengeService().cleanWorldSpecificConfig(getConfig());
-            modifications.getGamerulesService().cleanWorldSpecificConfig(getConfig());
-            modifications.getGoalsService().clearWorldSpecificConfig(getConfig());
+            modifications.clearWorldSpecificConfig(getConfig());
         }
 
         saveConfig();
