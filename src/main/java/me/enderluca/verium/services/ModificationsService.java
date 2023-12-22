@@ -124,6 +124,12 @@ public class ModificationsService {
         goals.saveConfig(dest);
     }
 
+    public void clearWorldSpecificConfig(FileConfiguration dest){
+        challenges.cleanWorldSpecificConfig(dest);
+        gamerules.cleanWorldSpecificConfig(dest);
+        goals.clearWorldSpecificConfig(dest);
+    }
+
     public ChallengesService getChallengeService(){
         return challenges;
     }
