@@ -160,10 +160,10 @@ public final class MessageUtil {
             builder.append("\n");
         }
         else{
-            builder.append("The enderdragon got killed by... uh... by nobody? What are you guys doing?\n");
+            builder.append("The enderdragon got killed by... uh... by nobody? What are you guys doing?\n").color(ChatColor.GREEN);
         }
 
-        builder.append("Goal complete");
+        builder.append("Goal complete").color(ChatColor.GREEN);
         return builder.create();
     }
 
