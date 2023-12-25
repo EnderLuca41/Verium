@@ -150,4 +150,16 @@ public final class GuiUtil {
         killEnderdragon.setItemMeta(meta);
         return killEnderdragon;
     }
+
+    /**
+     * Gets the item that represent the kill enderdragon goal in the gui
+     */
+    public static ItemStack getKillWitherIcon(){
+        ItemStack killWither = new ItemStack(Material.WITHER_SKELETON_SPAWN_EGG, 1);
+        ItemMeta meta = killWither.getItemMeta();
+        meta.setDisplayName("Kill Wither"); //Item cannot be air, so NullPointerException is impossible
+        meta.setLore(List.of("Summon and defeat the wither to complete this goal."));
+        killWither.setItemMeta(meta);
+        return killWither;
+    }
 }
