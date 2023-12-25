@@ -4,6 +4,7 @@ import me.enderluca.verium.GoalType;
 import me.enderluca.verium.interfaces.Goal;
 import me.enderluca.verium.services.goals.KillEnderdragonGoal;
 
+import me.enderluca.verium.services.goals.KillWitherGoal;
 import net.md_5.bungee.api.chat.BaseComponent;
 
 import org.bukkit.Bukkit;
@@ -25,6 +26,7 @@ public class GoalsService {
         this.onAllGoalsComplete = onAllGoalsComplete;
 
         goals.add(new KillEnderdragonGoal(owner, fileConfig, this::onGoalComplete));
+        goals.add(new KillWitherGoal(owner, fileConfig, this::onGoalComplete));
     }
 
     private void onGoalComplete(@Nullable BaseComponent[] message) {
