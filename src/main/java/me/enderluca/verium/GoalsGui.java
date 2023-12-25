@@ -21,6 +21,12 @@ public class GoalsGui {
             invGui.createIcon(GuiUtil.getKillEnderDragonIcon(), 0);
             invGui.createSwitch(killEnderdragon::setEnabled, killEnderdragon::isEnabled, 9);
         }
+
+        Goal killWither = service.getGoal(GoalType.KillWither);
+        if(killWither != null){
+            invGui.createIcon(GuiUtil.getKillWitherIcon(), 1);
+            invGui.createSwitch(killWither::setEnabled, killWither::isEnabled, 10);
+        }
     }
 
     public void show(Player player){
