@@ -140,7 +140,7 @@ public final class GuiUtil {
 
 
     /**
-     * Gets the item that represent the kill enderdragon goal in the gui
+     * Gets the item that represents the kill enderdragon goal in the gui
      */
     public static ItemStack getKillEnderDragonIcon(){
         ItemStack killEnderdragon = new ItemStack(Material.ENDERMAN_SPAWN_EGG, 1);
