@@ -145,7 +145,7 @@ public final class GuiUtil {
     public static ItemStack getKillEnderDragonIcon(){
         ItemStack killEnderdragon = new ItemStack(Material.ENDERMAN_SPAWN_EGG, 1);
         ItemMeta meta = killEnderdragon.getItemMeta();
-        meta.setDisplayName("Kill Enderdragon");
+        meta.setDisplayName("Kill Enderdragon"); //Item cannot be air, so NullPointerException is impossible
         meta.setLore(List.of("It does not matter how the enderdragon dies and if he was natural or a respawn."));
         killEnderdragon.setItemMeta(meta);
         return killEnderdragon;
