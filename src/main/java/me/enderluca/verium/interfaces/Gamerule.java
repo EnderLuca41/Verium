@@ -27,5 +27,5 @@ public interface Gamerule {
     /**
      * Cleans the config from world specific information
      */
-    void clearWoldSpecificConfig(FileConfiguration dest);
+    void clearWorldSpecificConfig(FileConfiguration dest);
 }

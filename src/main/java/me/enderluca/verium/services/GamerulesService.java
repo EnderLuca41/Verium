@@ -40,7 +40,7 @@ public class GamerulesService {
     }
     public void clearWorldSpecificConfig(FileConfiguration dest){
         for(Gamerule gamerule : gamerules){
-            gamerule.clearWoldSpecificConfig(dest);
+            gamerule.clearWorldSpecificConfig(dest);
         }
     }
 
