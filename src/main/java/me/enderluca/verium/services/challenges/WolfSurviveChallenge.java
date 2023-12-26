@@ -209,7 +209,7 @@ public class WolfSurviveChallenge implements Challenge {
     }
 
     @Override
-    public void clearWoldSpecificConfig(FileConfiguration dest){
+    public void clearWorldSpecificConfig(FileConfiguration dest){
         dest.set("challenges.wolf.wolfs", null);
         dest.set("challenges.wolf.failed", false);
     }

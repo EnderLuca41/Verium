@@ -75,5 +75,5 @@ public class NoCraftingChallenge implements Challenge {
     }
 
     @Override
-    public void clearWoldSpecificConfig(FileConfiguration dest) { }
+    public void clearWorldSpecificConfig(FileConfiguration dest) { }
 }

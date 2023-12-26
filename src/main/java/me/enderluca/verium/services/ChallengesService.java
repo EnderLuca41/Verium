@@ -49,7 +49,7 @@ public class ChallengesService {
      */
     public void clearWorldSpecificConfig(FileConfiguration dest){
         for(Challenge ch : challenges){
-            ch.clearWoldSpecificConfig(dest);
+            ch.clearWorldSpecificConfig(dest);
         }
     }
 
