@@ -69,9 +69,7 @@ public class NoHungerGamerule implements Gamerule {
     }
 
     @Override
-    public void clearWorldSpecificConfig(FileConfiguration dest) {
-        dest.set("gamerules.nohunger.paused", null);
-    }
+    public void clearWorldSpecificConfig(FileConfiguration dest) { }
 
     @Override
     public GameruleType getType(){
