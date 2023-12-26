@@ -99,7 +99,6 @@ public class KillEnderdragonGoal implements Goal {
 
     @Override
     public void clearWorldSpecificConfig(FileConfiguration dest) {
-        dest.set("goals.killenderdragon.paused", null);
         dest.set("goals.killenderdragon.completed", null);
     }
 

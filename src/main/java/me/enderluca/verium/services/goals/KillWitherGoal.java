@@ -94,7 +94,6 @@ public class KillWitherGoal implements Goal {
     }
 
     public void clearWorldSpecificConfig(FileConfiguration dest){
-        dest.set("goals.killwither.paused", null);
         dest.set("goals.killwither.completed", null);
     }
 
