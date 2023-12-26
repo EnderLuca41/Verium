@@ -85,7 +85,7 @@ public class KillEnderdragonGoal implements Goal {
 
     @Override
     public void loadConfig(FileConfiguration src) {
-        enabled = src.getBoolean("goals.killenderdragon.enabled", true);
+        enabled = src.getBoolean("goals.killenderdragon.enabled", false);
         paused = src.getBoolean("goals.killenderdragon.paused", false);
         completed = src.getBoolean("goals.killenderdragon.completed", false);
     }
