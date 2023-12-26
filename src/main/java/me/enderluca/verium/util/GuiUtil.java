@@ -138,6 +138,18 @@ public final class GuiUtil {
         return uuhc;
     }
 
+    /**
+     * Gets the item that represents the no villager gamerule in the gui
+     */
+    public static ItemStack getNoVillagerIcon(){
+        ItemStack noVillager = new ItemStack(Material.EMERALD, 1);
+        ItemMeta meta = noVillager.getItemMeta();
+        meta.setDisplayName("No Villager"); //Item cannot be air, so NullPointerException is impossible
+        meta.setLore(List.of("Disables trading with villagers and wandering traders."));
+        noVillager.setItemMeta(meta);
+        return noVillager;
+    }
+
 
     /**
      * Gets the item that represents the kill enderdragon goal in the gui
