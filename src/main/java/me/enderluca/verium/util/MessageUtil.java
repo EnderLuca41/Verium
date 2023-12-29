@@ -187,6 +187,25 @@ public final class MessageUtil {
     }
 
     /**
+     * Creates the broadcast message that get sent when the kill elder guardian goal is completed
+     */
+    public static BaseComponent[] buildKillElderguardianComplete(@Nullable Player killer){
+        ComponentBuilder builder = new ComponentBuilder();
+
+        if(killer != null){
+            builder.append("The elder guardian got killey by ").color(ChatColor.GREEN);
+            builder.append(killer.getDisplayName()).color(ChatColor.DARK_GREEN);
+            builder.append("\n");
+        }
+        else{
+            builder.append("The elder guardian got killed by... uh... by nobody? What are you guys doing?\n").color(ChatColor.GREEN);
+        }
+
+        builder.append("Goal complete").color(ChatColor.GREEN);
+        return builder.create();
+    }
+
+    /**
      * Creates the broadcast message that get sent when all goals are completed
      */
     public static BaseComponent[] buildAllGoalsComplete(@Nullable Long timerSeconds){
