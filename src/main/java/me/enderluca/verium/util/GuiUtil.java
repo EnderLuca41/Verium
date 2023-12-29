@@ -174,4 +174,16 @@ public final class GuiUtil {
         killWither.setItemMeta(meta);
         return killWither;
     }
+
+    /**
+     * Gets the item that represents the kill elder guardian goal in the gui
+     */
+    public static ItemStack getKillElderguardianIcon(){
+        ItemStack killElderguardian = new ItemStack(Material.ELDER_GUARDIAN_SPAWN_EGG, 1);
+        ItemMeta meta = killElderguardian.getItemMeta();
+        meta.setDisplayName("Kill elder guardian"); //Item cannot be air, so NullPointerException is impossible
+        meta.setLore(List.of("Defeat the mighty guardian of the ocean monument."));
+        killElderguardian.setItemMeta(meta);
+        return killElderguardian;
+    }
 }
