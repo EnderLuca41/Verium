@@ -2,6 +2,7 @@ package me.enderluca.verium.services;
 
 import me.enderluca.verium.GoalType;
 import me.enderluca.verium.interfaces.Goal;
+import me.enderluca.verium.services.goals.KillElderguardianGoal;
 import me.enderluca.verium.services.goals.KillEnderdragonGoal;
 
 import me.enderluca.verium.services.goals.KillWitherGoal;
@@ -27,6 +28,7 @@ public class GoalsService {
 
         goals.add(new KillEnderdragonGoal(owner, fileConfig, this::onGoalComplete));
         goals.add(new KillWitherGoal(owner, fileConfig, this::onGoalComplete));
+        goals.add(new KillElderguardianGoal(owner, fileConfig, this::onGoalComplete));
     }
 
     private void onGoalComplete(@Nullable BaseComponent[] message) {
