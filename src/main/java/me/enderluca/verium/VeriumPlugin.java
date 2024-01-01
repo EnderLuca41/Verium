@@ -5,7 +5,6 @@ import me.enderluca.verium.services.*;
 
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -16,6 +15,7 @@ public class VeriumPlugin extends JavaPlugin {
     TimerService timer;
     WorldResetService reset;
     ModificationsService modifications;
+    HealthpointsService healthpoints;
 
     @Override
     public void onEnable() {
@@ -41,6 +41,10 @@ public class VeriumPlugin extends JavaPlugin {
         logger.info("Creating Modifications service to handle challenges and gamerules");
         modifications = new ModificationsService(this, getConfig(), timer);
         logger.info("Creating Modifications service to handle challenges and gamerules complete");
+
+        logger.info("Creating Healthpoints service");
+        healthpoints = new HealthpointsService(this, getConfig());
+        logger.info("Creating Healthpoints service complete");
 
         logger.log(Level.INFO, "Creating commands");
         getCommand("timer").setExecutor(new TimerCommand(timer));
