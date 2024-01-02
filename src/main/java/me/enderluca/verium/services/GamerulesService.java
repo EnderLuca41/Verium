@@ -23,6 +23,7 @@ public class GamerulesService {
         gamerules.add(new UhcGamerule(owner, fileConfig));
         gamerules.add(new UuhcGamerule(owner, fileConfig));
         gamerules.add(new NoVillagerGamerule(owner, fileConfig));
+        gamerules.add(new NoArmorGamerule(owner, fileConfig));
     }
 
     public void loadConfig(FileConfiguration src){
