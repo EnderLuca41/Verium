@@ -150,6 +150,18 @@ public final class GuiUtil {
         return noVillager;
     }
 
+    /**
+     * Gets the item that represents the no armor gamerule in the gui
+     */
+    public static ItemStack getNoArmorIcon(){
+        ItemStack noArmor = new ItemStack(Material.IRON_CHESTPLATE, 1);
+        ItemMeta meta = noArmor.getItemMeta();
+        meta.setDisplayName("No Armor"); //Item cannot be air, so NullPointerException is impossible
+        meta.setLore(List.of("Disables the use of armor for players."));
+        noArmor.setItemMeta(meta);
+        return noArmor;
+    }
+
 
     /**
      * Gets the item that represents the kill enderdragon goal in the gui
