@@ -5,5 +5,6 @@ public enum GameruleType {
     Pvp,
     Uhc,
     Uuhc,
-    NoVillager
+    NoVillager,
+    NoArmor
 }
