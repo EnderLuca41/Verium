@@ -158,6 +158,7 @@ public final class GuiUtil {
         ItemMeta meta = noArmor.getItemMeta();
         meta.setDisplayName("No Armor"); //Item cannot be air, so NullPointerException is impossible
         meta.setLore(List.of("Disables the use of armor for players."));
+        meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
         noArmor.setItemMeta(meta);
         return noArmor;
     }
