@@ -33,6 +33,12 @@ public class GoalsGui {
             invGui.createIcon(GuiUtil.getKillElderguardianIcon(), 2);
             invGui.createSwitch(killElderguardian::setEnabled, killElderguardian::isEnabled, 11);
         }
+
+        Goal killWarden = service.getGoal(GoalType.KillWarden);
+        if(killWarden != null){
+            invGui.createIcon(GuiUtil.getKillWardenIcon(), 3);
+            invGui.createSwitch(killWarden::setEnabled, killWarden::isEnabled, 12);
+        }
     }
 
     public void show(Player player){
