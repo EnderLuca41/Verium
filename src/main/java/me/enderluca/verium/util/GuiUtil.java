@@ -199,4 +199,16 @@ public final class GuiUtil {
         killElderguardian.setItemMeta(meta);
         return killElderguardian;
     }
+
+    /**
+     * Gets the item that represents the kill warden goal in the gui
+     */
+    public static ItemStack getKillWardenIcon(){
+        ItemStack killWarden = new ItemStack(Material.WARDEN_SPAWN_EGG, 1);
+        ItemMeta meta = killWarden.getItemMeta();
+        meta.setDisplayName("Kill Warden"); //Item cannot be air, so NullPointerException is impossible
+        meta.setLore(List.of("Defeat the great warrior of the deep dark."));
+        killWarden.setItemMeta(meta);
+        return killWarden;
+    }
 }
