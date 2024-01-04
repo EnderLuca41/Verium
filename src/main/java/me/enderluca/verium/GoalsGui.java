@@ -18,7 +18,7 @@ public class GoalsGui {
 
         Goal killEnderdragon = service.getGoal(GoalType.KillEnderdragon);
         if(killEnderdragon != null){
-            invGui.createIcon(GuiUtil.getKillEnderDragonIcon(), 0);
+            invGui.createIcon(GuiUtil.getKillEnderdragonIcon(), 0);
             invGui.createSwitch(killEnderdragon::setEnabled, killEnderdragon::isEnabled, 9);
         }
 

@@ -167,7 +167,7 @@ public final class GuiUtil {
     /**
      * Gets the item that represents the kill enderdragon goal in the gui
      */
-    public static ItemStack getKillEnderDragonIcon(){
+    public static ItemStack getKillEnderdragonIcon(){
         ItemStack killEnderdragon = new ItemStack(Material.ENDERMAN_SPAWN_EGG, 1);
         ItemMeta meta = killEnderdragon.getItemMeta();
         meta.setDisplayName("Kill Enderdragon"); //Item cannot be air, so NullPointerException is impossible
