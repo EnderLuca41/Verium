@@ -2,9 +2,10 @@ package me.enderluca.verium.services.goals;
 
 import me.enderluca.verium.GoalType;
 import me.enderluca.verium.interfaces.Goal;
-
 import me.enderluca.verium.listener.KillWitherListener;
+
 import net.md_5.bungee.api.chat.BaseComponent;
+
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.Plugin;
