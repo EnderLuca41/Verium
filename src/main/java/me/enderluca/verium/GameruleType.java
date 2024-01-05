@@ -4,5 +4,7 @@ public enum GameruleType {
     NoHunger,
     Pvp,
     Uhc,
-    Uuhc
+    Uuhc,
+    NoVillager,
+    NoArmor
 }

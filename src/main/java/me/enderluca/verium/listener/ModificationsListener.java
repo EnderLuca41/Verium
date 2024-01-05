@@ -17,9 +17,12 @@ public class ModificationsListener implements Listener {
 
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event){
-        if(!isActive.getAsBoolean())
+        if(isActive.getAsBoolean()) {
+            event.getPlayer().setGameMode(GameMode.SPECTATOR);
             return;
+        }
 
-        event.getPlayer().setGameMode(GameMode.SPECTATOR);
+        if(event.getPlayer().getGameMode() == GameMode.SPECTATOR)
+            event.getPlayer().setGameMode(GameMode.SURVIVAL);
     }
 }

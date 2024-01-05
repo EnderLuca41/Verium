@@ -2,10 +2,7 @@ package me.enderluca.verium.services;
 
 import me.enderluca.verium.GameruleType;
 import me.enderluca.verium.interfaces.Gamerule;
-import me.enderluca.verium.services.gamerules.NoHungerGamerule;
-import me.enderluca.verium.services.gamerules.PvpGamerule;
-import me.enderluca.verium.services.gamerules.UhcGamerule;
-import me.enderluca.verium.services.gamerules.UuhcGamerule;
+import me.enderluca.verium.services.gamerules.*;
 
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.Plugin;
@@ -25,6 +22,8 @@ public class GamerulesService {
         gamerules.add(new PvpGamerule(owner, fileConfig));
         gamerules.add(new UhcGamerule(owner, fileConfig));
         gamerules.add(new UuhcGamerule(owner, fileConfig));
+        gamerules.add(new NoVillagerGamerule(owner, fileConfig));
+        gamerules.add(new NoArmorGamerule(owner, fileConfig));
     }
 
     public void loadConfig(FileConfiguration src){
@@ -38,9 +37,9 @@ public class GamerulesService {
             gamerule.saveConfig(dest);
         }
     }
-    public void cleanWorldSpecificConfig(FileConfiguration dest){
+    public void clearWorldSpecificConfig(FileConfiguration dest){
         for(Gamerule gamerule : gamerules){
-            gamerule.cleanWoldSpecificConfig(dest);
+            gamerule.clearWorldSpecificConfig(dest);
         }
     }
 

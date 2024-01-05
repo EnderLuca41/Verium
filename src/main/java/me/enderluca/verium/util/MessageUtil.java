@@ -160,10 +160,67 @@ public final class MessageUtil {
             builder.append("\n");
         }
         else{
-            builder.append("The enderdragon got killed by... uh... by nobody? What are you guys doing?\n");
+            builder.append("The enderdragon got killed by... uh... by nobody? What are you guys doing?\n").color(ChatColor.GREEN);
         }
 
-        builder.append("Goal complete");
+        builder.append("Goal complete").color(ChatColor.GREEN);
+        return builder.create();
+    }
+
+    /**
+     * Creates the broadcast message that get sent when the kill wither goal is completed
+     */
+    public static BaseComponent[] buildKillWitherComplete(@Nullable Player killer){
+        ComponentBuilder builder = new ComponentBuilder();
+
+        if(killer != null){
+            builder.append("The wither got killed by ").color(ChatColor.GREEN);
+            builder.append(killer.getDisplayName()).color(ChatColor.DARK_GREEN);
+            builder.append("\n");
+        }
+        else{
+            builder.append("The wither got killed by... uh... by nobody? What are you guys doing?\n").color(ChatColor.GREEN);
+        }
+
+        builder.append("Goal complete").color(ChatColor.GREEN);
+        return builder.create();
+    }
+
+    /**
+     * Creates the broadcast message that get sent when the kill elder guardian goal is completed
+     */
+    public static BaseComponent[] buildKillElderguardianComplete(@Nullable Player killer){
+        ComponentBuilder builder = new ComponentBuilder();
+
+        if(killer != null){
+            builder.append("The elder guardian got killey by ").color(ChatColor.GREEN);
+            builder.append(killer.getDisplayName()).color(ChatColor.DARK_GREEN);
+            builder.append("\n");
+        }
+        else{
+            builder.append("The elder guardian got killed by... uh... by nobody? What are you guys doing?\n").color(ChatColor.GREEN);
+        }
+
+        builder.append("Goal complete").color(ChatColor.GREEN);
+        return builder.create();
+    }
+
+    /**
+     * Creates the broadcast message that get sent when the kill warden goal is completed
+     */
+    public static BaseComponent[] buildKillWardenComplete(@Nullable Player killer){
+        ComponentBuilder builder = new ComponentBuilder();
+
+        if(killer != null){
+            builder.append("The warden got killed by ").color(ChatColor.GREEN);
+            builder.append(killer.getDisplayName()).color(ChatColor.DARK_GREEN);
+            builder.append("\n");
+        }
+        else{
+            builder.append("The warden got killed by... uh... by nobody? What are you guys doing?\n").color(ChatColor.GREEN);
+        }
+
+        builder.append("Goal complete").color(ChatColor.GREEN);
         return builder.create();
     }
 

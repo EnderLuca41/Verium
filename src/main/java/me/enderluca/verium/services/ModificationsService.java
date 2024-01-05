@@ -42,6 +42,12 @@ public class ModificationsService {
         allPaused = fileConfig.getBoolean("modifications.allpaused", false);
 
         Bukkit.getPluginManager().registerEvents(new ModificationsListener(() -> allPaused), owner);
+
+        if(allPaused){
+            challenges.setPausedAll(true);
+            gamerules.setPausedAll(true);
+            goals.setPausedAll(true);
+        }
     }
 
     private void onChallengeFail(@Nullable BaseComponent[] message){
@@ -122,6 +128,12 @@ public class ModificationsService {
         challenges.saveConfig(dest);
         gamerules.saveConfig(dest);
         goals.saveConfig(dest);
+    }
+
+    public void clearWorldSpecificConfig(FileConfiguration dest){
+        challenges.clearWorldSpecificConfig(dest);
+        gamerules.clearWorldSpecificConfig(dest);
+        goals.clearWorldSpecificConfig(dest);
     }
 
     public ChallengesService getChallengeService(){

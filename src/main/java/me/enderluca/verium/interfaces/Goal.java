@@ -48,7 +48,7 @@ public interface Goal {
     /**
      * Cleans the config from world specific information
      */
-    void cleanWoldSpecificConfig(FileConfiguration dest);
+    void clearWorldSpecificConfig(FileConfiguration dest);
 
 
     GoalType getType();

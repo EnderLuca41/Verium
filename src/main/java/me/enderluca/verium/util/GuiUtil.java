@@ -138,16 +138,77 @@ public final class GuiUtil {
         return uuhc;
     }
 
+    /**
+     * Gets the item that represents the no villager gamerule in the gui
+     */
+    public static ItemStack getNoVillagerIcon(){
+        ItemStack noVillager = new ItemStack(Material.EMERALD, 1);
+        ItemMeta meta = noVillager.getItemMeta();
+        meta.setDisplayName("No Villager"); //Item cannot be air, so NullPointerException is impossible
+        meta.setLore(List.of("Disables trading with villagers and wandering traders."));
+        noVillager.setItemMeta(meta);
+        return noVillager;
+    }
+
+    /**
+     * Gets the item that represents the no armor gamerule in the gui
+     */
+    public static ItemStack getNoArmorIcon(){
+        ItemStack noArmor = new ItemStack(Material.IRON_CHESTPLATE, 1);
+        ItemMeta meta = noArmor.getItemMeta();
+        meta.setDisplayName("No Armor"); //Item cannot be air, so NullPointerException is impossible
+        meta.setLore(List.of("Disables the use of armor for players."));
+        meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
+        noArmor.setItemMeta(meta);
+        return noArmor;
+    }
+
+
+    /**
+     * Gets the item that represents the kill enderdragon goal in the gui
+     */
+    public static ItemStack getKillEnderdragonIcon(){
+        ItemStack killEnderdragon = new ItemStack(Material.ENDERMAN_SPAWN_EGG, 1);
+        ItemMeta meta = killEnderdragon.getItemMeta();
+        meta.setDisplayName("Kill Enderdragon"); //Item cannot be air, so NullPointerException is impossible
+        meta.setLore(List.of("It does not matter how the enderdragon dies and if he was natural or a respawn."));
+        killEnderdragon.setItemMeta(meta);
+        return killEnderdragon;
+    }
 
     /**
      * Gets the item that represent the kill enderdragon goal in the gui
      */
-    public static ItemStack getKillEnderDragonIcon(){
-        ItemStack killEnderdragon = new ItemStack(Material.ENDERMAN_SPAWN_EGG, 1);
-        ItemMeta meta = killEnderdragon.getItemMeta();
-        meta.setDisplayName("Kill Enderdragon");
-        meta.setLore(List.of("It does not matter how the enderdragon dies and if he was natural or a respawn."));
-        killEnderdragon.setItemMeta(meta);
-        return killEnderdragon;
+    public static ItemStack getKillWitherIcon(){
+        ItemStack killWither = new ItemStack(Material.WITHER_SKELETON_SPAWN_EGG, 1);
+        ItemMeta meta = killWither.getItemMeta();
+        meta.setDisplayName("Kill Wither"); //Item cannot be air, so NullPointerException is impossible
+        meta.setLore(List.of("Summon and defeat the wither to complete this goal."));
+        killWither.setItemMeta(meta);
+        return killWither;
+    }
+
+    /**
+     * Gets the item that represents the kill elder guardian goal in the gui
+     */
+    public static ItemStack getKillElderguardianIcon(){
+        ItemStack killElderguardian = new ItemStack(Material.ELDER_GUARDIAN_SPAWN_EGG, 1);
+        ItemMeta meta = killElderguardian.getItemMeta();
+        meta.setDisplayName("Kill elder guardian"); //Item cannot be air, so NullPointerException is impossible
+        meta.setLore(List.of("Defeat the mighty guardian of the ocean monument."));
+        killElderguardian.setItemMeta(meta);
+        return killElderguardian;
+    }
+
+    /**
+     * Gets the item that represents the kill warden goal in the gui
+     */
+    public static ItemStack getKillWardenIcon(){
+        ItemStack killWarden = new ItemStack(Material.WARDEN_SPAWN_EGG, 1);
+        ItemMeta meta = killWarden.getItemMeta();
+        meta.setDisplayName("Kill Warden"); //Item cannot be air, so NullPointerException is impossible
+        meta.setLore(List.of("Defeat the great warrior of the deep dark."));
+        killWarden.setItemMeta(meta);
+        return killWarden;
     }
 }

@@ -67,9 +67,7 @@ public class PvpGamerule implements Gamerule {
     }
 
     @Override
-    public void cleanWoldSpecificConfig(FileConfiguration dest) {
-        dest.set("gamerules.pvp.paused", null);
-    }
+    public void clearWorldSpecificConfig(FileConfiguration dest) { }
 
     @Override
     public GameruleType getType() {

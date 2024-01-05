@@ -8,6 +8,7 @@ import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryDragEvent;
 import org.bukkit.event.inventory.InventoryOpenEvent;
@@ -110,7 +111,14 @@ public class InventoryGui implements Listener {
             return;
 
         if(event.isShiftClick() || !event.isLeftClick())
-            return; //We only count left clicks
+            return; //We only count non-shift, left clicks
+
+        /*
+         * if the user double clicks, the event will actually get fired three times,
+         * this ensures that a double click will only fire the event two times
+         */
+        if(event.getClick() == ClickType.DOUBLE_CLICK)
+            return;
 
         //Check if switch is registered at the clicked index
         Setter setter = switchSetterList.get(event.getRawSlot());

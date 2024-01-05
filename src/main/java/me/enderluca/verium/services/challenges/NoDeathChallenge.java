@@ -87,7 +87,7 @@ public class NoDeathChallenge implements Challenge {
     }
 
     @Override
-    public void cleanWoldSpecificConfig(FileConfiguration dest) {
+    public void clearWorldSpecificConfig(FileConfiguration dest) {
         dest.set("challenges.nodeath.failed", false);
     }
 

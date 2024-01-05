@@ -37,6 +37,18 @@ public class GamerulesGui {
             invGui.createIcon(GuiUtil.getUuhcIcon(), 3);
             invGui.createSwitch(uuhc::setEnabled, uuhc::isEnabled, 12);
         }
+
+        Gamerule noVillager = service.getGamerule(GameruleType.NoVillager);
+        if(noVillager != null){
+            invGui.createIcon(GuiUtil.getNoVillagerIcon(), 4);
+            invGui.createSwitch(noVillager::setEnabled, noVillager::isEnabled, 13);
+        }
+
+        Gamerule noArmor = service.getGamerule(GameruleType.NoArmor);
+        if(noArmor != null){
+            invGui.createIcon(GuiUtil.getNoArmorIcon(), 5);
+            invGui.createSwitch(noArmor::setEnabled, noArmor::isEnabled, 14);
+        }
     }
 
     public void show(Player player){

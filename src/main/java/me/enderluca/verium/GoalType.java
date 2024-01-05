@@ -1,5 +1,8 @@
 package me.enderluca.verium;
 
 public enum GoalType {
-    KillEnderdragon
+    KillEnderdragon,
+    KillWither,
+    KillElderguardian,
+    KillWarden
 }

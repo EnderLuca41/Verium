@@ -51,5 +51,5 @@ public interface Challenge {
      * Removes all world specific infos of the challenge from the config
      * This method will mainly be called on world reset
      */
-    void cleanWoldSpecificConfig(FileConfiguration dest);
+    void clearWorldSpecificConfig(FileConfiguration dest);
 }

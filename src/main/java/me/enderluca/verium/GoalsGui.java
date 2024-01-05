@@ -18,8 +18,26 @@ public class GoalsGui {
 
         Goal killEnderdragon = service.getGoal(GoalType.KillEnderdragon);
         if(killEnderdragon != null){
-            invGui.createIcon(GuiUtil.getKillEnderDragonIcon(), 0);
+            invGui.createIcon(GuiUtil.getKillEnderdragonIcon(), 0);
             invGui.createSwitch(killEnderdragon::setEnabled, killEnderdragon::isEnabled, 9);
+        }
+
+        Goal killWither = service.getGoal(GoalType.KillWither);
+        if(killWither != null){
+            invGui.createIcon(GuiUtil.getKillWitherIcon(), 1);
+            invGui.createSwitch(killWither::setEnabled, killWither::isEnabled, 10);
+        }
+
+        Goal killElderguardian = service.getGoal(GoalType.KillElderguardian);
+        if(killElderguardian != null){
+            invGui.createIcon(GuiUtil.getKillElderguardianIcon(), 2);
+            invGui.createSwitch(killElderguardian::setEnabled, killElderguardian::isEnabled, 11);
+        }
+
+        Goal killWarden = service.getGoal(GoalType.KillWarden);
+        if(killWarden != null){
+            invGui.createIcon(GuiUtil.getKillWardenIcon(), 3);
+            invGui.createSwitch(killWarden::setEnabled, killWarden::isEnabled, 12);
         }
     }
 

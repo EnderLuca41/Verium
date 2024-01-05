@@ -1,6 +1,6 @@
 name: Verium
 author: EnderLuca
-version: 0.0.5.0
+version: 0.0.6.0
 main: me.enderluca.verium.VeriumPlugin
 api-version: 1.20
 load: STARTUP
@@ -27,3 +27,6 @@ commands:
   goals:
     description: Show gui to manage the active goals
     usage: /goals
+  setmaxhealth:
+    description: Sets the max health of all players to the specified value
+    usage: /setmaxhealth [<hp>]
