@@ -8,7 +8,7 @@ Because it is a server plugin, you can also play these challenges with your frie
 Veriums development has just started, that's why the current supported features are very limited.
 ### Current supported features:
 
- - A timer that can be used with `/timer` to measure how well you performed and beat your last record 🚀https://github.com/EnderLuca41/Verium/blob/v0.0.5.0/README.md
+ - A timer that can be used with `/timer` to measure how well you performed and beat your last record 🚀
  - `/reset` to reset the current world and retry 🔁
  - With `/pause` and `/resume`, you can pause the timer, active challenges, gamerule and goals, and set everyone into spectator
  - With `/setmaxhealth` you can set the maximum health of all players
