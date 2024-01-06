@@ -6,6 +6,16 @@ public final class AttributeUtil {
     private AttributeUtil(){}
 
     /**
+     * Array containing all attributes that apply to a player
+     */
+    public static final Attribute[] PLAYER_ATTRIBUTES = {
+            Attribute.GENERIC_ARMOR, Attribute.GENERIC_ARMOR_TOUGHNESS,
+            Attribute.GENERIC_ATTACK_DAMAGE, Attribute.GENERIC_ATTACK_SPEED,
+            Attribute.GENERIC_KNOCKBACK_RESISTANCE, Attribute.GENERIC_LUCK,
+            Attribute.GENERIC_MAX_HEALTH, Attribute.GENERIC_MOVEMENT_SPEED
+    };
+
+    /**
      * Returns the default attribute base value for a player
      */
     public double getDefaultBaseValue(Attribute attribute){
