@@ -18,7 +18,7 @@ public final class AttributeUtil {
     /**
      * Returns the default attribute base value for a player
      */
-    public double getDefaultBaseValue(Attribute attribute){
+    public static double getDefaultBaseValue(Attribute attribute){
         return switch (attribute){
             case GENERIC_ARMOR -> 0.0;
             case GENERIC_ARMOR_TOUGHNESS -> 0.0;
