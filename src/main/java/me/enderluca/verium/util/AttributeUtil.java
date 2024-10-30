@@ -22,7 +22,7 @@ public final class AttributeUtil {
         return switch (attribute){
             case GENERIC_ARMOR -> 0.0;
             case GENERIC_ARMOR_TOUGHNESS -> 0.0;
-            case GENERIC_ATTACK_DAMAGE -> 2.0;
+            case GENERIC_ATTACK_DAMAGE -> 1.0;
             case GENERIC_ATTACK_SPEED -> 4.0;
             case GENERIC_KNOCKBACK_RESISTANCE -> 0.0;
             case GENERIC_LUCK -> 0.0;
