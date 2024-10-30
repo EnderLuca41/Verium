@@ -24,16 +24,25 @@ public class ButtonBuilder extends WidgetBuilder {
         super(owner, manager);
     }
 
+    /**
+     * Sets the sound to play when the player clicks on the button, if not set a default sound will be used
+     */
     public ButtonBuilder addClickSound(Sound sound){
         clickSound = sound;
         return this;
     }
 
+    /**
+     * Sets the consumer to be called when the player clicks on the button
+     */
     public ButtonBuilder addClickEvent(Consumer<InventoryClickEvent> onClick){
         this.onClick = onClick;
         return this;
     }
 
+    /**
+     * Sets if only double clicks should trigger the button
+     */
     public ButtonBuilder doubleClick(){
         doubleClick = true;
         return this;

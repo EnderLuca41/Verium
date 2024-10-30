@@ -28,16 +28,25 @@ public class TextInputBuilder extends WidgetBuilder {
         super(owner, manager);
     }
 
+    /**
+     * Sets the sound to play when the player clicks on the text input, if not set a default sound will be used
+     */
     public TextInputBuilder addClickSound(Sound sound){
         clickSound = sound;
         return this;
     }
 
+    /**
+     * Sets the sound to play when the player submits the text, if not set a default sound will be used
+     */
     public TextInputBuilder addDoneSound(Sound sound){
         doneSound = sound;
         return this;
     }
 
+    /**
+     * Sets the consumer to be called when the player submits the text
+     */
     public TextInputBuilder listenOnTextEntered(Consumer<TextInputEvent> onTextEntered){
         this.onTextEntered = onTextEntered;
         return this;

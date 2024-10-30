@@ -10,6 +10,10 @@ import org.bukkit.plugin.Plugin;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+
+/**
+ * Base builder class for all widget builder class to inherit from
+ */
 public abstract class WidgetBuilder {
     @Nonnull
     protected Plugin owner;
