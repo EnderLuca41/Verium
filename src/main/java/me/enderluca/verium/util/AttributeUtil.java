@@ -33,4 +33,24 @@ public final class AttributeUtil {
             //NOTE 2: 1.20.5 Also adds 4 new attributes
         };
     }
+    /**
+     * Returns the maximum value of a given attribute
+     */
+    public static double getMaxValue(Attribute attribute){
+        return switch(attribute){
+            case GENERIC_ARMOR -> 30.0;
+            case GENERIC_ARMOR_TOUGHNESS -> 20.0;
+            case GENERIC_ATTACK_DAMAGE -> 2048.0;
+            case GENERIC_ATTACK_KNOCKBACK -> 5.0;
+            case GENERIC_ATTACK_SPEED -> 1024.0;
+            case GENERIC_FLYING_SPEED -> 1024.0;
+            case GENERIC_FOLLOW_RANGE -> 2048.0;
+            case GENERIC_KNOCKBACK_RESISTANCE -> 1.0;
+            case GENERIC_LUCK -> 1024.0;
+            case GENERIC_MAX_HEALTH -> 1024.0;
+            case GENERIC_MOVEMENT_SPEED -> 1024.0;
+            case HORSE_JUMP_STRENGTH -> 32.0;
+            case ZOMBIE_SPAWN_REINFORCEMENTS -> 1.0;
+        };
+    }
 }
