@@ -46,6 +46,12 @@ public class TextInput extends Widget implements IOnClick, Listener {
     @Nullable
     private final IInventoryGui returnGui;
 
+    /**
+     * @param clickSound The sound to play when the player clicks on the text input, if not set a default sound will be used
+     * @param doneSound The sound to play when the player submits the text, if not set a default sound will be used
+     * @param onTextEntered The consumer to be called when the player submits the text
+     * @param returnGui The gui to return to after the text has been entered
+     */
     public TextInput(@Nonnull Plugin owner, @Nonnull ProtocolManager manager, @Nullable ItemStack icon,
                      @Nullable Sound clickSound, @Nullable Sound doneSound, @Nullable Consumer<TextInputEvent> onTextEntered,
                      @Nullable IInventoryGui returnGui){
