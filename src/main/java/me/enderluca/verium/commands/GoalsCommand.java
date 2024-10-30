@@ -1,7 +1,10 @@
 package me.enderluca.verium.commands;
 
-import me.enderluca.verium.GoalsGui;
+import me.enderluca.verium.gui.GoalsGui;
 import me.enderluca.verium.services.GoalsService;
+
+import com.comphenix.protocol.ProtocolManager;
+
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -14,8 +17,8 @@ public class GoalsCommand implements CommandExecutor {
 
     private final GoalsGui gui;
 
-    public GoalsCommand(Plugin owner, GoalsService service){
-        gui = new GoalsGui(owner, service);
+    public GoalsCommand(Plugin owner, ProtocolManager manager, GoalsService service){
+        gui = new GoalsGui(owner, null, service);
     }
 
     @Override

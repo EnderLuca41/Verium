@@ -59,7 +59,8 @@ public class VeriumPlugin extends JavaPlugin {
         getCommand("gamerules").setExecutor(new GameRulesCommand(this, protocolManager, modifications.getGamerulesService()));
         getCommand("pause").setExecutor(new PauseCommand(modifications));
         getCommand("resume").setExecutor(new ResumeCommand(modifications));
-        getCommand("goals").setExecutor(new GoalsCommand(this, modifications.getGoalsService()));
+        getCommand("goals").setExecutor(new GoalsCommand(this, protocolManager,modifications.getGoalsService()));
+        getCommand("attributes").setExecutor(new AttributeManagerCommand(this, protocolManager, modifications.getAttributeService()));
         logger.log(Level.INFO, "Creating commands complete");
     }
 
