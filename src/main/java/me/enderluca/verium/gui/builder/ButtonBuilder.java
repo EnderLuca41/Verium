@@ -1,7 +1,9 @@
 package me.enderluca.verium.gui.builder;
 
-import com.comphenix.protocol.ProtocolManager;
 import me.enderluca.verium.gui.widgets.Button;
+
+import com.comphenix.protocol.ProtocolManager;
+
 import org.bukkit.Sound;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;

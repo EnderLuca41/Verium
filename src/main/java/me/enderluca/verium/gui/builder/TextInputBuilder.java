@@ -1,9 +1,11 @@
 package me.enderluca.verium.gui.builder;
 
-import com.comphenix.protocol.ProtocolManager;
 import me.enderluca.verium.gui.widgets.TextInput;
 import me.enderluca.verium.gui.event.TextInputEvent;
 import me.enderluca.verium.interfaces.IInventoryGui;
+
+import com.comphenix.protocol.ProtocolManager;
+
 import org.bukkit.Sound;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
