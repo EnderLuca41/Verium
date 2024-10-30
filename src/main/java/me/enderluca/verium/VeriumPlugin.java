@@ -8,6 +8,9 @@ import org.bukkit.plugin.java.JavaPlugin;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import com.comphenix.protocol.ProtocolManager;
+import com.comphenix.protocol.ProtocolLibrary;
+
 public class VeriumPlugin extends JavaPlugin {
 
     Logger logger;
@@ -17,9 +20,12 @@ public class VeriumPlugin extends JavaPlugin {
     ModificationsService modifications;
     HealthpointsService healthpoints;
 
+    ProtocolManager protocolManager;
+
     @Override
     public void onEnable() {
         logger = getLogger();
+        protocolManager = ProtocolLibrary.getProtocolManager();
 
         logger.info("Reading server properties");
         serverProps = new ServerProperties();
