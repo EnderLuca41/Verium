@@ -33,6 +33,28 @@ public final class AttributeUtil {
             //NOTE 2: 1.20.5 Also adds 4 new attributes
         };
     }
+
+    /**
+     * Returns the minimum value of a given attribute
+     */
+    public static double getMinValue(Attribute attribute){
+        return switch(attribute){
+            case GENERIC_ARMOR -> 0.0;
+            case GENERIC_ARMOR_TOUGHNESS -> 0.0;
+            case GENERIC_ATTACK_DAMAGE -> 0.0;
+            case GENERIC_ATTACK_KNOCKBACK -> 0.0;
+            case GENERIC_ATTACK_SPEED -> 0.0;
+            case GENERIC_FLYING_SPEED -> 0.0;
+            case GENERIC_FOLLOW_RANGE -> 0.0;
+            case GENERIC_KNOCKBACK_RESISTANCE -> 0.0;
+            case GENERIC_LUCK -> -1024.0;
+            case GENERIC_MAX_HEALTH -> 1.0;
+            case GENERIC_MOVEMENT_SPEED -> 0.0;
+            case HORSE_JUMP_STRENGTH -> 0.0;
+            case ZOMBIE_SPAWN_REINFORCEMENTS -> 0.0;
+        };
+    }
+
     /**
      * Returns the maximum value of a given attribute
      */
