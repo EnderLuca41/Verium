@@ -1,7 +1,9 @@
 package me.enderluca.verium.commands;
 
-import me.enderluca.verium.ChallengesGui;
+import me.enderluca.verium.gui.ChallengesGui;
 import me.enderluca.verium.services.ChallengesService;
+
+import com.comphenix.protocol.ProtocolManager;
 
 import org.bukkit.command.*;
 import org.bukkit.entity.Player;
@@ -10,12 +12,10 @@ import org.bukkit.plugin.Plugin;
 import javax.annotation.Nonnull;
 
 public class ChallengeCommand implements CommandExecutor {
-    private final ChallengesService challengesService;
     private final ChallengesGui challengeGui;
 
-    public ChallengeCommand(Plugin owner, ChallengesService challengesService){
-        this.challengesService = challengesService;
-        challengeGui = new ChallengesGui(owner, challengesService);
+    public ChallengeCommand(Plugin owner, ProtocolManager manager, ChallengesService challengesService){
+        challengeGui = new ChallengesGui(owner, manager, challengesService);
     }
 
     @Override
