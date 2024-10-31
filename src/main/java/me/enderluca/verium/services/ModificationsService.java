@@ -17,7 +17,7 @@ import javax.annotation.Nullable;
 //TODO: Find better name for this class
 
 /**
- * Manages gamerules and challenges
+ * Manages challenges, gamerules, goals and attributes
  */
 public class ModificationsService {
 
