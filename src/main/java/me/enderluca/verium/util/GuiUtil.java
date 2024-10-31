@@ -6,10 +6,14 @@ import me.enderluca.verium.GoalType;
 
 import net.md_5.bungee.api.ChatColor;
 
+import org.bukkit.Color;
 import org.bukkit.Material;
+import org.bukkit.attribute.Attribute;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.PotionMeta;
 
 import java.util.List;
 
@@ -197,5 +201,164 @@ public final class GuiUtil {
 
             default -> {return new ItemStack(Material.AIR);} //Should never happen
         }
+    }
+
+    /**
+     * Returns the item used to represent a certain attribute in the attribute manager GUI
+     */
+    public static ItemStack getAttributeIcon(Attribute attribute){
+        switch (attribute){
+            case GENERIC_ARMOR -> {
+                ItemStack icon = new ItemStack(Material.IRON_CHESTPLATE, 1);
+                ItemMeta meta = icon.getItemMeta();
+                meta.setLore(List.of("Armor defense points. "));
+                meta.setDisplayName(ChatColor.WHITE + "Armor");
+                meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
+                icon.setItemMeta(meta);
+                return icon;
+            }
+
+            case GENERIC_ARMOR_TOUGHNESS -> {
+                ItemStack icon = new ItemStack(Material.DIAMOND_CHESTPLATE, 1);
+                ItemMeta meta = icon.getItemMeta();
+                meta.setDisplayName(ChatColor.WHITE + "Armor toughness");
+                meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
+                icon.setItemMeta(meta);
+                return icon;
+            }
+
+            case GENERIC_ATTACK_DAMAGE -> {
+                ItemStack icon = new ItemStack(Material.IRON_SWORD, 1);
+                ItemMeta meta = icon.getItemMeta();
+                meta.setLore(List.of("Damage dealt by attacks, in half-hearts. "));
+                meta.setDisplayName(ChatColor.WHITE + "Attack damage");
+                meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
+                icon.setItemMeta(meta);
+                return icon;
+            }
+
+            case GENERIC_ATTACK_SPEED -> {
+                ItemStack icon = new ItemStack(Material.FEATHER, 1);
+                ItemMeta meta = icon.getItemMeta();
+                meta.setLore(List.of("Determines recharging rate of attack strength.",
+                        "Value is the number of full-strength attacks per second. "));
+                meta.setDisplayName(ChatColor.WHITE + "Attack speed");
+                icon.setItemMeta(meta);
+                return icon;
+            }
+
+            case GENERIC_KNOCKBACK_RESISTANCE -> {
+                ItemStack icon = new ItemStack(Material.SHIELD, 1);
+                ItemMeta meta = icon.getItemMeta();
+                meta.setLore(List.of("The scale of horizontal knockback resisted from attacks and projectiles.",
+                        "Vertical knockback is not affected. Does not affect explosions.",
+                        "The resistance functions as a percentage from 0.0 (0% resistance) to 1.0 (100% resistance)",
+                        "(e.g. 0.4 is 40% resistance, meaning the attributed mob takes 60% of usual knockback)"));
+                meta.setDisplayName(ChatColor.WHITE + "Knockback resistance");
+                icon.setItemMeta(meta);
+                return icon;
+            }
+
+            case GENERIC_LUCK -> {
+                ItemStack icon = new ItemStack(Material.RED_MUSHROOM, 1);
+                ItemMeta meta = icon.getItemMeta();
+                meta.setLore(List.of("Affects the results of loot tables using the quality or bonus_rolls tag ",
+                        "(e.g. when opening chests or chest minecarts, fishing, and killing mobs)."));
+                meta.setDisplayName(ChatColor.WHITE + "Luck");
+                icon.setItemMeta(meta);
+                return icon;
+            }
+
+            case GENERIC_MAX_HEALTH -> {
+                ItemStack icon = new ItemStack(Material.APPLE, 1);
+                ItemMeta meta = icon.getItemMeta();
+                meta.setLore(List.of("Maximum health points in half-hearts."));
+                meta.setDisplayName(ChatColor.WHITE + "Max health");
+                icon.setItemMeta(meta);
+                return icon;
+            }
+
+            case GENERIC_MOVEMENT_SPEED -> {
+                ItemStack icon = new ItemStack(Material.POTION, 1);
+                PotionMeta meta = (PotionMeta) icon.getItemMeta();
+                meta.setColor(Color.AQUA);
+                meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
+                meta.addItemFlags(ItemFlag.HIDE_POTION_EFFECTS);
+                meta.setDisplayName(ChatColor.WHITE + "Movement speed");
+                icon.setItemMeta(meta);
+                return icon;
+            }
+
+            default -> {return new ItemStack(Material.AIR);}
+        }
+    }
+
+    public static ItemStack getAddAttributeIcon(){
+        ItemStack addAttribute = new ItemStack(Material.LIME_DYE, 1);
+        ItemMeta meta = addAttribute.getItemMeta();
+        meta.addEnchant(Enchantment.DAMAGE_ALL, 1, true); //Item cannot be air, so NullPointerException is impossible
+        meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+        meta.setDisplayName(ChatColor.WHITE + "Add attribute");
+        addAttribute.setItemMeta(meta);
+        return addAttribute;
+    }
+
+    public static ItemStack getWhitelistIcon(String playerList){
+        ItemStack whitelist = new ItemStack(Material.WHITE_STAINED_GLASS, 1);
+        ItemMeta meta = whitelist.getItemMeta();
+        meta.setDisplayName(ChatColor.WHITE + "Whitelist"); //Item cannot be air, so NullPointerException is impossible
+        meta.setLore(List.of(playerList));
+        whitelist.setItemMeta(meta);
+        return whitelist;
+    }
+
+    public static ItemStack getBlacklistIcon(String playerList){
+        ItemStack blacklist = new ItemStack(Material.BLACK_STAINED_GLASS, 1);
+        ItemMeta meta = blacklist.getItemMeta();
+        meta.setDisplayName(ChatColor.GRAY + "Blacklist"); //Item cannot be air, so NullPointerException is impossible
+        meta.setLore(List.of(playerList));
+        blacklist.setItemMeta(meta);
+        return blacklist;
+    }
+
+    public static ItemStack getAddPlayerInputIcon(){
+        ItemStack addPlayerInput = new ItemStack(Material.BIRCH_SIGN, 1);
+        ItemMeta meta = addPlayerInput.getItemMeta();
+        meta.setDisplayName(ChatColor.WHITE + "Add player"); //Item cannot be air, so NullPointerException is impossible
+        addPlayerInput.setItemMeta(meta);
+        return addPlayerInput;
+    }
+
+    public static ItemStack getRemovePlayerInputIcon(){
+        ItemStack removePlayerInput = new ItemStack(Material.SPRUCE_SIGN, 1);
+        ItemMeta meta = removePlayerInput.getItemMeta();
+        meta.setDisplayName(ChatColor.WHITE + "Remove player"); //Item cannot be air, so NullPointerException is impossible
+        removePlayerInput.setItemMeta(meta);
+        return removePlayerInput;
+    }
+
+    public static ItemStack getRemoveAttributeIcon(){
+        ItemStack removeAttribute = new ItemStack(Material.BARRIER, 1);
+        ItemMeta meta = removeAttribute.getItemMeta();
+        meta.setDisplayName(ChatColor.RED + "" + ChatColor.BOLD + "Remove attribute"); //Item cannot be air, so NullPointerException is impossible
+        removeAttribute.setItemMeta(meta);
+        return removeAttribute;
+    }
+
+    /**
+     * Returns the item used to represent the change value of an attribute in the attribute manager gui
+     * @param attribute The attribute to change the value of, used to add the value range and default value to the item lore
+     * @param value Current value the attribute is set to
+     */
+    public static ItemStack getChangeAttributeValueIcon(Attribute attribute, double value){
+        ItemStack changeAttributeValue = new ItemStack(Material.COMPARATOR, 1);
+        ItemMeta meta = changeAttributeValue.getItemMeta();
+        meta.setDisplayName(ChatColor.WHITE + "Change value"); //Item cannot be air, so NullPointerException is impossible
+        String line1 = "Current: " + value;
+        String line2 = "Range: " + AttributeUtil.getMaxValue(attribute) + " - " + AttributeUtil.getMinValue(attribute);
+        String line3 = "Default: " + AttributeUtil.getDefaultBaseValue(attribute);
+        meta.setLore(List.of(line1, line2, line3));
+        changeAttributeValue.setItemMeta(meta);
+        return changeAttributeValue;
     }
 }
