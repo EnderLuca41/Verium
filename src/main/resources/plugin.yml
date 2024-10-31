@@ -4,6 +4,8 @@ version: 0.0.7.0
 main: me.enderluca.verium.VeriumPlugin
 api-version: 1.20
 load: STARTUP
+depend:
+  - ProtocolLib
 
 commands:
   timer:
