@@ -18,7 +18,6 @@ public class VeriumPlugin extends JavaPlugin {
     TimerService timer;
     WorldResetService reset;
     ModificationsService modifications;
-    HealthpointsService healthpoints;
 
     ProtocolManager protocolManager;
 
@@ -48,9 +47,6 @@ public class VeriumPlugin extends JavaPlugin {
         modifications = new ModificationsService(this, getConfig(), timer);
         logger.info("Creating Modifications service complete");
 
-        logger.info("Creating Healthpoints service");
-        healthpoints = new HealthpointsService(this, getConfig());
-        logger.info("Creating Healthpoints service complete");
 
         logger.log(Level.INFO, "Creating commands");
         getCommand("timer").setExecutor(new TimerCommand(timer));
