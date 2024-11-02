@@ -44,9 +44,9 @@ public class VeriumPlugin extends JavaPlugin {
         timer = new TimerService(this, sec, timerEnabled);
         logger.log(Level.INFO, "Creating timer complete");
 
-        logger.info("Creating Modifications service to handle challenges and gamerules");
+        logger.info("Creating Modifications service to handle challenges, gamerules, goals and attributes");
         modifications = new ModificationsService(this, getConfig(), timer);
-        logger.info("Creating Modifications service to handle challenges and gamerules complete");
+        logger.info("Creating Modifications service complete");
 
         logger.info("Creating Healthpoints service");
         healthpoints = new HealthpointsService(this, getConfig());
