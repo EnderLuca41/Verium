@@ -300,6 +300,9 @@ public final class GuiUtil {
         }
     }
 
+    /**
+     * Returns the item used to represent the add attribute button in the attribute manager gui
+     */
     @Nonnull
     public static ItemStack getAddAttributeIcon(){
         ItemStack addAttribute = new ItemStack(Material.LIME_DYE, 1);
@@ -311,6 +314,10 @@ public final class GuiUtil {
         return addAttribute;
     }
 
+    /**
+     * Return the item used to represent the switch to switch between blacklist and whitelist in the gui, set on whitelist
+     * @param playerList List of all players contained in the access list, used to list them in the lore
+     */
     @Nonnull
     public static ItemStack getWhitelistIcon(String playerList){
         ItemStack whitelist = new ItemStack(Material.WHITE_STAINED_GLASS, 1);
@@ -321,6 +328,10 @@ public final class GuiUtil {
         return whitelist;
     }
 
+    /**
+     * Return the item used to represent the switch to switch between blacklist and whitelist in the gui, set on blacklist
+     * @param playerList List of all players contained in the access list, used to list them in the lore
+     */
     @Nonnull
     public static ItemStack getBlacklistIcon(String playerList){
         ItemStack blacklist = new ItemStack(Material.BLACK_STAINED_GLASS, 1);
@@ -331,6 +342,9 @@ public final class GuiUtil {
         return blacklist;
     }
 
+    /**
+     * Returns the item used to represent the add player input in the attribute manager gui, to add a new player to the access list
+     */
     @Nonnull
     public static ItemStack getAddPlayerInputIcon(){
         ItemStack addPlayerInput = new ItemStack(Material.BIRCH_SIGN, 1);
@@ -340,6 +354,9 @@ public final class GuiUtil {
         return addPlayerInput;
     }
 
+    /**
+     * Returns the item used to represent the remove player input in the attribute manager gui, to remove a player from the access list
+     */
     @Nonnull
     public static ItemStack getRemovePlayerInputIcon(){
         ItemStack removePlayerInput = new ItemStack(Material.SPRUCE_SIGN, 1);
@@ -349,6 +366,9 @@ public final class GuiUtil {
         return removePlayerInput;
     }
 
+    /**
+     * Returns the item used to represent the remove attribute button in the attribute manager gui, which removes an attribute change from the attribute manager
+     */
     @Nonnull
     public static ItemStack getRemoveAttributeIcon(){
         ItemStack removeAttribute = new ItemStack(Material.BARRIER, 1);
