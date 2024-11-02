@@ -56,7 +56,7 @@ public class VeriumPlugin extends JavaPlugin {
         getCommand("pause").setExecutor(new PauseCommand(modifications));
         getCommand("resume").setExecutor(new ResumeCommand(modifications));
         getCommand("goals").setExecutor(new GoalsCommand(this, protocolManager,modifications.getGoalsService()));
-        getCommand("attributes").setExecutor(new AttributeManagerCommand(this, protocolManager, modifications.getAttributeService()));
+        getCommand("attributemanager").setExecutor(new AttributeManagerCommand(this, protocolManager, modifications.getAttributeService()));
         logger.log(Level.INFO, "Creating commands complete");
     }
 
@@ -67,18 +67,19 @@ public class VeriumPlugin extends JavaPlugin {
 
         logger.log(Level.INFO, "Saving config");
 
-        boolean timerEnabled = timer.isEnabled();
-        long sec = timer.cancel();
-        getConfig().set("timer.seconds", sec);
-        getConfig().set("timer.enabled", timerEnabled);
-
         getConfig().set("reset.scheduled", reset.isResetScheduled());
 
         modifications.saveConfig(getConfig());
 
         if(reset.isResetScheduled()){
             modifications.clearWorldSpecificConfig(getConfig());
+            timer.reset();
         }
+
+        boolean timerEnabled = timer.isEnabled();
+        long sec = timer.cancel();
+        getConfig().set("timer.seconds", sec);
+        getConfig().set("timer.enabled", timerEnabled);
 
         saveConfig();
 

@@ -32,6 +32,6 @@ commands:
   setmaxhealth:
     description: Sets the max health of all players to the specified value
     usage: /setmaxhealth [<hp>]
-  attributes:
-    description: Show a gui to manage the active attributes
+  attributemanager:
+    description: Shows a gui to manage the attributes of all players, for example the max health or the speed
     usage: /attributes
