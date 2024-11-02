@@ -15,6 +15,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.PotionMeta;
 
+import javax.annotation.Nonnull;
 import java.util.List;
 
 /**
@@ -26,6 +27,7 @@ public final class GuiUtil {
     /**
      * Gets the item that symbols the enabled state
      */
+    @Nonnull
     public static ItemStack getEnabledIcon(){
         ItemStack enabled = new ItemStack(Material.GREEN_STAINED_GLASS, 1);
         ItemMeta meta = enabled.getItemMeta();
@@ -38,6 +40,7 @@ public final class GuiUtil {
     /**
      * Gets the item that symbols the disabled state
      */
+    @Nonnull
     public static ItemStack getDisabledIcon(){
         ItemStack disabled = new ItemStack(Material.RED_STAINED_GLASS, 1);
         ItemMeta meta = disabled.getItemMeta();
@@ -50,6 +53,7 @@ public final class GuiUtil {
     /**
      * Gets the item that represents the specified challenge in the gui
      */
+    @Nonnull
     public static ItemStack getChallengeIcon(ChallengeType type){
         switch (type){
             case NoCrafting -> {
@@ -95,6 +99,7 @@ public final class GuiUtil {
     /**
      * Gets the item that represents the specified gamerule in the gui
      */
+    @Nonnull
     public static ItemStack getGameruleIcon(GameruleType type){
         switch (type){
             case NoHunger -> {
@@ -161,6 +166,7 @@ public final class GuiUtil {
     /**
      * Gets the item that represents the specified goal in the gui
      */
+    @Nonnull
     public static ItemStack getGoalIcon(GoalType type){
         switch(type){
             case KillEnderdragon ->{
@@ -206,6 +212,7 @@ public final class GuiUtil {
     /**
      * Returns the item used to represent a certain attribute in the attribute manager GUI
      */
+    @Nonnull
     public static ItemStack getAttributeIcon(Attribute attribute){
         switch (attribute){
             case GENERIC_ARMOR -> {
@@ -293,6 +300,7 @@ public final class GuiUtil {
         }
     }
 
+    @Nonnull
     public static ItemStack getAddAttributeIcon(){
         ItemStack addAttribute = new ItemStack(Material.LIME_DYE, 1);
         ItemMeta meta = addAttribute.getItemMeta();
@@ -303,6 +311,7 @@ public final class GuiUtil {
         return addAttribute;
     }
 
+    @Nonnull
     public static ItemStack getWhitelistIcon(String playerList){
         ItemStack whitelist = new ItemStack(Material.WHITE_STAINED_GLASS, 1);
         ItemMeta meta = whitelist.getItemMeta();
@@ -312,6 +321,7 @@ public final class GuiUtil {
         return whitelist;
     }
 
+    @Nonnull
     public static ItemStack getBlacklistIcon(String playerList){
         ItemStack blacklist = new ItemStack(Material.BLACK_STAINED_GLASS, 1);
         ItemMeta meta = blacklist.getItemMeta();
@@ -321,6 +331,7 @@ public final class GuiUtil {
         return blacklist;
     }
 
+    @Nonnull
     public static ItemStack getAddPlayerInputIcon(){
         ItemStack addPlayerInput = new ItemStack(Material.BIRCH_SIGN, 1);
         ItemMeta meta = addPlayerInput.getItemMeta();
@@ -329,6 +340,7 @@ public final class GuiUtil {
         return addPlayerInput;
     }
 
+    @Nonnull
     public static ItemStack getRemovePlayerInputIcon(){
         ItemStack removePlayerInput = new ItemStack(Material.SPRUCE_SIGN, 1);
         ItemMeta meta = removePlayerInput.getItemMeta();
@@ -337,6 +349,7 @@ public final class GuiUtil {
         return removePlayerInput;
     }
 
+    @Nonnull
     public static ItemStack getRemoveAttributeIcon(){
         ItemStack removeAttribute = new ItemStack(Material.BARRIER, 1);
         ItemMeta meta = removeAttribute.getItemMeta();
@@ -350,6 +363,7 @@ public final class GuiUtil {
      * @param attribute The attribute to change the value of, used to add the value range and default value to the item lore
      * @param value Current value the attribute is set to
      */
+    @Nonnull
     public static ItemStack getChangeAttributeValueIcon(Attribute attribute, double value){
         ItemStack changeAttributeValue = new ItemStack(Material.COMPARATOR, 1);
         ItemMeta meta = changeAttributeValue.getItemMeta();
