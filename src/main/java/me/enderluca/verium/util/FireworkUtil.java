@@ -1,8 +1,8 @@
 package me.enderluca.verium.util;
 
-import org.bukkit.plugin.Plugin;
 import org.bukkit.entity.Firework;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
