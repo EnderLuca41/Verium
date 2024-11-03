@@ -3,7 +3,7 @@ package me.enderluca.verium.services.gamerules;
 import me.enderluca.verium.GameruleType;
 import me.enderluca.verium.interfaces.Gamerule;
 
-import me.enderluca.verium.listener.PvpListener;
+import me.enderluca.verium.listener.gamerules.PvpListener;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.configuration.file.FileConfiguration;

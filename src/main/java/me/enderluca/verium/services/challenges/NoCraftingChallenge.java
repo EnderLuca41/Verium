@@ -2,7 +2,7 @@ package me.enderluca.verium.services.challenges;
 
 import me.enderluca.verium.interfaces.Challenge;
 import me.enderluca.verium.ChallengeType;
-import me.enderluca.verium.listener.NoCraftingListener;
+import me.enderluca.verium.listener.challenges.NoCraftingListener;
 
 import net.md_5.bungee.api.chat.BaseComponent;
 

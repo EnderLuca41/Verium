@@ -17,13 +17,14 @@ import javax.annotation.Nullable;
 //TODO: Find better name for this class
 
 /**
- * Manages gamerules and challenges
+ * Manages challenges, gamerules, goals and attributes
  */
 public class ModificationsService {
 
     private final ChallengesService challenges;
     private final GamerulesService gamerules;
     private final GoalsService goals;
+    private final AttributeService attributes;
 
     private final TimerService timer;
 
@@ -36,6 +37,7 @@ public class ModificationsService {
         this.gamerules = new GamerulesService(owner, fileConfig);
         this.challenges = new ChallengesService(owner, fileConfig, this::onChallengeFail);
         this.goals = new GoalsService(owner, fileConfig, this::onAllGoalsComplete);
+        this.attributes = new AttributeService(owner, fileConfig);
         this.timer = timer;
         this.owner = owner;
 
@@ -47,6 +49,7 @@ public class ModificationsService {
             challenges.setPausedAll(true);
             gamerules.setPausedAll(true);
             goals.setPausedAll(true);
+            attributes.setPaused(true);
         }
     }
 
@@ -85,6 +88,7 @@ public class ModificationsService {
         challenges.setPausedAll(true);
         gamerules.setPausedAll(true);
         goals.setPausedAll(true);
+        attributes.setPaused(true);
 
         for(Player p : Bukkit.getOnlinePlayers()){
             p.setGameMode(GameMode.SPECTATOR);
@@ -110,6 +114,7 @@ public class ModificationsService {
         gamerules.setPausedAll(false);
         challenges.setPausedAll(false);
         goals.setPausedAll(false);
+        attributes.setPaused(false);
 
         timer.start();
     }
@@ -120,6 +125,7 @@ public class ModificationsService {
         challenges.loadConfig(src);
         gamerules.loadConfig(src);
         goals.loadConfig(src);
+        attributes.loadConfig(src);
     }
 
     public void saveConfig(FileConfiguration dest){
@@ -128,6 +134,7 @@ public class ModificationsService {
         challenges.saveConfig(dest);
         gamerules.saveConfig(dest);
         goals.saveConfig(dest);
+        attributes.saveConfig(dest);
     }
 
     public void clearWorldSpecificConfig(FileConfiguration dest){
@@ -147,4 +154,6 @@ public class ModificationsService {
     public GoalsService getGoalsService(){
         return goals;
     }
+
+    public AttributeService getAttributeService(){ return attributes; }
 }

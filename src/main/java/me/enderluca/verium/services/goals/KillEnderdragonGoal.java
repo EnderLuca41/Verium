@@ -2,12 +2,12 @@ package me.enderluca.verium.services.goals;
 
 import me.enderluca.verium.GoalType;
 import me.enderluca.verium.interfaces.Goal;
-import me.enderluca.verium.listener.KillEnderdragonListener;
-import me.enderluca.verium.util.MessageUtil;
+import me.enderluca.verium.listener.goals.KillEnderdragonListener;
+
 import net.md_5.bungee.api.chat.BaseComponent;
+
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
 import javax.annotation.Nullable;

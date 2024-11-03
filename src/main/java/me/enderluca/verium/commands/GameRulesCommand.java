@@ -1,7 +1,9 @@
 package me.enderluca.verium.commands;
 
-import me.enderluca.verium.GamerulesGui;
+import me.enderluca.verium.gui.GamerulesGui;
 import me.enderluca.verium.services.GamerulesService;
+
+import com.comphenix.protocol.ProtocolManager;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -14,8 +16,8 @@ import javax.annotation.Nonnull;
 public class GameRulesCommand implements CommandExecutor {
     private final GamerulesGui gamerulesGui;
 
-    public GameRulesCommand(Plugin owner, GamerulesService service){
-        gamerulesGui = new GamerulesGui(owner, service);
+    public GameRulesCommand(Plugin owner, ProtocolManager manager, GamerulesService service){
+        gamerulesGui = new GamerulesGui(owner, manager, service);
     }
 
     @Override

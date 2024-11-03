@@ -8,6 +8,9 @@ import org.bukkit.plugin.java.JavaPlugin;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import com.comphenix.protocol.ProtocolManager;
+import com.comphenix.protocol.ProtocolLibrary;
+
 public class VeriumPlugin extends JavaPlugin {
 
     Logger logger;
@@ -15,11 +18,13 @@ public class VeriumPlugin extends JavaPlugin {
     TimerService timer;
     WorldResetService reset;
     ModificationsService modifications;
-    HealthpointsService healthpoints;
+
+    ProtocolManager protocolManager;
 
     @Override
     public void onEnable() {
         logger = getLogger();
+        protocolManager = ProtocolLibrary.getProtocolManager();
 
         logger.info("Reading server properties");
         serverProps = new ServerProperties();
@@ -38,22 +43,20 @@ public class VeriumPlugin extends JavaPlugin {
         timer = new TimerService(this, sec, timerEnabled);
         logger.log(Level.INFO, "Creating timer complete");
 
-        logger.info("Creating Modifications service to handle challenges and gamerules");
+        logger.info("Creating Modifications service to handle challenges, gamerules, goals and attributes");
         modifications = new ModificationsService(this, getConfig(), timer);
-        logger.info("Creating Modifications service to handle challenges and gamerules complete");
+        logger.info("Creating Modifications service complete");
 
-        logger.info("Creating Healthpoints service");
-        healthpoints = new HealthpointsService(this, getConfig());
-        logger.info("Creating Healthpoints service complete");
 
         logger.log(Level.INFO, "Creating commands");
         getCommand("timer").setExecutor(new TimerCommand(timer));
         getCommand("reset").setExecutor(new ResetCommand(reset));
-        getCommand("challenges").setExecutor(new ChallengeCommand(this, modifications.getChallengeService()));
-        getCommand("gamerules").setExecutor(new GameRulesCommand(this, modifications.getGamerulesService()));
+        getCommand("challenges").setExecutor(new ChallengeCommand(this, protocolManager, modifications.getChallengeService()));
+        getCommand("gamerules").setExecutor(new GameRulesCommand(this, protocolManager, modifications.getGamerulesService()));
         getCommand("pause").setExecutor(new PauseCommand(modifications));
         getCommand("resume").setExecutor(new ResumeCommand(modifications));
-        getCommand("goals").setExecutor(new GoalsCommand(this, modifications.getGoalsService()));
+        getCommand("goals").setExecutor(new GoalsCommand(this, protocolManager,modifications.getGoalsService()));
+        getCommand("attributemanager").setExecutor(new AttributeManagerCommand(this, protocolManager, modifications.getAttributeService()));
         logger.log(Level.INFO, "Creating commands complete");
     }
 
@@ -64,18 +67,19 @@ public class VeriumPlugin extends JavaPlugin {
 
         logger.log(Level.INFO, "Saving config");
 
-        boolean timerEnabled = timer.isEnabled();
-        long sec = timer.cancel();
-        getConfig().set("timer.seconds", sec);
-        getConfig().set("timer.enabled", timerEnabled);
-
         getConfig().set("reset.scheduled", reset.isResetScheduled());
 
         modifications.saveConfig(getConfig());
 
         if(reset.isResetScheduled()){
             modifications.clearWorldSpecificConfig(getConfig());
+            timer.reset();
         }
+
+        boolean timerEnabled = timer.isEnabled();
+        long sec = timer.cancel();
+        getConfig().set("timer.seconds", sec);
+        getConfig().set("timer.enabled", timerEnabled);
 
         saveConfig();
 
