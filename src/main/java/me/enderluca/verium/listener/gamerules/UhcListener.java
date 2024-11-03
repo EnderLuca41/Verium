@@ -1,5 +1,6 @@
-package me.enderluca.verium.listener;
+package me.enderluca.verium.listener.gamerules;
 
+import org.bukkit.GameRule;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -7,16 +8,15 @@ import org.bukkit.event.world.WorldLoadEvent;
 
 import java.util.function.BooleanSupplier;
 
-public class PvpListener implements Listener {
-
+public class UhcListener implements Listener {
     private final BooleanSupplier isActive;
 
-    public PvpListener(BooleanSupplier isActive){
+    public UhcListener(BooleanSupplier isActive){
         this.isActive = isActive;
     }
 
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onWorldLoad(WorldLoadEvent event){
-        event.getWorld().setPVP(isActive.getAsBoolean());
+        event.getWorld().setGameRule(GameRule.NATURAL_REGENERATION, !isActive.getAsBoolean());
     }
 }

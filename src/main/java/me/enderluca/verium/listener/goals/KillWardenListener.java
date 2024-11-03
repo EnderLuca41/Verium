@@ -1,12 +1,11 @@
-package me.enderluca.verium.listener;
+package me.enderluca.verium.listener.goals;
 
 import me.enderluca.verium.util.MessageUtil;
 
 import net.md_5.bungee.api.chat.BaseComponent;
 
-import org.bukkit.entity.EnderDragon;
 import org.bukkit.entity.Entity;
-import org.bukkit.entity.EntityType;
+import org.bukkit.entity.Warden;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -15,14 +14,14 @@ import org.bukkit.event.entity.EntityDeathEvent;
 import java.util.function.BooleanSupplier;
 import java.util.function.Consumer;
 
-public class KillEnderdragonListener  implements Listener {
+public class KillWardenListener implements Listener {
 
     private final BooleanSupplier isActive;
-    private final Consumer<BaseComponent[]> onEnderdragonDead;
+    private final Consumer<BaseComponent[]> onWardenDead;
 
-    public KillEnderdragonListener(BooleanSupplier isActive, Consumer<BaseComponent[]> onEnderdragonDead){
+    public KillWardenListener(BooleanSupplier isActive, Consumer<BaseComponent[]> onWardenDead){
         this.isActive = isActive;
-        this.onEnderdragonDead = onEnderdragonDead;
+        this.onWardenDead = onWardenDead;
     }
 
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
@@ -32,11 +31,10 @@ public class KillEnderdragonListener  implements Listener {
 
         Entity entity = event.getEntity();
 
-        if(entity.getType() != EntityType.ENDER_DRAGON)
+        if(!(entity instanceof Warden warden))
             return;
 
-        EnderDragon dragon = (EnderDragon) entity;
-        BaseComponent[] message = MessageUtil.buildKillEnderdragonComplete(dragon.getKiller());
-        onEnderdragonDead.accept(message);
+        BaseComponent[] message = MessageUtil.buildKillWardenComplete(warden.getKiller());
+        onWardenDead.accept(message);
     }
 }

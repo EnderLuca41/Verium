@@ -2,7 +2,7 @@ package me.enderluca.verium.services.challenges;
 
 import me.enderluca.verium.ChallengeType;
 import me.enderluca.verium.interfaces.Challenge;
-import me.enderluca.verium.listener.NoDeathListener;
+import me.enderluca.verium.listener.challenges.NoDeathListener;
 import net.md_5.bungee.api.chat.BaseComponent;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;

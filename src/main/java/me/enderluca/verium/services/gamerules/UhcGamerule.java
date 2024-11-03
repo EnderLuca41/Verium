@@ -2,7 +2,7 @@ package me.enderluca.verium.services.gamerules;
 
 import me.enderluca.verium.GameruleType;
 import me.enderluca.verium.interfaces.Gamerule;
-import me.enderluca.verium.listener.UhcListener;
+import me.enderluca.verium.listener.gamerules.UhcListener;
 
 import org.bukkit.Bukkit;
 import org.bukkit.GameRule;

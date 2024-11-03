@@ -3,13 +3,12 @@ package me.enderluca.verium.services.challenges;
 import me.enderluca.verium.interfaces.Challenge;
 import me.enderluca.verium.ChallengeType;
 import me.enderluca.verium.runnable.WolfSurviveRunnable;
-import me.enderluca.verium.listener.WolfSurviveListener;
+import me.enderluca.verium.listener.challenges.WolfSurviveListener;
 import me.enderluca.verium.util.EntityUtil;
 
 import net.md_5.bungee.api.chat.BaseComponent;
 
 import org.bukkit.Bukkit;
-import org.bukkit.Location;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;

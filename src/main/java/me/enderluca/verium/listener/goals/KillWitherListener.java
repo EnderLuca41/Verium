@@ -1,4 +1,4 @@
-package me.enderluca.verium.listener;
+package me.enderluca.verium.listener.goals;
 
 import me.enderluca.verium.util.MessageUtil;
 

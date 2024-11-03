@@ -2,17 +2,15 @@ package me.enderluca.verium.services.gamerules;
 
 import me.enderluca.verium.GameruleType;
 import me.enderluca.verium.interfaces.Gamerule;
-import me.enderluca.verium.listener.NoArmorListener;
+import me.enderluca.verium.listener.gamerules.NoArmorListener;
 
 import me.enderluca.verium.util.ItemUtil;
 import org.bukkit.Bukkit;
-import org.bukkit.Material;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
 
-import java.util.Arrays;
 import java.util.Objects;
 
 public class NoArmorGamerule implements Gamerule {

@@ -1,29 +1,26 @@
-package me.enderluca.verium.listener;
+package me.enderluca.verium.listener.gamerules;
 
-import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
-import org.bukkit.event.entity.EntityRegainHealthEvent;
+import org.bukkit.event.entity.FoodLevelChangeEvent;
 
 import java.util.function.BooleanSupplier;
 
-public class UuhcListener implements Listener {
+public class NoHungerListener implements Listener {
 
     private final BooleanSupplier isActive;
 
-    public UuhcListener(BooleanSupplier isActive){
+    public NoHungerListener(BooleanSupplier isActive){
         this.isActive = isActive;
     }
 
     @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
-    public void onEntityHeal(EntityRegainHealthEvent event){
+    public void onFoodLevelChange(FoodLevelChangeEvent event){
         if(!isActive.getAsBoolean())
             return;
 
-        if(!(event.getEntity() instanceof Player))
-            return;
-
         event.setCancelled(true);
+        event.getEntity().setFoodLevel(20); //Food might be not 20, because the player joined after the rule was activated
     }
 }

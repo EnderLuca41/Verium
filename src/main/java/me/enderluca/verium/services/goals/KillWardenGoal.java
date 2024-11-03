@@ -3,7 +3,7 @@ package me.enderluca.verium.services.goals;
 import me.enderluca.verium.GoalType;
 import me.enderluca.verium.interfaces.Goal;
 
-import me.enderluca.verium.listener.KillWardenListener;
+import me.enderluca.verium.listener.goals.KillWardenListener;
 import net.md_5.bungee.api.chat.BaseComponent;
 
 import org.bukkit.Bukkit;
