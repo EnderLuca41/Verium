@@ -4,6 +4,7 @@ import me.enderluca.verium.util.ItemUtil;
 
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityPickupItemEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -23,7 +24,7 @@ public class NoArmorListener implements Listener {
         this.isActive = isActive;
     }
 
-    @EventHandler(ignoreCancelled = true)
+    @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true) //High priority to ensure the player cannot obtain armor but to also allow other plugins to not cancel the event
     public void onItemPickup(EntityPickupItemEvent event){
         if(!isActive.getAsBoolean())
             return;
@@ -37,7 +38,7 @@ public class NoArmorListener implements Listener {
         event.setCancelled(true);
     }
 
-    @EventHandler(ignoreCancelled = true)
+    @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
     public void onInventoryClick(InventoryClickEvent event){
         if(!isActive.getAsBoolean())
             return;
@@ -52,7 +53,7 @@ public class NoArmorListener implements Listener {
     }
 
 
-    @EventHandler(ignoreCancelled = true)
+    @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
     public void onInventoryDrag(InventoryDragEvent event){
         if(!isActive.getAsBoolean())
             return;
@@ -66,7 +67,7 @@ public class NoArmorListener implements Listener {
         event.setCancelled(true);
     }
 
-    @EventHandler(ignoreCancelled = true)
+    @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
     public void onManipulateArmorStand(PlayerArmorStandManipulateEvent event){
         if(!isActive.getAsBoolean())
             return;
@@ -74,7 +75,7 @@ public class NoArmorListener implements Listener {
         event.setCancelled(true);
     }
 
-    @EventHandler(ignoreCancelled = true)
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onPlayerJon(PlayerJoinEvent event){
         if(!isActive.getAsBoolean())
             return;

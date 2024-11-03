@@ -1,6 +1,7 @@
 package me.enderluca.verium.listener;
 
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.world.WorldLoadEvent;
 
@@ -14,7 +15,7 @@ public class PvpListener implements Listener {
         this.isActive = isActive;
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onWorldLoad(WorldLoadEvent event){
         event.getWorld().setPVP(isActive.getAsBoolean());
     }

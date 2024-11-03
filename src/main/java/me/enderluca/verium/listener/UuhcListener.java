@@ -2,6 +2,7 @@ package me.enderluca.verium.listener;
 
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityRegainHealthEvent;
 
@@ -15,7 +16,7 @@ public class UuhcListener implements Listener {
         this.isActive = isActive;
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
     public void onEntityHeal(EntityRegainHealthEvent event){
         if(!isActive.getAsBoolean())
             return;

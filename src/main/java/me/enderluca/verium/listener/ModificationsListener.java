@@ -2,6 +2,7 @@ package me.enderluca.verium.listener;
 
 import org.bukkit.GameMode;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 
@@ -15,7 +16,7 @@ public class ModificationsListener implements Listener {
         this.isActive = isActive;
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onPlayerJoin(PlayerJoinEvent event){
         if(isActive.getAsBoolean()) {
             event.getPlayer().setGameMode(GameMode.SPECTATOR);

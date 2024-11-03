@@ -7,6 +7,7 @@ import net.md_5.bungee.api.chat.BaseComponent;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Warden;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDeathEvent;
 
@@ -23,7 +24,7 @@ public class KillWardenListener implements Listener {
         this.onWardenDead = onWardenDead;
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onEntityDeath(EntityDeathEvent event){
         if(!isActive.getAsBoolean())
             return;

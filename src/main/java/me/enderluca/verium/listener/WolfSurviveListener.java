@@ -7,6 +7,7 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Wolf;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
@@ -29,7 +30,7 @@ public class WolfSurviveListener implements Listener {
         this.isActive = isActive;
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onPlayerJoin(PlayerJoinEvent event){
         if(!isActive.getAsBoolean())
             return;
@@ -43,7 +44,7 @@ public class WolfSurviveListener implements Listener {
     }
 
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onEntityDead(EntityDeathEvent event){
         if(!isActive.getAsBoolean())
             return;

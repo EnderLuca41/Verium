@@ -1,6 +1,7 @@
 package me.enderluca.verium.listener;
 
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.FoodLevelChangeEvent;
 
@@ -14,7 +15,7 @@ public class NoHungerListener implements Listener {
         this.isActive = isActive;
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
     public void onFoodLevelChange(FoodLevelChangeEvent event){
         if(!isActive.getAsBoolean())
             return;

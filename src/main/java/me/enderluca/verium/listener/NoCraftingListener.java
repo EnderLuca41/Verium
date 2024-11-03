@@ -1,6 +1,7 @@
 package me.enderluca.verium.listener;
 
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryOpenEvent;
 import org.bukkit.event.inventory.InventoryType;
@@ -15,7 +16,7 @@ public class NoCraftingListener implements Listener {
         this.isActive = isActive;
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true) //High priority to ensure the player cannot open the workbench but also allow other plugins to cancel the event
     public void onOpenInventory(InventoryOpenEvent event){
         if(!isActive.getAsBoolean())
             return;

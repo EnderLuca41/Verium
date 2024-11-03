@@ -6,6 +6,7 @@ import net.md_5.bungee.api.chat.BaseComponent;
 
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
@@ -23,7 +24,7 @@ public class NoFallDamageListener implements Listener {
         this.onFail = onFail;
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onEntityDamage(EntityDamageEvent event) {
         if (!isActive.getAsBoolean())
             return;
