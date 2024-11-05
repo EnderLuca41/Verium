@@ -37,7 +37,7 @@ Veriums development has just started, that's why the current supported features 
 The attribute manager can be used to change the player's attributes, which includes for example the speed, health and attack damage.
 You can find the full list of attributes in the [minecraft wiki](https://minecraft.wiki/w/Attribute).
 
-<img src="https://private-user-images.githubusercontent.com/73256695/382516697-9b1f9d50-0ad5-47ba-971c-2da8e22f57c9.png?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3MzA1OTYzNzEsIm5iZiI6MTczMDU5NjA3MSwicGF0aCI6Ii83MzI1NjY5NS8zODI1MTY2OTctOWIxZjlkNTAtMGFkNS00N2JhLTk3MWMtMmRhOGUyMmY1N2M5LnBuZz9YLUFtei1BbGdvcml0aG09QVdTNC1ITUFDLVNIQTI1NiZYLUFtei1DcmVkZW50aWFsPUFLSUFWQ09EWUxTQTUzUFFLNFpBJTJGMjAyNDExMDMlMkZ1cy1lYXN0LTElMkZzMyUyRmF3czRfcmVxdWVzdCZYLUFtei1EYXRlPTIwMjQxMTAzVDAxMDc1MVomWC1BbXotRXhwaXJlcz0zMDAmWC1BbXotU2lnbmF0dXJlPTAwMDM0OTlmOWNiMmUxYmFhNjZlMDQ0OWZhYmNlMzM5ODJhMjljZjc3MTI4MzJmODRjNzA4YzE0ODQ4ODcyMjAmWC1BbXotU2lnbmVkSGVhZGVycz1ob3N0In0.hrCKab8pV3KScq09A5BfmUQZRwyGfUjul6g6C4Q5wMQ" alt="drawing" width="700"/>
+<img src="https://github.com/user-attachments/assets/35ff0261-d0e6-4f73-ae43-6f5f5f1092f1" alt="drawing" width="900"/>
 
 Not only that, but you can also customize to which players these attribute changes apply to with a blacklist or whitelist.
 
