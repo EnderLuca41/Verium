@@ -214,90 +214,81 @@ public final class GuiUtil {
      */
     @Nonnull
     public static ItemStack getAttributeIcon(Attribute attribute){
-        switch (attribute){
-            case GENERIC_ARMOR -> {
-                ItemStack icon = new ItemStack(Material.IRON_CHESTPLATE, 1);
-                ItemMeta meta = icon.getItemMeta();
-                meta.setLore(List.of("Armor defense points. "));
-                meta.setDisplayName(ChatColor.WHITE + "Armor");
-                meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
-                icon.setItemMeta(meta);
-                return icon;
-            }
-
-            case GENERIC_ARMOR_TOUGHNESS -> {
-                ItemStack icon = new ItemStack(Material.DIAMOND_CHESTPLATE, 1);
-                ItemMeta meta = icon.getItemMeta();
-                meta.setDisplayName(ChatColor.WHITE + "Armor toughness");
-                meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
-                icon.setItemMeta(meta);
-                return icon;
-            }
-
-            case GENERIC_ATTACK_DAMAGE -> {
-                ItemStack icon = new ItemStack(Material.IRON_SWORD, 1);
-                ItemMeta meta = icon.getItemMeta();
-                meta.setLore(List.of("Damage dealt by attacks, in half-hearts. "));
-                meta.setDisplayName(ChatColor.WHITE + "Attack damage");
-                meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
-                icon.setItemMeta(meta);
-                return icon;
-            }
-
-            case GENERIC_ATTACK_SPEED -> {
-                ItemStack icon = new ItemStack(Material.FEATHER, 1);
-                ItemMeta meta = icon.getItemMeta();
-                meta.setLore(List.of("Determines recharging rate of attack strength.",
-                        "Value is the number of full-strength attacks per second. "));
-                meta.setDisplayName(ChatColor.WHITE + "Attack speed");
-                icon.setItemMeta(meta);
-                return icon;
-            }
-
-            case GENERIC_KNOCKBACK_RESISTANCE -> {
-                ItemStack icon = new ItemStack(Material.SHIELD, 1);
-                ItemMeta meta = icon.getItemMeta();
-                meta.setLore(List.of("The scale of horizontal knockback resisted from attacks and projectiles.",
-                        "Vertical knockback is not affected. Does not affect explosions.",
-                        "The resistance functions as a percentage from 0.0 (0% resistance) to 1.0 (100% resistance)",
-                        "(e.g. 0.4 is 40% resistance, meaning the attributed mob takes 60% of usual knockback)"));
-                meta.setDisplayName(ChatColor.WHITE + "Knockback resistance");
-                icon.setItemMeta(meta);
-                return icon;
-            }
-
-            case GENERIC_LUCK -> {
-                ItemStack icon = new ItemStack(Material.RED_MUSHROOM, 1);
-                ItemMeta meta = icon.getItemMeta();
-                meta.setLore(List.of("Affects the results of loot tables using the quality or bonus_rolls tag ",
-                        "(e.g. when opening chests or chest minecarts, fishing, and killing mobs)."));
-                meta.setDisplayName(ChatColor.WHITE + "Luck");
-                icon.setItemMeta(meta);
-                return icon;
-            }
-
-            case GENERIC_MAX_HEALTH -> {
-                ItemStack icon = new ItemStack(Material.APPLE, 1);
-                ItemMeta meta = icon.getItemMeta();
-                meta.setLore(List.of("Maximum health points in half-hearts."));
-                meta.setDisplayName(ChatColor.WHITE + "Max health");
-                icon.setItemMeta(meta);
-                return icon;
-            }
-
-            case GENERIC_MOVEMENT_SPEED -> {
-                ItemStack icon = new ItemStack(Material.POTION, 1);
-                PotionMeta meta = (PotionMeta) icon.getItemMeta();
-                meta.setColor(Color.AQUA);
-                meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
-                meta.addItemFlags(ItemFlag.HIDE_POTION_EFFECTS);
-                meta.setDisplayName(ChatColor.WHITE + "Movement speed");
-                icon.setItemMeta(meta);
-                return icon;
-            }
-
-            default -> {return new ItemStack(Material.AIR);}
+        if(attribute == Attribute.ARMOR) {
+            ItemStack icon = new ItemStack(Material.IRON_CHESTPLATE, 1);
+            ItemMeta meta = icon.getItemMeta();
+            meta.setLore(List.of("Armor defense points. "));
+            meta.setDisplayName(ChatColor.WHITE + "Armor");
+            meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
+            icon.setItemMeta(meta);
+            return icon;
         }
+        else if(attribute == Attribute.ARMOR_TOUGHNESS) {
+            ItemStack icon = new ItemStack(Material.DIAMOND_CHESTPLATE, 1);
+            ItemMeta meta = icon.getItemMeta();
+            meta.setDisplayName(ChatColor.WHITE + "Armor toughness");
+            meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
+            icon.setItemMeta(meta);
+            return icon;
+        }
+        else if(attribute == Attribute.ATTACK_DAMAGE) {
+            ItemStack icon = new ItemStack(Material.IRON_SWORD, 1);
+            ItemMeta meta = icon.getItemMeta();
+            meta.setLore(List.of("Damage dealt by attacks, in half-hearts. "));
+            meta.setDisplayName(ChatColor.WHITE + "Attack damage");
+            meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
+            icon.setItemMeta(meta);
+            return icon;
+        }
+        else if(attribute == Attribute.ATTACK_SPEED) {
+            ItemStack icon = new ItemStack(Material.FEATHER, 1);
+            ItemMeta meta = icon.getItemMeta();
+            meta.setLore(List.of("Determines recharging rate of attack strength.",
+                    "Value is the number of full-strength attacks per second. "));
+            meta.setDisplayName(ChatColor.WHITE + "Attack speed");
+            icon.setItemMeta(meta);
+            return icon;
+        }
+        else if(attribute == Attribute.KNOCKBACK_RESISTANCE) {
+            ItemStack icon = new ItemStack(Material.SHIELD, 1);
+            ItemMeta meta = icon.getItemMeta();
+            meta.setLore(List.of("The scale of horizontal knockback resisted from attacks and projectiles.",
+                    "Vertical knockback is not affected. Does not affect explosions.",
+                    "The resistance functions as a percentage from 0.0 (0% resistance) to 1.0 (100% resistance)",
+                    "(e.g. 0.4 is 40% resistance, meaning the attributed mob takes 60% of usual knockback)"));
+            meta.setDisplayName(ChatColor.WHITE + "Knockback resistance");
+            icon.setItemMeta(meta);
+            return icon;
+        }
+        else if(attribute == Attribute.LUCK) {
+            ItemStack icon = new ItemStack(Material.RED_MUSHROOM, 1);
+            ItemMeta meta = icon.getItemMeta();
+            meta.setLore(List.of("Affects the results of loot tables using the quality or bonus_rolls tag ",
+                    "(e.g. when opening chests or chest minecarts, fishing, and killing mobs)."));
+            meta.setDisplayName(ChatColor.WHITE + "Luck");
+            icon.setItemMeta(meta);
+            return icon;
+        }
+        else if(attribute == Attribute.MAX_HEALTH) {
+            ItemStack icon = new ItemStack(Material.APPLE, 1);
+            ItemMeta meta = icon.getItemMeta();
+            meta.setLore(List.of("Maximum health points in half-hearts."));
+            meta.setDisplayName(ChatColor.WHITE + "Max health");
+            icon.setItemMeta(meta);
+            return icon;
+        }
+        else if(attribute == Attribute.MOVEMENT_SPEED) {
+            ItemStack icon = new ItemStack(Material.POTION, 1);
+            PotionMeta meta = (PotionMeta) icon.getItemMeta();
+            meta.setColor(Color.AQUA);
+            meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
+            meta.addItemFlags(ItemFlag.HIDE_POTION_EFFECTS);
+            meta.setDisplayName(ChatColor.WHITE + "Movement speed");
+            icon.setItemMeta(meta);
+            return icon;
+        }
+        else
+            return new ItemStack(Material.AIR); //Should never happen
     }
 
     /**
