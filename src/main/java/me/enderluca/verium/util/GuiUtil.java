@@ -298,7 +298,7 @@ public final class GuiUtil {
     public static ItemStack getAddAttributeIcon(){
         ItemStack addAttribute = new ItemStack(Material.LIME_DYE, 1);
         ItemMeta meta = addAttribute.getItemMeta();
-        meta.addEnchant(Enchantment.DAMAGE_ALL, 1, true); //Item cannot be air, so NullPointerException is impossible
+        meta.addEnchant(Enchantment.SHARPNESS, 1, true); //Item cannot be air, so NullPointerException is impossible
         meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
         meta.setDisplayName(ChatColor.WHITE + "Add attribute");
         addAttribute.setItemMeta(meta);
