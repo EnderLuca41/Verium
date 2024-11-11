@@ -15,7 +15,17 @@ public final class AttributeUtil {
             Attribute.ARMOR, Attribute.ARMOR_TOUGHNESS,
             Attribute.ATTACK_DAMAGE, Attribute.ATTACK_SPEED,
             Attribute.KNOCKBACK_RESISTANCE, Attribute.LUCK,
-            Attribute.MAX_HEALTH, Attribute.MOVEMENT_SPEED
+            Attribute.MAX_ABSORPTION, Attribute.MAX_HEALTH,
+            Attribute.MOVEMENT_SPEED, Attribute.SCALE,
+            Attribute.STEP_HEIGHT, Attribute.JUMP_STRENGTH,
+            Attribute.BLOCK_INTERACTION_RANGE, Attribute.ENTITY_INTERACTION_RANGE,
+            Attribute.BLOCK_BREAK_SPEED, Attribute.GRAVITY,
+            Attribute.SAFE_FALL_DISTANCE, Attribute.FALL_DAMAGE_MULTIPLIER,
+            Attribute.BURNING_TIME, Attribute.EXPLOSION_KNOCKBACK_RESISTANCE,
+            Attribute.MINING_EFFICIENCY, Attribute.MOVEMENT_EFFICIENCY,
+            Attribute.OXYGEN_BONUS, Attribute.SNEAKING_SPEED,
+            Attribute.SUBMERGED_MINING_SPEED, Attribute.SWEEPING_DAMAGE_RATIO,
+            Attribute.WATER_MOVEMENT_EFFICIENCY
     };
 
     private static final Map<Attribute, Double> defaultBaseValues = new HashMap<>();
