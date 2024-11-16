@@ -22,7 +22,9 @@ public class SwitchBuilder extends WidgetBuilder {
     @Nullable
     protected ItemStack falseIcon = null;
     @Nullable
-    protected Sound clickSound = null;
+    protected Sound trueSound = null;
+    @Nullable
+    protected Sound falseSound = null;
     @Nullable
     protected Supplier<Boolean> getter = null;
     @Nullable
@@ -51,11 +53,20 @@ public class SwitchBuilder extends WidgetBuilder {
     }
 
     /**
-     * Add a sound that is played to the player when the switch is clicked
+     * Add a sound that is played when the switch switches to the true state. <br>
      * Default is Sound.ENTITY_EXPERIENCE_ORB_PICKUP
      */
-    public SwitchBuilder addClickSound(Sound sound){
-        clickSound = sound;
+    public SwitchBuilder addTrueSound(Sound sound){
+        trueSound = sound;
+        return this;
+    }
+
+    /**
+     * Add a sound that is played when the switch switches to the false state. <br>
+     * Default is Sound.ENTITY_EXPERIENCE_ORB_PICKUP
+     */
+    public SwitchBuilder addFalseSound(Sound sound) {
+        falseSound = sound;
         return this;
     }
 
@@ -90,6 +101,6 @@ public class SwitchBuilder extends WidgetBuilder {
      * Build the switch from the configuration mode with the builder.
      */
     public Switch build(){
-        return new Switch(trueIcon, falseIcon, getter, setter, clickSound);
+        return new Switch(trueIcon, falseIcon, getter, setter, trueSound, falseSound);
     }
 }

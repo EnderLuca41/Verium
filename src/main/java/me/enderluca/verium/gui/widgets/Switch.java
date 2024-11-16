@@ -26,7 +26,9 @@ public class Switch extends Widget implements IOnClick {
     @Nonnull
     protected ItemStack falseIcon;
     @Nonnull
-    protected Sound clickSound;
+    protected Sound trueSound;
+    @Nonnull
+    protected Sound falseSound;
 
     @Nullable
     protected Supplier<Boolean> getter;
@@ -38,12 +40,22 @@ public class Switch extends Widget implements IOnClick {
      */
     protected boolean state;
 
+    /**
+     * Create a new Switch instance
+     * @param trueIcon Icon that is displayed when the switch is in the true state
+     * @param falseIcon Icon that is displayed when the switch is in the false state
+     * @param getter Function that returns the current state of the switch, if not set, the state will be stored internally
+     * @param setter Function that sets the state of the switch
+     * @param trueSound Sound that is played when the switch switches to the true state
+     * @param falseSound Sound that is played when the switch switches to the false state
+     */
     public Switch(@Nullable ItemStack trueIcon, @Nullable ItemStack falseIcon,
-                  @Nullable Supplier<Boolean> getter, @Nullable Consumer<Boolean> setter, @Nullable Sound clickSound){
+                  @Nullable Supplier<Boolean> getter, @Nullable Consumer<Boolean> setter, @Nullable Sound trueSound, @Nullable Sound falseSound){
 
         this.trueIcon = Objects.requireNonNullElseGet(trueIcon, GuiUtil::getEnabledIcon);
         this.falseIcon = Objects.requireNonNullElseGet(falseIcon, GuiUtil::getDisabledIcon);
-        this.clickSound = Objects.isNull(clickSound) ? Sound.ENTITY_EXPERIENCE_ORB_PICKUP : clickSound;
+        this.trueSound = Objects.requireNonNullElse(trueSound, Sound.ENTITY_EXPERIENCE_ORB_PICKUP);
+        this.falseSound = Objects.requireNonNullElse(falseSound, Sound.ENTITY_EXPERIENCE_ORB_PICKUP);
 
         this.getter = getter;
         this.setter = setter;
@@ -95,7 +107,10 @@ public class Switch extends Widget implements IOnClick {
             return;
 
         setState(!(getState()));
-        player.playSound(player.getLocation(), clickSound, 1f, 1f);
+        if(getState())
+            player.playSound(player.getLocation(), trueSound, 1, 1);
+        else
+            player.playSound(player.getLocation(), falseSound, 1, 1);
 
         render(event.getInventory(), index);
     }
