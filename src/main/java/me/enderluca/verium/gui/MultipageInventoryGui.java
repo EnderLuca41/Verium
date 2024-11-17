@@ -90,7 +90,7 @@ public class MultipageInventoryGui implements IInventoryGui {
         icon.setItemMeta(meta);
 
         builder.addIcon(icon);
-        builder.addClickSound(Sound.ENTITY_ITEM_PICKUP);
+        builder.addClickSound(new SoundEffect(Sound.ENTITY_ITEM_PICKUP));
         builder.addClickEvent(event -> {
             if (!(event.getWhoClicked() instanceof Player player))
                 return;
@@ -112,7 +112,7 @@ public class MultipageInventoryGui implements IInventoryGui {
         icon.setItemMeta(meta);
 
         builder.addIcon(icon);
-        builder.addClickSound(Sound.ENTITY_ITEM_PICKUP);
+        builder.addClickSound(new SoundEffect(Sound.ENTITY_ITEM_PICKUP));
         builder.addClickEvent(event -> {
             if(!(event.getWhoClicked() instanceof Player player))
                 return;

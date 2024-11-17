@@ -1,5 +1,6 @@
 package me.enderluca.verium.gui.widgets;
 
+import me.enderluca.verium.gui.SoundEffect;
 import me.enderluca.verium.gui.event.TextInputEvent;
 import me.enderluca.verium.interfaces.IInventoryGui;
 import me.enderluca.verium.interfaces.IOnClick;
@@ -33,9 +34,9 @@ import java.util.logging.Level;
 public class TextInput extends Widget implements IOnClick, Listener {
 
     @Nonnull
-    protected Sound clickSound;
+    protected SoundEffect clickSound;
     @Nonnull
-    protected Sound doneSound;
+    protected SoundEffect doneSound;
 
     @Nullable
     protected final Consumer<TextInputEvent> onTextEntered;
@@ -53,7 +54,7 @@ public class TextInput extends Widget implements IOnClick, Listener {
      * @param returnGui The gui to return to after the text has been entered
      */
     public TextInput(@Nonnull Plugin owner, @Nonnull ProtocolManager manager, @Nullable ItemStack icon,
-                     @Nullable Sound clickSound, @Nullable Sound doneSound, @Nullable Consumer<TextInputEvent> onTextEntered,
+                     @Nullable SoundEffect clickSound, @Nullable SoundEffect doneSound, @Nullable Consumer<TextInputEvent> onTextEntered,
                      @Nullable IInventoryGui returnGui){
         this.owner = owner;
         this.manager = manager;
@@ -71,12 +72,12 @@ public class TextInput extends Widget implements IOnClick, Listener {
             this.icon = icon;
 
         if(Objects.isNull(clickSound))
-            this.clickSound = Sound.BLOCK_BARREL_OPEN; //Default sound
+            this.clickSound = new SoundEffect(Sound.BLOCK_BARREL_OPEN); //Default sound
         else
             this.clickSound = clickSound;
 
         if(Objects.isNull(doneSound))
-            this.doneSound = Sound.BLOCK_BARREL_CLOSE; //Default sound
+            this.doneSound = new SoundEffect(Sound.BLOCK_BARREL_OPEN); //Default sound
         else
             this.doneSound = doneSound;
 
@@ -108,7 +109,7 @@ public class TextInput extends Widget implements IOnClick, Listener {
 
                 player.sendBlockChange(position.toLocation(player.getWorld()), player.getWorld().getBlockData(position.toLocation(player.getWorld()).getBlock().getLocation()));
 
-                player.playSound(player.getLocation(), doneSound, 1, 1);
+                doneSound.play(player);
 
                 manager.removePacketListener(this);
 
@@ -138,7 +139,7 @@ public class TextInput extends Widget implements IOnClick, Listener {
         if(event.getClick() == ClickType.DOUBLE_CLICK)
             return;
 
-        player.playSound(player.getLocation(), clickSound, 1, 1);
+        clickSound.play(player);
 
         Location signLocation = player.getLocation().clone().add(player.getLocation().getDirection().multiply(-1)).add(0, -2, 0);
 

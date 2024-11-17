@@ -1,9 +1,11 @@
 package me.enderluca.verium.gui.widgets;
 
+import me.enderluca.verium.gui.SoundEffect;
 import me.enderluca.verium.interfaces.IOnClick;
 
 import org.bukkit.Material;
 import org.bukkit.Sound;
+import org.bukkit.SoundCategory;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -22,14 +24,14 @@ import java.util.function.Consumer;
 public class Button extends Widget implements IOnClick {
 
     @Nonnull
-    protected Sound clickSound;
+    protected SoundEffect clickSound;
 
     @Nullable
     protected Consumer<InventoryClickEvent> onClick;
     protected boolean doubleClick;
 
 
-    public Button(@Nullable ItemStack icon, @Nullable Sound clickSound,
+    public Button(@Nullable ItemStack icon, @Nullable SoundEffect clickSound,
                   @Nullable Consumer<InventoryClickEvent> onClick, boolean doubleClick){
         if(Objects.isNull(icon)){
             ItemStack defaultIcon = new ItemStack(Material.REDSTONE_BLOCK, 1);
@@ -41,7 +43,7 @@ public class Button extends Widget implements IOnClick {
         else
             this.icon = icon;
 
-        this.clickSound = Objects.isNull(clickSound) ? Sound.ENTITY_EXPERIENCE_ORB_PICKUP : clickSound;
+        this.clickSound = Objects.isNull(clickSound) ? new SoundEffect(Sound.ENTITY_EXPERIENCE_ORB_PICKUP) : clickSound;
         this.onClick = onClick;
         this.doubleClick = doubleClick;
     }
@@ -69,7 +71,7 @@ public class Button extends Widget implements IOnClick {
         if((event.getClick() == ClickType.DOUBLE_CLICK) != doubleClick)
             return;
 
-        player.playSound(player.getLocation(), clickSound, 1f, 1f);
+        clickSound.play(player);
         if(Objects.nonNull(onClick))
             onClick.accept(event);
     }

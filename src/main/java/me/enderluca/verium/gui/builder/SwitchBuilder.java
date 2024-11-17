@@ -1,5 +1,6 @@
 package me.enderluca.verium.gui.builder;
 
+import me.enderluca.verium.gui.SoundEffect;
 import me.enderluca.verium.gui.widgets.Switch;
 
 import com.comphenix.protocol.ProtocolManager;
@@ -22,9 +23,9 @@ public class SwitchBuilder extends WidgetBuilder {
     @Nullable
     protected ItemStack falseIcon = null;
     @Nullable
-    protected Sound trueSound = null;
+    protected SoundEffect trueSound = null;
     @Nullable
-    protected Sound falseSound = null;
+    protected SoundEffect falseSound = null;
     @Nullable
     protected Supplier<Boolean> getter = null;
     @Nullable
@@ -56,7 +57,7 @@ public class SwitchBuilder extends WidgetBuilder {
      * Add a sound that is played when the switch switches to the true state. <br>
      * Default is Sound.ENTITY_EXPERIENCE_ORB_PICKUP
      */
-    public SwitchBuilder addTrueSound(Sound sound){
+    public SwitchBuilder addTrueSound(SoundEffect sound){
         trueSound = sound;
         return this;
     }
@@ -65,7 +66,7 @@ public class SwitchBuilder extends WidgetBuilder {
      * Add a sound that is played when the switch switches to the false state. <br>
      * Default is Sound.ENTITY_EXPERIENCE_ORB_PICKUP
      */
-    public SwitchBuilder addFalseSound(Sound sound) {
+    public SwitchBuilder addFalseSound(SoundEffect sound) {
         falseSound = sound;
         return this;
     }

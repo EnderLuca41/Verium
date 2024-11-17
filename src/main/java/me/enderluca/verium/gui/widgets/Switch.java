@@ -1,5 +1,6 @@
 package me.enderluca.verium.gui.widgets;
 
+import me.enderluca.verium.gui.SoundEffect;
 import me.enderluca.verium.interfaces.IOnClick;
 import me.enderluca.verium.util.GuiUtil;
 
@@ -26,9 +27,9 @@ public class Switch extends Widget implements IOnClick {
     @Nonnull
     protected ItemStack falseIcon;
     @Nonnull
-    protected Sound trueSound;
+    protected SoundEffect trueSound;
     @Nonnull
-    protected Sound falseSound;
+    protected SoundEffect falseSound;
 
     @Nullable
     protected Supplier<Boolean> getter;
@@ -50,12 +51,12 @@ public class Switch extends Widget implements IOnClick {
      * @param falseSound Sound that is played when the switch switches to the false state
      */
     public Switch(@Nullable ItemStack trueIcon, @Nullable ItemStack falseIcon,
-                  @Nullable Supplier<Boolean> getter, @Nullable Consumer<Boolean> setter, @Nullable Sound trueSound, @Nullable Sound falseSound){
+                  @Nullable Supplier<Boolean> getter, @Nullable Consumer<Boolean> setter, @Nullable SoundEffect trueSound, @Nullable SoundEffect falseSound){
 
         this.trueIcon = Objects.requireNonNullElseGet(trueIcon, GuiUtil::getEnabledIcon);
         this.falseIcon = Objects.requireNonNullElseGet(falseIcon, GuiUtil::getDisabledIcon);
-        this.trueSound = Objects.requireNonNullElse(trueSound, Sound.ENTITY_EXPERIENCE_ORB_PICKUP);
-        this.falseSound = Objects.requireNonNullElse(falseSound, Sound.ENTITY_EXPERIENCE_ORB_PICKUP);
+        this.trueSound = Objects.requireNonNullElse(trueSound, new SoundEffect(Sound.ENTITY_EXPERIENCE_ORB_PICKUP));
+        this.falseSound = Objects.requireNonNullElse(falseSound, new SoundEffect(Sound.ENTITY_EXPERIENCE_ORB_PICKUP));
 
         this.getter = getter;
         this.setter = setter;
@@ -108,9 +109,9 @@ public class Switch extends Widget implements IOnClick {
 
         setState(!(getState()));
         if(getState())
-            player.playSound(player.getLocation(), trueSound, 1, 1);
+            trueSound.play(player);
         else
-            player.playSound(player.getLocation(), falseSound, 1, 1);
+            falseSound.play(player);
 
         render(event.getInventory(), index);
     }
