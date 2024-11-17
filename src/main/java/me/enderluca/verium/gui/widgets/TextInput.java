@@ -33,9 +33,9 @@ import java.util.logging.Level;
  */
 public class TextInput extends Widget implements IOnClick, Listener {
 
-    @Nonnull
+    @Nullable
     protected SoundEffect clickSound;
-    @Nonnull
+    @Nullable
     protected SoundEffect doneSound;
 
     @Nullable
@@ -48,8 +48,8 @@ public class TextInput extends Widget implements IOnClick, Listener {
     private final IInventoryGui returnGui;
 
     /**
-     * @param clickSound The sound to play when the player clicks on the text input, if not set a default sound will be used
-     * @param doneSound The sound to play when the player submits the text, if not set a default sound will be used
+     * @param clickSound The sound to play when the player clicks on the text input, if not set no sound will be played
+     * @param doneSound The sound to play when the player submits the text, if not set no sound will be played
      * @param onTextEntered The consumer to be called when the player submits the text
      * @param returnGui The gui to return to after the text has been entered
      */
@@ -71,15 +71,8 @@ public class TextInput extends Widget implements IOnClick, Listener {
         else
             this.icon = icon;
 
-        if(Objects.isNull(clickSound))
-            this.clickSound = new SoundEffect(Sound.BLOCK_BARREL_OPEN); //Default sound
-        else
-            this.clickSound = clickSound;
-
-        if(Objects.isNull(doneSound))
-            this.doneSound = new SoundEffect(Sound.BLOCK_BARREL_OPEN); //Default sound
-        else
-            this.doneSound = doneSound;
+        this.clickSound = clickSound;
+        this.doneSound = doneSound;
 
         this.onTextEntered = onTextEntered;
     }
@@ -109,7 +102,8 @@ public class TextInput extends Widget implements IOnClick, Listener {
 
                 player.sendBlockChange(position.toLocation(player.getWorld()), player.getWorld().getBlockData(position.toLocation(player.getWorld()).getBlock().getLocation()));
 
-                doneSound.play(player);
+                if(Objects.nonNull(doneSound))
+                    doneSound.play(player);
 
                 manager.removePacketListener(this);
 
@@ -139,7 +133,8 @@ public class TextInput extends Widget implements IOnClick, Listener {
         if(event.getClick() == ClickType.DOUBLE_CLICK)
             return;
 
-        clickSound.play(player);
+        if(Objects.nonNull(clickSound))
+            clickSound.play(player);
 
         Location signLocation = player.getLocation().clone().add(player.getLocation().getDirection().multiply(-1)).add(0, -2, 0);
 
