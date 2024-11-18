@@ -4,6 +4,7 @@ import com.comphenix.protocol.ProtocolManager;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+
 import me.enderluca.verium.AttributeChange;
 import me.enderluca.verium.ListingType;
 import me.enderluca.verium.gui.builder.ButtonBuilder;
@@ -17,9 +18,12 @@ import me.enderluca.verium.interfaces.IInventoryGui;
 import me.enderluca.verium.services.AttributeService;
 import me.enderluca.verium.util.AttributeUtil;
 import me.enderluca.verium.util.GuiUtil;
+
 import net.md_5.bungee.api.ChatColor;
+
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
+import org.bukkit.Sound;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
@@ -56,6 +60,10 @@ public class AttributeManagerGui implements IInventoryGui {
     //Gui to select the attributes from to create a new attribute change
     @Nonnull
     private final AttributeListGui attributeListGui;
+
+
+    private final SoundEffect inputSuccessSound = new SoundEffect(Sound.BLOCK_NOTE_BLOCK_BELL, 1, 1.25f, 0);
+    private final SoundEffect inputErrorSound = new SoundEffect(Sound.BLOCK_NOTE_BLOCK_BASS, 1, 0.5f, 0);
 
     public AttributeManagerGui(@Nonnull Plugin owner, @Nonnull ProtocolManager manager, @Nonnull AttributeService service){
         this.owner = owner;
@@ -96,6 +104,8 @@ public class AttributeManagerGui implements IInventoryGui {
         switchBuilder.addFalseIcon(GuiUtil.getBlacklistIcon(playerList));
         switchBuilder.addGetter(() -> change.getListType() == ListingType.Whitelist);
         switchBuilder.addSetter(b -> change.setListType(ListingType.values()[b ? 1 : 0]));
+        switchBuilder.addTrueSound(new SoundEffect(Sound.ITEM_BOOK_PAGE_TURN, 1, 1.25f, 0));
+        switchBuilder.addFalseSound(new SoundEffect(Sound.ITEM_BOOK_PAGE_TURN, 1, 0.7f, 0));
         return switchBuilder.build();
     }
 
@@ -109,9 +119,17 @@ public class AttributeManagerGui implements IInventoryGui {
             UUID uuid = getUUID(args.getText());
             if(Objects.isNull(uuid)){
                 args.getPlayer().sendMessage(ChatColor.RED + "Player entered does not exist.");
+                inputErrorSound.play(args.getPlayer());
+                return;
             }
+
+            inputSuccessSound.play(args.getPlayer());
             change.addPlayer(uuid);
-        }).addReturnGui(this);
+            renderWidgets();
+        })
+        .addClickSound(new SoundEffect(Sound.BLOCK_BARREL_OPEN))
+        .addReturnGui(this);
+
         return builder.build();
     }
 
@@ -120,14 +138,21 @@ public class AttributeManagerGui implements IInventoryGui {
      */
     private TextInput createRemovePlayer(AttributeChange change){
         TextInputBuilder builder = new TextInputBuilder(owner, protocolManager);
-        builder.addIcon(GuiUtil.getRemovePlayerInputIcon());
-        builder.listenOnTextEntered(args -> {
+        builder.addIcon(GuiUtil.getRemovePlayerInputIcon())
+        .listenOnTextEntered(args -> {
             UUID uuid = getUUID(args.getText());
             if(!change.containsPlayer(uuid)){
                 args.getPlayer().sendMessage(ChatColor.RED + "Player entered is not in the list.");
+                inputErrorSound.play(args.getPlayer());
+                return;
             }
+
+            inputSuccessSound.play(args.getPlayer());
             change.removePlayer(uuid);
-        });
+            renderWidgets();
+        })
+        .addClickSound(new SoundEffect(Sound.BLOCK_BARREL_OPEN))
+        .addReturnGui(this);
         return builder.build();
     }
 
@@ -140,6 +165,8 @@ public class AttributeManagerGui implements IInventoryGui {
         switchBuilder.addFalseIcon(GuiUtil.getDisabledIcon());
         switchBuilder.addGetter(change::isEnabled);
         switchBuilder.addSetter(change::setEnabled);
+        switchBuilder.addTrueSound(new SoundEffect(Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1, 1.1f, 0));
+        switchBuilder.addFalseSound(new SoundEffect(Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1, 0.7f, 0));
         return switchBuilder.build();
     }
 
@@ -147,7 +174,7 @@ public class AttributeManagerGui implements IInventoryGui {
      * Creates a button used in the gui to remove an attribute change
      */
     private Button createRemoveButton(AttributeChange change){
-        return new Button(GuiUtil.getRemoveAttributeIcon(), null, event -> {
+        return new Button(GuiUtil.getRemoveAttributeIcon(), new SoundEffect(Sound.ITEM_BUNDLE_DROP_CONTENTS), event -> {
             attributeService.removeAttributeChange(change);
             renderWidgets();
         }, false);
@@ -159,18 +186,22 @@ public class AttributeManagerGui implements IInventoryGui {
     private TextInput createChangeValue(AttributeChange change){
         TextInputBuilder builder = new TextInputBuilder(owner, protocolManager);
         return builder.addIcon(GuiUtil.getChangeAttributeValueIcon(change.getAttribute(), change.getValue()))
-                      .listenOnTextEntered(args -> {
-                          try {
-                              String[] lines = args.getText().split("\n");
-                              lines[0] = lines[0].replace(",", "."); //Replace commas with dots to allow for decimal numbers
-                              double value = Double.parseDouble(lines[0]);
-                              change.setValue(value);
+        .listenOnTextEntered(args -> {
+            try {
+                String[] lines = args.getText().split("\n");
+                lines[0] = lines[0].replace(",", "."); //Replace commas with dots to allow for decimal numbers
+                double value = Double.parseDouble(lines[0]);
+                inputSuccessSound.play(args.getPlayer());
+                change.setValue(value);
 
-                          } catch (NumberFormatException e){
-                              args.getPlayer().sendMessage(ChatColor.RED + "Invalid number entered.");
-                          }
-                      })
-                      .build();
+            } catch (NumberFormatException e){
+                args.getPlayer().sendMessage(ChatColor.RED + "Invalid number entered.");
+                inputErrorSound.play(args.getPlayer());
+            }
+        })
+        .addClickSound(new SoundEffect(Sound.BLOCK_BARREL_OPEN))
+        .addReturnGui(this)
+        .build();
     }
 
     /**
