@@ -1,5 +1,6 @@
 package me.enderluca.verium.gui.builder;
 
+import me.enderluca.verium.gui.SoundEffect;
 import me.enderluca.verium.gui.widgets.TextInput;
 import me.enderluca.verium.gui.event.TextInputEvent;
 import me.enderluca.verium.interfaces.IInventoryGui;
@@ -15,9 +16,9 @@ import java.util.function.Consumer;
 
 public class TextInputBuilder extends WidgetBuilder {
     @Nullable
-    protected Sound clickSound;
+    protected SoundEffect clickSound;
     @Nullable
-    protected Sound doneSound;
+    protected SoundEffect doneSound;
     @Nullable
     protected Consumer<TextInputEvent> onTextEntered;
 
@@ -31,7 +32,7 @@ public class TextInputBuilder extends WidgetBuilder {
     /**
      * Sets the sound to play when the player clicks on the text input, if not set a default sound will be used
      */
-    public TextInputBuilder addClickSound(Sound sound){
+    public TextInputBuilder addClickSound(SoundEffect sound){
         clickSound = sound;
         return this;
     }
@@ -39,7 +40,7 @@ public class TextInputBuilder extends WidgetBuilder {
     /**
      * Sets the sound to play when the player submits the text, if not set a default sound will be used
      */
-    public TextInputBuilder addDoneSound(Sound sound){
+    public TextInputBuilder addDoneSound(SoundEffect sound){
         doneSound = sound;
         return this;
     }

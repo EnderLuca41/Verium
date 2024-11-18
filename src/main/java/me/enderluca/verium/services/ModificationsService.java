@@ -8,10 +8,13 @@ import net.md_5.bungee.api.chat.BaseComponent;
 
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
+import org.bukkit.GameRule;
+import org.bukkit.World;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 //TODO: Find better name for this class
@@ -43,7 +46,7 @@ public class ModificationsService {
 
         allPaused = fileConfig.getBoolean("modifications.allpaused", false);
 
-        Bukkit.getPluginManager().registerEvents(new ModificationsListener(() -> allPaused), owner);
+        Bukkit.getPluginManager().registerEvents(new ModificationsListener(() -> allPaused, this::onWorldLoad), owner);
 
         if(allPaused){
             challenges.setPausedAll(true);
@@ -58,6 +61,13 @@ public class ModificationsService {
 
         if(message != null)
             Bukkit.spigot().broadcast(message);
+    }
+
+    /**
+     * Called when a world is loaded by the listener, disables the daylight cycle if allPaused is true
+     */
+    private void onWorldLoad(@Nonnull World world){
+        world.setGameRule(GameRule.DO_DAYLIGHT_CYCLE, !allPaused);
     }
 
     private void onAllGoalsComplete(){
@@ -92,7 +102,10 @@ public class ModificationsService {
 
         for(Player p : Bukkit.getOnlinePlayers()){
             p.setGameMode(GameMode.SPECTATOR);
+            p.getWorld().setGameRule(GameRule.DO_DAYLIGHT_CYCLE, false);
         }
+
+
     }
 
     /**
@@ -109,6 +122,7 @@ public class ModificationsService {
 
         for(Player p : Bukkit.getOnlinePlayers()){
             p.setGameMode(GameMode.SURVIVAL);
+            p.getWorld().setGameRule(GameRule.DO_DAYLIGHT_CYCLE, true);
         }
 
         gamerules.setPausedAll(false);

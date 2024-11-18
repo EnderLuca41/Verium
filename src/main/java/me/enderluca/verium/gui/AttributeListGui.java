@@ -40,7 +40,7 @@ public class AttributeListGui implements IInventoryGui {
         this.protocolManager = manager;
         this.onAttributeSelected = onAttributeSelected;
 
-        gui = new InventoryGui(owner, 18, "Attributes", parent);
+        gui = new InventoryGui(owner, 27, "Attributes", parent);
         createAttributeButtons();
     }
 

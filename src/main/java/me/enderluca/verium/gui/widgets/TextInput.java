@@ -1,5 +1,6 @@
 package me.enderluca.verium.gui.widgets;
 
+import me.enderluca.verium.gui.SoundEffect;
 import me.enderluca.verium.gui.event.TextInputEvent;
 import me.enderluca.verium.interfaces.IInventoryGui;
 import me.enderluca.verium.interfaces.IOnClick;
@@ -32,10 +33,10 @@ import java.util.logging.Level;
  */
 public class TextInput extends Widget implements IOnClick, Listener {
 
-    @Nonnull
-    protected Sound clickSound;
-    @Nonnull
-    protected Sound doneSound;
+    @Nullable
+    protected SoundEffect clickSound;
+    @Nullable
+    protected SoundEffect doneSound;
 
     @Nullable
     protected final Consumer<TextInputEvent> onTextEntered;
@@ -47,13 +48,13 @@ public class TextInput extends Widget implements IOnClick, Listener {
     private final IInventoryGui returnGui;
 
     /**
-     * @param clickSound The sound to play when the player clicks on the text input, if not set a default sound will be used
-     * @param doneSound The sound to play when the player submits the text, if not set a default sound will be used
+     * @param clickSound The sound to play when the player clicks on the text input, if not set no sound will be played
+     * @param doneSound The sound to play when the player submits the text, if not set no sound will be played
      * @param onTextEntered The consumer to be called when the player submits the text
      * @param returnGui The gui to return to after the text has been entered
      */
     public TextInput(@Nonnull Plugin owner, @Nonnull ProtocolManager manager, @Nullable ItemStack icon,
-                     @Nullable Sound clickSound, @Nullable Sound doneSound, @Nullable Consumer<TextInputEvent> onTextEntered,
+                     @Nullable SoundEffect clickSound, @Nullable SoundEffect doneSound, @Nullable Consumer<TextInputEvent> onTextEntered,
                      @Nullable IInventoryGui returnGui){
         this.owner = owner;
         this.manager = manager;
@@ -70,15 +71,8 @@ public class TextInput extends Widget implements IOnClick, Listener {
         else
             this.icon = icon;
 
-        if(Objects.isNull(clickSound))
-            this.clickSound = Sound.BLOCK_BARREL_OPEN; //Default sound
-        else
-            this.clickSound = clickSound;
-
-        if(Objects.isNull(doneSound))
-            this.doneSound = Sound.BLOCK_BARREL_CLOSE; //Default sound
-        else
-            this.doneSound = doneSound;
+        this.clickSound = clickSound;
+        this.doneSound = doneSound;
 
         this.onTextEntered = onTextEntered;
     }
@@ -101,11 +95,15 @@ public class TextInput extends Widget implements IOnClick, Listener {
                     return;
 
                 String[] lines = event.getPacket().getStringArrays().read(0);
+                BlockPosition position = event.getPacket().getBlockPositionModifier().read(0);
                 String text = String.join("\n", lines);
                 if(!Objects.nonNull(onTextEntered))
                     return;
 
-                player.playSound(player.getLocation(), doneSound, 1, 1);
+                player.sendBlockChange(position.toLocation(player.getWorld()), player.getWorld().getBlockData(position.toLocation(player.getWorld()).getBlock().getLocation()));
+
+                if(Objects.nonNull(doneSound))
+                    doneSound.play(player);
 
                 manager.removePacketListener(this);
 
@@ -135,12 +133,16 @@ public class TextInput extends Widget implements IOnClick, Listener {
         if(event.getClick() == ClickType.DOUBLE_CLICK)
             return;
 
-        player.playSound(player.getLocation(), clickSound, 1, 1);
+        if(Objects.nonNull(clickSound))
+            clickSound.play(player);
+
+        Location signLocation = player.getLocation().clone().add(player.getLocation().getDirection().multiply(-1)).add(0, -2, 0);
+
+        player.sendBlockChange(signLocation, Material.OAK_SIGN.createBlockData());
 
         PacketContainer openSign = manager.createPacket(PacketType.Play.Server.OPEN_SIGN_EDITOR);
-        BlockPosition pos = new BlockPosition(player.getLocation().getBlockX(), player.getLocation().getBlockY(), player.getLocation().getBlockZ());
-        openSign.getBlockPositionModifier().write(0, pos);
-        openSign.getBooleans().write(0, true);
+        openSign.getBlockPositionModifier().write(0, new BlockPosition(signLocation.getBlockX(), signLocation.getBlockY(), signLocation.getBlockZ()));
+        openSign.getBooleans().write(0, false);
         try {
             manager.sendServerPacket(player, openSign);
         } catch (Exception e) {

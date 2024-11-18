@@ -1,8 +1,8 @@
 name: Verium
 author: EnderLuca
-version: 0.0.7.0
+version: 0.0.1.0
 main: me.enderluca.verium.VeriumPlugin
-api-version: 1.20
+api-version: 1.21.3
 load: STARTUP
 depend:
   - ProtocolLib
@@ -31,4 +31,4 @@ commands:
     usage: /goals
   attributemanager:
     description: Shows a gui to manage the attributes of all players, for example the max health or the speed
-    usage: /attributes
+    usage: /attributemanager

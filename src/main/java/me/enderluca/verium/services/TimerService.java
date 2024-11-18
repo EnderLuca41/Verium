@@ -1,6 +1,11 @@
 package me.enderluca.verium.services;
 
 import me.enderluca.verium.runnable.TimerRunnable;
+
+import org.bukkit.Bukkit;
+import org.bukkit.Sound;
+import org.bukkit.SoundCategory;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitTask;
 
@@ -53,6 +58,8 @@ public class TimerService {
         timerStarted = Instant.now();
 
         timerRunnable.setPaused(false);
+        for(Player p : Bukkit.getOnlinePlayers())
+            p.playSound(p.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1, 1);
         return true;
     }
 
@@ -70,6 +77,8 @@ public class TimerService {
         timerStarted = null;
 
         timerRunnable.setPaused(true);
+        for(Player p : Bukkit.getOnlinePlayers())
+            p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 1, 1);
         return true;
     }
 
@@ -81,6 +90,8 @@ public class TimerService {
         realSeconds = 0;
         timerRunnable.setPaused(true);
         timerRunnable.setSeconds(0);
+        for(Player p : Bukkit.getOnlinePlayers())
+            p.playSound(p.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, SoundCategory.MASTER, 1, 1, 2);
     }
 
     /**

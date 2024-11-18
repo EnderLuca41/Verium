@@ -11,6 +11,7 @@ import me.enderluca.verium.util.GuiUtil;
 
 import com.comphenix.protocol.ProtocolManager;
 
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
@@ -37,6 +38,8 @@ public class ChallengesGui implements IInventoryGui {
             Icon icon = new Icon(GuiUtil.getChallengeIcon(type));
             Switch sw = builder.addGetter(challenge::isEnabled)
                                .addSetter(challenge::setEnabled)
+                               .addTrueSound(new SoundEffect(Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1, 1.1f))
+                               .addFalseSound(new SoundEffect(Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1, 0.7f))
                                .build();
 
             gui.addWidget(icon, i + ((i / 9) * 18));

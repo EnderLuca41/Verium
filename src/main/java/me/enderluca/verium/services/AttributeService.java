@@ -90,9 +90,18 @@ public class AttributeService {
     public void loadConfig(FileConfiguration src){
         for(int i = 0; src.isSet("attributechanges." + i); i++){
             double value = src.getDouble("attributechanges." + i + ".value");
-            int attributeOrdinal = src.getInt("attributechanges." + i + ".attribute");
+            int attributeId = src.getInt("attributechanges." + i + ".attribute");
             int listingTypeOrdinal = src.getInt("attributechanges." + i + ".listingtype");
-            createAttributeChange(Attribute.values()[attributeOrdinal], value);
+            Attribute attribute = AttributeUtil.ATTRIBUTE_IDS.entrySet().stream()
+                    .filter(entry -> entry.getValue() == attributeId)
+                    .map(Map.Entry::getKey)
+                    .findFirst()
+                    .orElse(null);
+
+            if(attribute == null)
+                continue;
+
+            createAttributeChange(attribute, value);
 
             AttributeChange change = attributeChanges.get(attributeChanges.size() - 1);
             change.setListType(ListingType.values()[listingTypeOrdinal]);
@@ -114,7 +123,7 @@ public class AttributeService {
         dest.set("attributechanges", null); //Clear the old values
         for(AttributeChange change : attributeChanges){
             dest.set("attributechanges." + i + ".value", change.getValue());
-            dest.set("attributechanges." + i + ".attribute", change.getAttribute().ordinal());
+            dest.set("attributechanges." + i + ".attribute", AttributeUtil.ATTRIBUTE_IDS.get(change.getAttribute()));
             dest.set("attributechanges." + i + ".listingtype", change.getListType().ordinal());
             for(int j = 0; j < change.getPlayers().size(); j++){
                 dest.set("attributechanges." + i + ".players." + j, change.getPlayers().get(j).toString());

@@ -122,7 +122,7 @@ public class InventoryGui implements IInventoryGui, Listener {
 
     @EventHandler
     public void onDrag(InventoryDragEvent event){
-        if(event.getView().getTitle().equals(inventoryTitle))
+        if(!event.getView().getTitle().equals(inventoryTitle))
             return;
         event.setCancelled(true);
     }

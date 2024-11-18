@@ -1,10 +1,10 @@
 package me.enderluca.verium.gui.builder;
 
+import me.enderluca.verium.gui.SoundEffect;
 import me.enderluca.verium.gui.widgets.Button;
 
 import com.comphenix.protocol.ProtocolManager;
 
-import org.bukkit.Sound;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
@@ -15,7 +15,7 @@ import java.util.function.Consumer;
 
 public class ButtonBuilder extends WidgetBuilder {
     @Nullable
-    protected Sound clickSound = null;
+    protected SoundEffect clickSound = null;
     @Nullable
     protected Consumer<InventoryClickEvent> onClick = null;
     protected boolean doubleClick = false;
@@ -27,7 +27,7 @@ public class ButtonBuilder extends WidgetBuilder {
     /**
      * Sets the sound to play when the player clicks on the button, if not set a default sound will be used
      */
-    public ButtonBuilder addClickSound(Sound sound){
+    public ButtonBuilder addClickSound(SoundEffect sound){
         clickSound = sound;
         return this;
     }

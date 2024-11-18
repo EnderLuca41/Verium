@@ -9,7 +9,9 @@ import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Color;
 import org.bukkit.Material;
 import org.bukkit.attribute.Attribute;
+import org.bukkit.attribute.AttributeInstance;
 import org.bukkit.enchantments.Enchantment;
+import org.bukkit.entity.Item;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -214,90 +216,261 @@ public final class GuiUtil {
      */
     @Nonnull
     public static ItemStack getAttributeIcon(Attribute attribute){
-        switch (attribute){
-            case GENERIC_ARMOR -> {
-                ItemStack icon = new ItemStack(Material.IRON_CHESTPLATE, 1);
-                ItemMeta meta = icon.getItemMeta();
-                meta.setLore(List.of("Armor defense points. "));
-                meta.setDisplayName(ChatColor.WHITE + "Armor");
-                meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
-                icon.setItemMeta(meta);
-                return icon;
-            }
-
-            case GENERIC_ARMOR_TOUGHNESS -> {
-                ItemStack icon = new ItemStack(Material.DIAMOND_CHESTPLATE, 1);
-                ItemMeta meta = icon.getItemMeta();
-                meta.setDisplayName(ChatColor.WHITE + "Armor toughness");
-                meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
-                icon.setItemMeta(meta);
-                return icon;
-            }
-
-            case GENERIC_ATTACK_DAMAGE -> {
-                ItemStack icon = new ItemStack(Material.IRON_SWORD, 1);
-                ItemMeta meta = icon.getItemMeta();
-                meta.setLore(List.of("Damage dealt by attacks, in half-hearts. "));
-                meta.setDisplayName(ChatColor.WHITE + "Attack damage");
-                meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
-                icon.setItemMeta(meta);
-                return icon;
-            }
-
-            case GENERIC_ATTACK_SPEED -> {
-                ItemStack icon = new ItemStack(Material.FEATHER, 1);
-                ItemMeta meta = icon.getItemMeta();
-                meta.setLore(List.of("Determines recharging rate of attack strength.",
-                        "Value is the number of full-strength attacks per second. "));
-                meta.setDisplayName(ChatColor.WHITE + "Attack speed");
-                icon.setItemMeta(meta);
-                return icon;
-            }
-
-            case GENERIC_KNOCKBACK_RESISTANCE -> {
-                ItemStack icon = new ItemStack(Material.SHIELD, 1);
-                ItemMeta meta = icon.getItemMeta();
-                meta.setLore(List.of("The scale of horizontal knockback resisted from attacks and projectiles.",
-                        "Vertical knockback is not affected. Does not affect explosions.",
-                        "The resistance functions as a percentage from 0.0 (0% resistance) to 1.0 (100% resistance)",
-                        "(e.g. 0.4 is 40% resistance, meaning the attributed mob takes 60% of usual knockback)"));
-                meta.setDisplayName(ChatColor.WHITE + "Knockback resistance");
-                icon.setItemMeta(meta);
-                return icon;
-            }
-
-            case GENERIC_LUCK -> {
-                ItemStack icon = new ItemStack(Material.RED_MUSHROOM, 1);
-                ItemMeta meta = icon.getItemMeta();
-                meta.setLore(List.of("Affects the results of loot tables using the quality or bonus_rolls tag ",
-                        "(e.g. when opening chests or chest minecarts, fishing, and killing mobs)."));
-                meta.setDisplayName(ChatColor.WHITE + "Luck");
-                icon.setItemMeta(meta);
-                return icon;
-            }
-
-            case GENERIC_MAX_HEALTH -> {
-                ItemStack icon = new ItemStack(Material.APPLE, 1);
-                ItemMeta meta = icon.getItemMeta();
-                meta.setLore(List.of("Maximum health points in half-hearts."));
-                meta.setDisplayName(ChatColor.WHITE + "Max health");
-                icon.setItemMeta(meta);
-                return icon;
-            }
-
-            case GENERIC_MOVEMENT_SPEED -> {
-                ItemStack icon = new ItemStack(Material.POTION, 1);
-                PotionMeta meta = (PotionMeta) icon.getItemMeta();
-                meta.setColor(Color.AQUA);
-                meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
-                meta.addItemFlags(ItemFlag.HIDE_POTION_EFFECTS);
-                meta.setDisplayName(ChatColor.WHITE + "Movement speed");
-                icon.setItemMeta(meta);
-                return icon;
-            }
-
-            default -> {return new ItemStack(Material.AIR);}
+        if(attribute == Attribute.ARMOR) {
+            ItemStack icon = new ItemStack(Material.IRON_CHESTPLATE, 1);
+            ItemMeta meta = icon.getItemMeta();
+            meta.setLore(List.of("Armor defense points. "));
+            meta.setDisplayName(ChatColor.WHITE + "Armor");
+            meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
+            icon.setItemMeta(meta);
+            return icon;
         }
+        else if(attribute == Attribute.ARMOR_TOUGHNESS) {
+            ItemStack icon = new ItemStack(Material.DIAMOND_CHESTPLATE, 1);
+            ItemMeta meta = icon.getItemMeta();
+            meta.setDisplayName(ChatColor.WHITE + "Armor toughness");
+            meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
+            icon.setItemMeta(meta);
+            return icon;
+        }
+        else if(attribute == Attribute.ATTACK_DAMAGE) {
+            ItemStack icon = new ItemStack(Material.IRON_SWORD, 1);
+            ItemMeta meta = icon.getItemMeta();
+            meta.setLore(List.of("Damage dealt by attacks, in half-hearts. "));
+            meta.setDisplayName(ChatColor.WHITE + "Attack damage");
+            meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
+            icon.setItemMeta(meta);
+            return icon;
+        }
+        else if(attribute == Attribute.ATTACK_KNOCKBACK){
+            ItemStack icon = new ItemStack(Material.STICK, 1);
+            ItemMeta meta = icon.getItemMeta();
+            meta.setLore(List.of("The scale of horizontal knockback applied to entities hit by attacks.",
+                    "Vertical knockback is not affected. Does not affect explosions."));
+            meta.setDisplayName(ChatColor.WHITE + "Attack knockback");
+            icon.setItemMeta(meta);
+            return icon;
+        }
+        else if(attribute == Attribute.ATTACK_SPEED) {
+            ItemStack icon = new ItemStack(Material.FEATHER, 1);
+            ItemMeta meta = icon.getItemMeta();
+            meta.setLore(List.of("Determines recharging rate of attack strength.",
+                    "Value is the number of full-strength attacks per second. "));
+            meta.setDisplayName(ChatColor.WHITE + "Attack speed");
+            icon.setItemMeta(meta);
+            return icon;
+        }
+        else if(attribute == Attribute.KNOCKBACK_RESISTANCE) {
+            ItemStack icon = new ItemStack(Material.SHIELD, 1);
+            ItemMeta meta = icon.getItemMeta();
+            meta.setLore(List.of("The scale of horizontal knockback resisted from attacks and projectiles.",
+                    "Vertical knockback is not affected. Does not affect explosions.",
+                    "The resistance functions as a percentage from 0.0 (0% resistance) to 1.0 (100% resistance)",
+                    "(e.g. 0.4 is 40% resistance, meaning the attributed mob takes 60% of usual knockback)"));
+            meta.setDisplayName(ChatColor.WHITE + "Knockback resistance");
+            icon.setItemMeta(meta);
+            return icon;
+        }
+        else if(attribute == Attribute.LUCK) {
+            ItemStack icon = new ItemStack(Material.RED_MUSHROOM, 1);
+            ItemMeta meta = icon.getItemMeta();
+            meta.setLore(List.of("Affects the results of loot tables using the quality or bonus_rolls tag ",
+                    "(e.g. when opening chests or chest minecarts, fishing, and killing mobs)."));
+            meta.setDisplayName(ChatColor.WHITE + "Luck");
+            icon.setItemMeta(meta);
+            return icon;
+        }
+        else if(attribute == Attribute.MAX_ABSORPTION) {
+            ItemStack icon = new ItemStack(Material.GOLDEN_APPLE, 1);
+            ItemMeta meta = icon.getItemMeta();
+            meta.setLore(List.of("Maximum absorption health points in half-hearts."));
+            meta.setDisplayName(ChatColor.WHITE + "Max absorption");
+            icon.setItemMeta(meta);
+            return icon;
+        }
+        else if(attribute == Attribute.MAX_HEALTH) {
+            ItemStack icon = new ItemStack(Material.APPLE, 1);
+            ItemMeta meta = icon.getItemMeta();
+            meta.setLore(List.of("Maximum health points in half-hearts."));
+            meta.setDisplayName(ChatColor.WHITE + "Max health");
+            icon.setItemMeta(meta);
+            return icon;
+        }
+        else if(attribute == Attribute.MOVEMENT_SPEED) {
+            ItemStack icon = new ItemStack(Material.POTION, 1);
+            PotionMeta meta = (PotionMeta) icon.getItemMeta();
+            meta.setColor(Color.AQUA);
+            meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
+            meta.addItemFlags(ItemFlag.HIDE_ADDITIONAL_TOOLTIP);
+            meta.setDisplayName(ChatColor.WHITE + "Movement speed");
+            icon.setItemMeta(meta);
+            return icon;
+        }
+        else if(attribute == Attribute.SCALE){
+            ItemStack icon = new ItemStack(Material.SLIME_BALL, 1);
+            ItemMeta meta = icon.getItemMeta();
+            meta.setLore(List.of("The scale of the players, the higher the value, the bigger the player."));
+            meta.setDisplayName(ChatColor.WHITE + "Scale");
+            icon.setItemMeta(meta);
+            return icon;
+        }
+        else if(attribute == Attribute.STEP_HEIGHT){
+            ItemStack icon = new ItemStack(Material.SMOOTH_STONE_SLAB, 1);
+            ItemMeta meta = icon.getItemMeta();
+            meta.setLore(List.of("The maximum height the player can step up without jumping in blocks.",
+                    "Sneaking prevents drops from heights that are higher than the step height."));
+            meta.setDisplayName(ChatColor.WHITE + "Step height");
+            icon.setItemMeta(meta);
+            return icon;
+
+        }
+        else if(attribute == Attribute.JUMP_STRENGTH){
+            ItemStack icon = new ItemStack(Material.RABBIT_FOOT, 1);
+            ItemMeta meta = icon.getItemMeta();
+            meta.setLore(List.of("The initial velocity of an player when they jump, in blocks per second.",
+                    "This directly influcences the jump height."));
+            meta.setDisplayName(ChatColor.WHITE + "Jump strength");
+            icon.setItemMeta(meta);
+            return icon;
+        }
+        else if(attribute == Attribute.BLOCK_INTERACTION_RANGE){
+            ItemStack icon = new ItemStack(Material.FISHING_ROD, 1);
+            ItemMeta meta = icon.getItemMeta();
+            meta.setLore(List.of("The maximum distance from which a player can interact with blocks.",
+                    "This includes breaking blocks, placing blocks, and using blocks (e.g. opening a chest)."));
+            meta.setDisplayName(ChatColor.WHITE + "Block interaction range");
+            icon.setItemMeta(meta);
+            return icon;
+        }
+        else if(attribute == Attribute.ENTITY_INTERACTION_RANGE){
+            ItemStack icon = new ItemStack(Material.NAME_TAG, 1);
+            ItemMeta meta = icon.getItemMeta();
+            meta.setLore(List.of("The maximum distance from which a player can interact with entities.",
+                    "This includes attacking entities and interacting with them (e.g. milking a cow)."));
+            meta.setDisplayName(ChatColor.WHITE + "Entity interaction range");
+            icon.setItemMeta(meta);
+            return icon;
+        }
+        else if(attribute == Attribute.BLOCK_BREAK_SPEED){
+            ItemStack icon = new ItemStack(Material.DIAMOND_PICKAXE, 1);
+            ItemMeta meta = icon.getItemMeta();
+            meta.setLore(List.of("The speed at which a player can break blocks.",
+                    "The value is the multiplier of the base speed."));
+            meta.setDisplayName(ChatColor.WHITE + "Block break speed");
+            meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
+            icon.setItemMeta(meta);
+            return icon;
+        }
+        else if(attribute == Attribute.GRAVITY){
+            ItemStack icon = new ItemStack(Material.ANVIL, 1);
+            ItemMeta meta = icon.getItemMeta();
+            meta.setLore(List.of("The gravity of the player, the higher the value, the faster the player falls."));
+            meta.setDisplayName(ChatColor.WHITE + "Gravity");
+            icon.setItemMeta(meta);
+            return icon;
+        }
+        else if(attribute == Attribute.SAFE_FALL_DISTANCE){
+            ItemStack icon = new ItemStack(Material.HONEY_BLOCK, 1);
+            ItemMeta meta = icon.getItemMeta();
+            meta.setLore(List.of("The distance a player can fall before they start taking fall damage.",
+                    "The value is in blocks."));
+            meta.setDisplayName(ChatColor.WHITE + "Safe fall distance");
+            icon.setItemMeta(meta);
+            return icon;
+        }
+        else if(attribute == Attribute.FALL_DAMAGE_MULTIPLIER){
+            ItemStack icon = new ItemStack(Material.SLIME_BLOCK, 1);
+            ItemMeta meta = icon.getItemMeta();
+            meta.setLore(List.of("The multiplier of the fall damage a player takes.",
+                    "The value is the multiplier of the base fall damage."));
+            meta.setDisplayName(ChatColor.WHITE + "Fall damage multiplier");
+            icon.setItemMeta(meta);
+            return icon;
+        }
+        else if(attribute == Attribute.BURNING_TIME){
+            ItemStack icon = new ItemStack(Material.LAVA_BUCKET, 1);
+            ItemMeta meta = icon.getItemMeta();
+            meta.setLore(List.of("Amount of time how long an player remains on fire after being as an multiplier."));
+            meta.setDisplayName(ChatColor.WHITE + "Burning time");
+            icon.setItemMeta(meta);
+            return icon;
+        }
+        else if(attribute == Attribute.EXPLOSION_KNOCKBACK_RESISTANCE){
+            ItemStack icon = new ItemStack(Material.TNT, 1);
+            ItemMeta meta = icon.getItemMeta();
+            meta.setLore(List.of("The scale of horizontal knockback resisted from explosions.",
+                    "Vertical knockback is not affected. Does not affect attacks."));
+            meta.setDisplayName(ChatColor.WHITE + "Explosion knockback resistance");
+            icon.setItemMeta(meta);
+            return icon;
+        }
+        else if(attribute == Attribute.MINING_EFFICIENCY){
+            ItemStack icon = new ItemStack(Material.WOODEN_PICKAXE, 1);
+            ItemMeta meta = icon.getItemMeta();
+            meta.setLore(List.of("A factor to speed up the mining of blocks when using a tool."));
+            meta.setDisplayName(ChatColor.WHITE + "Mining efficiency");
+            meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
+            icon.setItemMeta(meta);
+            return icon;
+        }
+        else if(attribute == Attribute.MOVEMENT_EFFICIENCY){
+            ItemStack icon = new ItemStack(Material.SOUL_SAND, 1);
+            ItemMeta meta = icon.getItemMeta();
+            meta.setLore(List.of("A factor to improve waling on terrain that slows down movement.",
+                    "A value of 1 removed the slowdown effect."));
+            meta.setDisplayName(ChatColor.WHITE + "Movement efficiency");
+            icon.setItemMeta(meta);
+            return icon;
+        }
+        else if(attribute == Attribute.OXYGEN_BONUS){
+            ItemStack icon = new ItemStack(Material.PUFFERFISH, 1);
+            ItemMeta meta = icon.getItemMeta();
+            meta.setLore(List.of("Decreases the chance of decreasing the air while a player is submerged.",
+                    "The chance is given by 1/(1 + oxygen_bonus)."));
+            meta.setDisplayName(ChatColor.WHITE + "Oxygen bonus");
+            icon.setItemMeta(meta);
+            return icon;
+        }
+        else if(attribute == Attribute.SNEAKING_SPEED){
+            ItemStack icon = new ItemStack(Material.LEATHER_BOOTS, 1);
+            ItemMeta meta = icon.getItemMeta();
+            meta.setLore(List.of("The movement speed factor when sneaking or crawling.",
+                    "A factor of 1 means sneaking or crawling is as fast as walking."));
+            meta.setDisplayName(ChatColor.WHITE + "Sneaking speed");
+            meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
+            icon.setItemMeta(meta);
+            return icon;
+        }
+        else if(attribute == Attribute.SUBMERGED_MINING_SPEED){
+            ItemStack icon = new ItemStack(Material.STONE_PICKAXE, 1);
+            ItemMeta meta = icon.getItemMeta();
+            meta.setLore(List.of("The mining speed factor when underwater.",
+                    "A factor of 1 means mining as fast as on land."));
+            meta.setDisplayName(ChatColor.WHITE + "Submerged mining speed");
+            meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
+            icon.setItemMeta(meta);
+            return icon;
+        }
+        else if(attribute == Attribute.SWEEPING_DAMAGE_RATIO){
+            ItemStack icon = new ItemStack(Material.DIAMOND_SWORD, 1);
+            ItemMeta meta = icon.getItemMeta();
+            meta.setLore(List.of("Determines how much of the base attack damage gets transferred",
+                    "to secondary targets in a sweep attack"));
+            meta.setDisplayName(ChatColor.WHITE + "Sweeping damage ratio");
+            meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
+            icon.setItemMeta(meta);
+            return icon;
+        }
+        else if(attribute == Attribute.WATER_MOVEMENT_EFFICIENCY){
+            ItemStack icon = new ItemStack(Material.WATER_BUCKET, 1);
+            ItemMeta meta = icon.getItemMeta();
+            meta.setLore(List.of("The movement speed factor when submerged."));
+            meta.setDisplayName(ChatColor.WHITE + "Water movement efficiency");
+            icon.setItemMeta(meta);
+            return icon;
+        }
+        else
+            return new ItemStack(Material.AIR); //Should never happen
     }
 
     /**
@@ -307,7 +480,7 @@ public final class GuiUtil {
     public static ItemStack getAddAttributeIcon(){
         ItemStack addAttribute = new ItemStack(Material.LIME_DYE, 1);
         ItemMeta meta = addAttribute.getItemMeta();
-        meta.addEnchant(Enchantment.DAMAGE_ALL, 1, true); //Item cannot be air, so NullPointerException is impossible
+        meta.addEnchant(Enchantment.SHARPNESS, 1, true); //Item cannot be air, so NullPointerException is impossible
         meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
         meta.setDisplayName(ChatColor.WHITE + "Add attribute");
         addAttribute.setItemMeta(meta);
