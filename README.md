@@ -4,13 +4,11 @@
 Verium is spigot plugin, that aims to bring different kinds of challenges to minecraft.
 Because it is a server plugin, you can also play these challenges with your friends.
 
-## Current state
-Veriums development has just started, that's why the current supported features are very limited.
-### Current supported features:
+## Current supported features:
 
  - A timer that can be used with `/timer` to measure how well you performed and beat your last record 🚀
  - `/reset` to reset the current world and retry 🔁
- - With `/pause` and `/resume`, you can pause the timer, active challenges, gamerule and goals, and set everyone into spectator
+ - With `/pause` and `/resume`, you can pause the timer, active challenges, gamerule and goals, set everyone into spectator and pauses the time
    
 #### Challenges (can be managed with `/challenges`):
 - No Death: Challenge will fail if a player dies 💀
@@ -45,5 +43,7 @@ Not only that, but you can also customize to which players these attribute chang
 ## How to use Verium
 
 1. Download the latest version from [Releases](https://github.com/EnderLuca41/Verium/releases)
-2. Go to your plugin folder from your Spigot/Paper server (Plugin does not work on Bukkit servers)
-3. Paste the .jar file in and start the server
+2. Go to your plugin folder from your Spigot/Paper server with a Minecraft version of 1.21.3 or above (Plugin does not work on Bukkit servers)
+3. Paste the .jar file into the folder
+4. Also install [ProtocolLib](https://www.spigotmc.org/resources/protocollib.1997/), if not done already
+5. (Recommended) Setup a restart script with this [tutorial](https://gist.github.com/Prof-Bloodstone/6367eb4016eaf9d1646a88772cdbbac5)
