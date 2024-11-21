@@ -7,12 +7,12 @@ import me.enderluca.verium.interfaces.IInventoryGui;
 
 import com.comphenix.protocol.ProtocolManager;
 
-import org.bukkit.Sound;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
 
 import javax.annotation.Nullable;
 import java.util.function.Consumer;
+import java.util.function.Supplier;
 
 public class TextInputBuilder extends WidgetBuilder {
     @Nullable
@@ -21,6 +21,8 @@ public class TextInputBuilder extends WidgetBuilder {
     protected SoundEffect doneSound;
     @Nullable
     protected Consumer<TextInputEvent> onTextEntered;
+    @Nullable
+    protected Supplier<String> preText;
 
     @Nullable
     protected IInventoryGui returnGui;
@@ -54,6 +56,15 @@ public class TextInputBuilder extends WidgetBuilder {
     }
 
     /**
+     * Sets the text to be pre-entered into the text input
+     */
+    public TextInputBuilder addPreEnteredText(Supplier<String> preText){
+        this.preText = preText;
+        return this;
+
+    }
+
+    /**
      * Sets the gui to return to after the text has been entered
      */
     public TextInputBuilder addReturnGui(IInventoryGui gui){
@@ -69,6 +80,6 @@ public class TextInputBuilder extends WidgetBuilder {
 
     @Override
     public TextInput build() {
-        return new TextInput(owner, manager, icon, clickSound, doneSound, onTextEntered, returnGui);
+        return new TextInput(owner, manager, icon, clickSound, doneSound, onTextEntered, returnGui, preText);
     }
 }

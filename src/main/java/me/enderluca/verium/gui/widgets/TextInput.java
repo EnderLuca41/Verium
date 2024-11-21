@@ -13,6 +13,7 @@ import com.comphenix.protocol.events.PacketEvent;
 import com.comphenix.protocol.wrappers.BlockPosition;
 
 import org.bukkit.*;
+import org.bukkit.block.data.BlockData;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.ClickType;
@@ -26,6 +27,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.Objects;
 import java.util.function.Consumer;
+import java.util.function.Supplier;
 import java.util.logging.Level;
 
 /**
@@ -40,6 +42,8 @@ public class TextInput extends Widget implements IOnClick, Listener {
 
     @Nullable
     protected final Consumer<TextInputEvent> onTextEntered;
+    @Nullable
+    protected final Supplier<String> preText;
 
     @Nonnull
     private final ProtocolManager manager;
@@ -52,10 +56,11 @@ public class TextInput extends Widget implements IOnClick, Listener {
      * @param doneSound The sound to play when the player submits the text, if not set no sound will be played
      * @param onTextEntered The consumer to be called when the player submits the text
      * @param returnGui The gui to return to after the text has been entered
+     * @param preEnteredText The text that is already entered into the sign when the player opens the text input
      */
     public TextInput(@Nonnull Plugin owner, @Nonnull ProtocolManager manager, @Nullable ItemStack icon,
                      @Nullable SoundEffect clickSound, @Nullable SoundEffect doneSound, @Nullable Consumer<TextInputEvent> onTextEntered,
-                     @Nullable IInventoryGui returnGui){
+                     @Nullable IInventoryGui returnGui, @Nullable Supplier<String> preEnteredText){
         this.owner = owner;
         this.manager = manager;
         this.returnGui = returnGui;
@@ -75,6 +80,7 @@ public class TextInput extends Widget implements IOnClick, Listener {
         this.doneSound = doneSound;
 
         this.onTextEntered = onTextEntered;
+        this.preText = preEnteredText;
     }
 
     @Override
@@ -138,11 +144,15 @@ public class TextInput extends Widget implements IOnClick, Listener {
 
         Location signLocation = player.getLocation().clone().add(player.getLocation().getDirection().multiply(-1)).add(0, -2, 0);
 
-        player.sendBlockChange(signLocation, Material.OAK_SIGN.createBlockData());
+        BlockData signData = Material.OAK_SIGN.createBlockData();
+        player.sendBlockChange(signLocation, signData);
+        String text = Objects.nonNull(preText) ? preText.get() : "";
+        String[] lines = text.split("\n");
+        player.sendSignChange(signLocation, lines);
 
         PacketContainer openSign = manager.createPacket(PacketType.Play.Server.OPEN_SIGN_EDITOR);
         openSign.getBlockPositionModifier().write(0, new BlockPosition(signLocation.getBlockX(), signLocation.getBlockY(), signLocation.getBlockZ()));
-        openSign.getBooleans().write(0, false);
+        openSign.getBooleans().write(0, true);
         try {
             manager.sendServerPacket(player, openSign);
         } catch (Exception e) {
