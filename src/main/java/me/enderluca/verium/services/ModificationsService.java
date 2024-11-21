@@ -24,6 +24,8 @@ import javax.annotation.Nullable;
  */
 public class ModificationsService {
 
+    private final TimeService time;
+
     private final ChallengesService challenges;
     private final GamerulesService gamerules;
     private final GoalsService goals;
@@ -37,6 +39,7 @@ public class ModificationsService {
 
 
     public ModificationsService(Plugin owner, FileConfiguration fileConfig, TimerService timer){
+        this.time = new TimeService(owner, fileConfig);
         this.gamerules = new GamerulesService(owner, fileConfig);
         this.challenges = new ChallengesService(owner, fileConfig, this::onChallengeFail);
         this.goals = new GoalsService(owner, fileConfig, this::onAllGoalsComplete);
@@ -45,8 +48,9 @@ public class ModificationsService {
         this.owner = owner;
 
         allPaused = fileConfig.getBoolean("modifications.allpaused", false);
+        time.setPaused(allPaused);
 
-        Bukkit.getPluginManager().registerEvents(new ModificationsListener(() -> allPaused, this::onWorldLoad), owner);
+        Bukkit.getPluginManager().registerEvents(new ModificationsListener(() -> allPaused), owner);
 
         if(allPaused){
             challenges.setPausedAll(true);
@@ -61,13 +65,6 @@ public class ModificationsService {
 
         if(message != null)
             Bukkit.spigot().broadcast(message);
-    }
-
-    /**
-     * Called when a world is loaded by the listener, disables the daylight cycle if allPaused is true
-     */
-    private void onWorldLoad(@Nonnull World world){
-        world.setGameRule(GameRule.DO_DAYLIGHT_CYCLE, !allPaused);
     }
 
     private void onAllGoalsComplete(){
@@ -95,6 +92,7 @@ public class ModificationsService {
 
         timer.pause();
 
+        time.setPaused(true);
         challenges.setPausedAll(true);
         gamerules.setPausedAll(true);
         goals.setPausedAll(true);
@@ -125,6 +123,7 @@ public class ModificationsService {
             p.getWorld().setGameRule(GameRule.DO_DAYLIGHT_CYCLE, true);
         }
 
+        time.setPaused(false);
         gamerules.setPausedAll(false);
         challenges.setPausedAll(false);
         goals.setPausedAll(false);
