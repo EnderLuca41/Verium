@@ -2,8 +2,8 @@ package me.enderluca.verium.gui.widgets;
 
 import me.enderluca.verium.gui.SoundEffect;
 import me.enderluca.verium.gui.event.TextInputEvent;
-import me.enderluca.verium.interfaces.IInventoryGui;
-import me.enderluca.verium.interfaces.IOnClick;
+import me.enderluca.verium.interfaces.Gui;
+import me.enderluca.verium.interfaces.OnClick;
 
 import com.comphenix.protocol.PacketType;
 import com.comphenix.protocol.ProtocolManager;
@@ -33,7 +33,7 @@ import java.util.logging.Level;
 /**
  * A text input widget that allows the player to input text into a sign
  */
-public class TextInput extends Widget implements IOnClick, Listener {
+public class TextInput extends Widget implements OnClick, Listener {
 
     @Nullable
     protected SoundEffect clickSound;
@@ -49,7 +49,7 @@ public class TextInput extends Widget implements IOnClick, Listener {
     private final ProtocolManager manager;
 
     @Nullable
-    private final IInventoryGui returnGui;
+    private final Gui returnGui;
 
     /**
      * @param clickSound The sound to play when the player clicks on the text input, if not set no sound will be played
@@ -60,7 +60,7 @@ public class TextInput extends Widget implements IOnClick, Listener {
      */
     public TextInput(@Nonnull Plugin owner, @Nonnull ProtocolManager manager, @Nullable ItemStack icon,
                      @Nullable SoundEffect clickSound, @Nullable SoundEffect doneSound, @Nullable Consumer<TextInputEvent> onTextEntered,
-                     @Nullable IInventoryGui returnGui, @Nullable Supplier<String> preEnteredText){
+                     @Nullable Gui returnGui, @Nullable Supplier<String> preEnteredText){
         this.owner = owner;
         this.manager = manager;
         this.returnGui = returnGui;

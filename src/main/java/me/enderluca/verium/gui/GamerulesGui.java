@@ -5,7 +5,7 @@ import me.enderluca.verium.gui.builder.SwitchBuilder;
 import me.enderluca.verium.gui.widgets.Icon;
 import me.enderluca.verium.gui.widgets.Switch;
 import me.enderluca.verium.interfaces.Gamerule;
-import me.enderluca.verium.interfaces.IInventoryGui;
+import me.enderluca.verium.interfaces.Gui;
 import me.enderluca.verium.services.GamerulesService;
 import me.enderluca.verium.util.GuiUtil;
 
@@ -18,7 +18,7 @@ import org.bukkit.plugin.Plugin;
 /**
  * A gui that allows the player to toggle gamerules
  */
-public class GamerulesGui implements IInventoryGui {
+public class GamerulesGui implements Gui {
 
     protected final InventoryGui gui;
 

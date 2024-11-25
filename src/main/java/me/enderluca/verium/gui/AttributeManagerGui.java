@@ -14,7 +14,7 @@ import me.enderluca.verium.gui.widgets.Button;
 import me.enderluca.verium.gui.widgets.Icon;
 import me.enderluca.verium.gui.widgets.Switch;
 import me.enderluca.verium.gui.widgets.TextInput;
-import me.enderluca.verium.interfaces.IInventoryGui;
+import me.enderluca.verium.interfaces.Gui;
 import me.enderluca.verium.services.AttributeService;
 import me.enderluca.verium.util.AttributeUtil;
 import me.enderluca.verium.util.GuiUtil;
@@ -40,7 +40,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.UUID;
 
-public class AttributeManagerGui implements IInventoryGui {
+public class AttributeManagerGui implements Gui {
 
     @Nonnull
     protected final AttributeService attributeService;

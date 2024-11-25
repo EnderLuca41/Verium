@@ -3,7 +3,7 @@ package me.enderluca.verium.gui.builder;
 import me.enderluca.verium.gui.SoundEffect;
 import me.enderluca.verium.gui.widgets.TextInput;
 import me.enderluca.verium.gui.event.TextInputEvent;
-import me.enderluca.verium.interfaces.IInventoryGui;
+import me.enderluca.verium.interfaces.Gui;
 
 import com.comphenix.protocol.ProtocolManager;
 
@@ -25,7 +25,7 @@ public class TextInputBuilder extends WidgetBuilder {
     protected Supplier<String> preText;
 
     @Nullable
-    protected IInventoryGui returnGui;
+    protected Gui returnGui;
 
     public TextInputBuilder(Plugin owner, ProtocolManager manager){
         super(owner, manager);
@@ -67,7 +67,7 @@ public class TextInputBuilder extends WidgetBuilder {
     /**
      * Sets the gui to return to after the text has been entered
      */
-    public TextInputBuilder addReturnGui(IInventoryGui gui){
+    public TextInputBuilder addReturnGui(Gui gui){
         returnGui = gui;
         return this;
     }

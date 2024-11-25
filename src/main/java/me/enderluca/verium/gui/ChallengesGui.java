@@ -5,7 +5,7 @@ import me.enderluca.verium.gui.builder.SwitchBuilder;
 import me.enderluca.verium.gui.widgets.Icon;
 import me.enderluca.verium.gui.widgets.Switch;
 import me.enderluca.verium.interfaces.Challenge;
-import me.enderluca.verium.interfaces.IInventoryGui;
+import me.enderluca.verium.interfaces.Gui;
 import me.enderluca.verium.services.ChallengesService;
 import me.enderluca.verium.util.GuiUtil;
 
@@ -20,7 +20,7 @@ import javax.annotation.Nonnull;
 /**
  * Gui that is used to toggle challenges
  */
-public class ChallengesGui implements IInventoryGui {
+public class ChallengesGui implements Gui {
 
     @Nonnull
     protected final InventoryGui gui;
