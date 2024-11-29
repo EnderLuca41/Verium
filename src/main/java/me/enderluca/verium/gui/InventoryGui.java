@@ -81,6 +81,16 @@ public class InventoryGui implements Gui, Listener {
     }
 
     /**
+     *
+     */
+    public void renderWidget(int index){
+        if(widgets[index] != null)
+            widgets[index].render(inventory, index);
+        else
+            inventory.clear(index);
+    }
+
+    /**
      * Adds a widget to the gui, if the widget is a listener, it will be automatically registered
      */
     public void addWidget(Widget widget, int index){
