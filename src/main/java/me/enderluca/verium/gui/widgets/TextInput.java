@@ -106,19 +106,20 @@ public class TextInput extends Widget implements OnClick, Listener {
                 if(!Objects.nonNull(onTextEntered))
                     return;
 
-                player.sendBlockChange(position.toLocation(player.getWorld()), player.getWorld().getBlockData(position.toLocation(player.getWorld()).getBlock().getLocation()));
+                player.sendBlockChange(position.toLocation(player.getWorld()), player.getWorld().getBlockData(position.toLocation(player.getWorld()).getBlock().getLocation())); //Thread safe
 
                 if(Objects.nonNull(doneSound))
-                    doneSound.play(player);
+                    doneSound.play(player); //Thread safe
 
                 manager.removePacketListener(this);
 
-                Bukkit.getScheduler().runTask(owner, () -> {
+                //Call in sync context
+                Bukkit.getScheduler().scheduleSyncDelayedTask(owner, () -> {
                     if(Objects.nonNull(returnGui))
                         returnGui.show(player);
-                });
 
-                onTextEntered.accept(new TextInputEvent(player, text));
+                    onTextEntered.accept(new TextInputEvent(player, text));
+                });
             }
         });
     }
