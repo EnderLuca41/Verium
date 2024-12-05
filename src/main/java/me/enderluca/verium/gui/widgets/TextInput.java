@@ -147,8 +147,13 @@ public class TextInput extends Widget implements OnClick, Listener {
 
         BlockData signData = Material.OAK_SIGN.createBlockData();
         player.sendBlockChange(signLocation, signData);
-        String text = Objects.nonNull(preText) ? preText.get() : "";
+        String text = Objects.nonNull(preText) ? preText.get() : "\n\n\n";
         String[] lines = text.split("\n");
+        if(lines.length < 4){ //Submitted text has less than 4 lines, and need to be padded
+            String[] newLines = new String[4];
+            System.arraycopy(lines, 0, newLines, 0, lines.length);
+            lines = newLines;
+        }
         player.sendSignChange(signLocation, lines);
 
         PacketContainer openSign = manager.createPacket(PacketType.Play.Server.OPEN_SIGN_EDITOR);
