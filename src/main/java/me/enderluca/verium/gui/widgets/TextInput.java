@@ -27,6 +27,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.Objects;
 import java.util.function.Consumer;
+import java.util.function.Predicate;
 import java.util.function.Supplier;
 import java.util.logging.Level;
 
@@ -38,8 +39,12 @@ public class TextInput extends Widget implements OnClick, Listener {
     @Nullable
     protected SoundEffect clickSound;
     @Nullable
-    protected SoundEffect doneSound;
+    protected SoundEffect successSound;
+    @Nullable
+    protected SoundEffect failSound;
 
+    @Nonnull
+    protected final Predicate<String> validator;
     @Nullable
     protected final Consumer<TextInputEvent> onTextEntered;
     @Nullable
@@ -53,14 +58,18 @@ public class TextInput extends Widget implements OnClick, Listener {
 
     /**
      * @param clickSound The sound to play when the player clicks on the text input, if not set no sound will be played
-     * @param doneSound The sound to play when the player submits the text, if not set no sound will be played
+     * @param successSound The sound to play when the player submits the text, if not set no sound will be played
+     * @param failSound The sound to play when the player fails to submit the text, if not set no sound will be played
+     * @param validator The predicate to validate the text entered by the player, depending on the return value success/fail sound will be played and on success onTextEntered will be called <br>
+     *                  Needs to be thread safe, meaning avoid side effects when implementing the predicate
      * @param onTextEntered The consumer to be called when the player submits the text
      * @param returnGui The gui to return to after the text has been entered
      * @param preEnteredText The text that is already entered into the sign when the player opens the text input
      */
     public TextInput(@Nonnull Plugin owner, @Nonnull ProtocolManager manager, @Nullable ItemStack icon,
-                     @Nullable SoundEffect clickSound, @Nullable SoundEffect doneSound, @Nullable Consumer<TextInputEvent> onTextEntered,
-                     @Nullable Gui returnGui, @Nullable Supplier<String> preEnteredText){
+                     @Nullable SoundEffect clickSound, @Nullable SoundEffect successSound, @Nullable SoundEffect failSound,
+                     @Nullable Predicate<String> validator, @Nullable Consumer<TextInputEvent> onTextEntered, @Nullable Gui returnGui,
+                     @Nullable Supplier<String> preEnteredText){
         this.owner = owner;
         this.manager = manager;
         this.returnGui = returnGui;
@@ -77,8 +86,10 @@ public class TextInput extends Widget implements OnClick, Listener {
             this.icon = icon;
 
         this.clickSound = clickSound;
-        this.doneSound = doneSound;
+        this.successSound = successSound;
+        this.failSound = failSound;
 
+        this.validator = Objects.nonNull(validator) ? validator : (s) -> true;
         this.onTextEntered = onTextEntered;
         this.preText = preEnteredText;
     }
@@ -108,10 +119,16 @@ public class TextInput extends Widget implements OnClick, Listener {
 
                 player.sendBlockChange(position.toLocation(player.getWorld()), player.getWorld().getBlockData(position.toLocation(player.getWorld()).getBlock().getLocation())); //Thread safe
 
-                if(Objects.nonNull(doneSound))
-                    doneSound.play(player); //Thread safe
-
                 manager.removePacketListener(this);
+
+                if(!validator.test(text)){
+                    if(Objects.nonNull(failSound))
+                        failSound.play(player); //Thread safe
+                    return;
+                }
+
+                if(Objects.nonNull(successSound))
+                    successSound.play(player); //Thread safe
 
                 //Call in sync context
                 Bukkit.getScheduler().scheduleSyncDelayedTask(owner, () -> {

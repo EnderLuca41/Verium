@@ -12,13 +12,18 @@ import org.bukkit.plugin.Plugin;
 
 import javax.annotation.Nullable;
 import java.util.function.Consumer;
+import java.util.function.Predicate;
 import java.util.function.Supplier;
 
 public class TextInputBuilder extends WidgetBuilder {
     @Nullable
     protected SoundEffect clickSound;
     @Nullable
-    protected SoundEffect doneSound;
+    protected SoundEffect successSound;
+    @Nullable
+    protected SoundEffect failSound;
+    @Nullable
+    protected Predicate<String> validator;
     @Nullable
     protected Consumer<TextInputEvent> onTextEntered;
     @Nullable
@@ -40,10 +45,26 @@ public class TextInputBuilder extends WidgetBuilder {
     }
 
     /**
-     * Sets the sound to play when the player submits the text, if not set a default sound will be used
+     * Sets the sound to play when the player submits the text, if not set no sound will be played
      */
-    public TextInputBuilder addDoneSound(SoundEffect sound){
-        doneSound = sound;
+    public TextInputBuilder addSuccessSound(SoundEffect sound){
+        successSound = sound;
+        return this;
+    }
+    /**
+     * Sets the sound to play when the player submits the text, if not set no sound will be played
+     */
+    public TextInputBuilder addFailSound(SoundEffect sound){
+        failSound = sound;
+        return this;
+    }
+
+    /**
+     * Sets the validator to be used to validate the text input, depending on the result the text will be submitted or not and the success/fail sound will be played. <br>
+     * The function needs to be thread safe, so avoid side effects when implementing the predicate.
+     */
+    public TextInputBuilder addValidator(Predicate<String> validator){
+        this.validator = validator;
         return this;
     }
 
@@ -80,6 +101,6 @@ public class TextInputBuilder extends WidgetBuilder {
 
     @Override
     public TextInput build() {
-        return new TextInput(owner, manager, icon, clickSound, doneSound, onTextEntered, returnGui, preText);
+        return new TextInput(owner, manager, icon, clickSound, successSound, failSound, validator, onTextEntered, returnGui, preText);
     }
 }
