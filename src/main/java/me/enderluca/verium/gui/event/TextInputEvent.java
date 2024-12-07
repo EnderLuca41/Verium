@@ -7,9 +7,12 @@ public class TextInputEvent {
 
     protected final Player player;
 
-    public TextInputEvent(Player player, String text) {
+    protected final boolean validationResult;
+
+    public TextInputEvent(Player player, String text, boolean validationResult) {
         this.player = player;
         this.text = text;
+        this.validationResult = validationResult;
     }
 
     /**
@@ -24,5 +27,12 @@ public class TextInputEvent {
      */
     public Player getPlayer() {
         return this.player;
+    }
+
+    /**
+     * Returns the result of the validation predicate
+     */
+    public boolean getValidationResult() {
+        return this.validationResult;
     }
 }

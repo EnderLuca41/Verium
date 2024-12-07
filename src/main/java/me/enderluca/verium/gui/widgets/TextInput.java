@@ -56,20 +56,23 @@ public class TextInput extends Widget implements OnClick, Listener {
     @Nullable
     private final Gui returnGui;
 
+    protected final boolean callOnValidationFail;
+
     /**
      * @param clickSound The sound to play when the player clicks on the text input, if not set no sound will be played
      * @param successSound The sound to play when the player submits the text, if not set no sound will be played
-     * @param failSound The sound to play when the player fails to submit the text, if not set no sound will be played
+     * @param failSound The sound to play when the player if the validator returns false, if not set no sound will be played
      * @param validator The predicate to validate the text entered by the player, depending on the return value success/fail sound will be played and on success onTextEntered will be called <br>
      *                  Needs to be thread safe, meaning avoid side effects when implementing the predicate
+     * @param callOnValidationFail If true, the onTextEntered consumer will be called even if the validator returns false
      * @param onTextEntered The consumer to be called when the player submits the text
      * @param returnGui The gui to return to after the text has been entered
      * @param preEnteredText The text that is already entered into the sign when the player opens the text input
      */
     public TextInput(@Nonnull Plugin owner, @Nonnull ProtocolManager manager, @Nullable ItemStack icon,
                      @Nullable SoundEffect clickSound, @Nullable SoundEffect successSound, @Nullable SoundEffect failSound,
-                     @Nullable Predicate<String> validator, @Nullable Consumer<TextInputEvent> onTextEntered, @Nullable Gui returnGui,
-                     @Nullable Supplier<String> preEnteredText){
+                     @Nullable Predicate<String> validator, @Nullable Consumer<TextInputEvent> onTextEntered, boolean callOnValidationFail,
+                     @Nullable Gui returnGui, @Nullable Supplier<String> preEnteredText){
         this.owner = owner;
         this.manager = manager;
         this.returnGui = returnGui;
@@ -92,6 +95,8 @@ public class TextInput extends Widget implements OnClick, Listener {
         this.validator = Objects.nonNull(validator) ? validator : (s) -> true;
         this.onTextEntered = onTextEntered;
         this.preText = preEnteredText;
+
+        this.callOnValidationFail = callOnValidationFail;
     }
 
     @Override
@@ -121,21 +126,24 @@ public class TextInput extends Widget implements OnClick, Listener {
 
                 manager.removePacketListener(this);
 
-                if(!validator.test(text)){
+                boolean validationResult = validator.test(text);
+                if(!validationResult){
                     if(Objects.nonNull(failSound))
                         failSound.play(player); //Thread safe
-                    return;
-                }
 
-                if(Objects.nonNull(successSound))
-                    successSound.play(player); //Thread safe
+                    if(!callOnValidationFail)
+                        return;
+                }
+                else
+                    if(Objects.nonNull(successSound))
+                        successSound.play(player); //Thread safe
 
                 //Call in sync context
                 Bukkit.getScheduler().scheduleSyncDelayedTask(owner, () -> {
                     if(Objects.nonNull(returnGui))
                         returnGui.show(player);
 
-                    onTextEntered.accept(new TextInputEvent(player, text));
+                    onTextEntered.accept(new TextInputEvent(player, text, validationResult));
                 });
             }
         });

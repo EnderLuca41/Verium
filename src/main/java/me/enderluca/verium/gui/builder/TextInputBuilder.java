@@ -32,6 +32,8 @@ public class TextInputBuilder extends WidgetBuilder {
     @Nullable
     protected Gui returnGui;
 
+    protected boolean callOnValidationFail = false;
+
     public TextInputBuilder(Plugin owner, ProtocolManager manager){
         super(owner, manager);
     }
@@ -69,6 +71,14 @@ public class TextInputBuilder extends WidgetBuilder {
     }
 
     /**
+     * If true, the onTextEntered consumer will be called even if the validator returns false
+     */
+    public TextInputBuilder callOnValidationFail(boolean callOnValidationFail) {
+        this.callOnValidationFail = callOnValidationFail;
+        return this;
+    }
+
+    /**
      * Sets the consumer to be called when the player submits the text
      */
     public TextInputBuilder listenOnTextEntered(Consumer<TextInputEvent> onTextEntered){
@@ -101,6 +111,6 @@ public class TextInputBuilder extends WidgetBuilder {
 
     @Override
     public TextInput build() {
-        return new TextInput(owner, manager, icon, clickSound, successSound, failSound, validator, onTextEntered, returnGui, preText);
+        return new TextInput(owner, manager, icon, clickSound, successSound, failSound, validator, onTextEntered, callOnValidationFail, returnGui, preText);
     }
 }
