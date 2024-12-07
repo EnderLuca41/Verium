@@ -76,6 +76,18 @@ public class TimeService {
         setTime(Math.round(time % 24000));
     }
 
+    public long getTime(){
+        return Bukkit.getWorlds().get(0).getTime();
+    }
+
+    public String getTimeString(){
+        long actualTime = (getTime() + 6000) % 24000;
+        long hours = actualTime / 1000;
+        long minutes = (actualTime % 1000) / 16;
+        long seconds = (actualTime % 16) * 3;
+        return String.format("%02d:%02d:%02d", hours, minutes, seconds);
+    }
+
     public void loadConfig(FileConfiguration src){
         paused = src.getBoolean("time.paused", false);
         frozen = src.getBoolean("time.frozen", false);
