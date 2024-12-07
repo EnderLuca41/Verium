@@ -128,6 +128,10 @@ public class MultipageInventoryGui implements Gui {
         }
     }
 
+    public void renderWidget(int page, int index){
+        invPages[page].renderWidget(index);
+    }
+
     /**
      * Shows the first page to the specified player
      */
