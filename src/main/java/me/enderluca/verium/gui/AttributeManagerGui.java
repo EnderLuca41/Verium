@@ -35,10 +35,10 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URI;
 import java.net.URL;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class AttributeManagerGui implements Gui {
 
@@ -70,7 +70,7 @@ public class AttributeManagerGui implements Gui {
         attributeService = service;
         protocolManager = manager;
 
-        playerUuidCache = new HashMap<>();
+        playerUuidCache = new ConcurrentHashMap<>();
 
         gui = new MultipageInventoryGui(owner, manager, 10, "Attribute Manager");
         renderWidgets();
@@ -116,20 +116,24 @@ public class AttributeManagerGui implements Gui {
         TextInputBuilder builder = new TextInputBuilder(owner, protocolManager);
         builder.addIcon(GuiUtil.getAddPlayerInputIcon())
         .listenOnTextEntered(args -> {
-            UUID uuid = getUUID(args.getText());
-            if(Objects.isNull(uuid)){
-                args.getPlayer().sendMessage(ChatColor.RED + "Player entered does not exist.");
-                inputErrorSound.play(args.getPlayer());
+            if(!args.getValidationResult()){
+                args.getPlayer().sendMessage(ChatColor.RED + "Invalid player entered.");
                 return;
             }
 
-            inputSuccessSound.play(args.getPlayer());
+            UUID uuid = getUUID(args.getText());
             change.addPlayer(uuid);
             renderWidgets();
         })
+        .addValidator(s -> {
+            UUID uuid = getUUID(s);
+            return Objects.nonNull(uuid) && !change.containsPlayer(uuid);
+        })
+        .callOnValidationFail(true)
+        .addSuccessSound(inputSuccessSound)
+        .addFailSound(inputErrorSound)
         .addClickSound(new SoundEffect(Sound.BLOCK_BARREL_OPEN))
         .addReturnGui(this);
-
         return builder.build();
     }
 
@@ -140,18 +144,23 @@ public class AttributeManagerGui implements Gui {
         TextInputBuilder builder = new TextInputBuilder(owner, protocolManager);
         builder.addIcon(GuiUtil.getRemovePlayerInputIcon())
         .listenOnTextEntered(args -> {
-            UUID uuid = getUUID(args.getText());
-            if(!change.containsPlayer(uuid)){
-                args.getPlayer().sendMessage(ChatColor.RED + "Player entered is not in the list.");
-                inputErrorSound.play(args.getPlayer());
+            if(!args.getValidationResult()){
+                args.getPlayer().sendMessage(ChatColor.RED + "Invalid player entered.");
                 return;
             }
 
-            inputSuccessSound.play(args.getPlayer());
+            UUID uuid = getUUID(args.getText());
             change.removePlayer(uuid);
             renderWidgets();
         })
+        .addValidator(s -> {
+            UUID uuid = getUUID(s);
+            return Objects.nonNull(uuid) && change.containsPlayer(uuid);
+        })
+        .callOnValidationFail(true)
         .addClickSound(new SoundEffect(Sound.BLOCK_BARREL_OPEN))
+        .addSuccessSound(inputSuccessSound)
+        .addFailSound(inputErrorSound)
         .addReturnGui(this);
         return builder.build();
     }
@@ -187,19 +196,28 @@ public class AttributeManagerGui implements Gui {
         TextInputBuilder builder = new TextInputBuilder(owner, protocolManager);
         return builder.addIcon(GuiUtil.getChangeAttributeValueIcon(change.getAttribute(), change.getValue()))
         .listenOnTextEntered(args -> {
-            try {
-                String[] lines = args.getText().split("\n");
-                lines[0] = lines[0].replace(",", "."); //Replace commas with dots to allow for decimal numbers
-                double value = Double.parseDouble(lines[0]);
-                inputSuccessSound.play(args.getPlayer());
-                change.setValue(value);
-
-            } catch (NumberFormatException e){
+            if(!args.getValidationResult()){
                 args.getPlayer().sendMessage(ChatColor.RED + "Invalid number entered.");
-                inputErrorSound.play(args.getPlayer());
+                return;
+            }
+
+            change.setValue(Double.parseDouble(args.getText().replace(",", ".")));
+            renderWidgets();
+        })
+        .addValidator(s -> {
+            try {
+                String[] lines = s.split("\n");
+                lines[0] = lines[0].replace(",", "."); //Replace commas with dots to allow for decimal numbers
+                Double.parseDouble(lines[0]);
+                return true;
+            } catch (NumberFormatException e){
+                return false;
             }
         })
+        .callOnValidationFail(true)
         .addClickSound(new SoundEffect(Sound.BLOCK_BARREL_OPEN))
+        .addSuccessSound(inputSuccessSound)
+        .addFailSound(inputErrorSound)
         .addReturnGui(this)
         .build();
     }
