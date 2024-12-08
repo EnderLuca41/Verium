@@ -35,6 +35,7 @@ public class TimeService {
 
     public void setFrozen(boolean frozen){
         this.frozen = frozen;
+        this.frozenTime = getTime();
         updateTime();
     }
 
