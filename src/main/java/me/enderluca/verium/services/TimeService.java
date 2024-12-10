@@ -21,9 +21,6 @@ public class TimeService {
     //Wehther the time is manually frozen
     protected boolean frozen;
 
-    //The time the world is frozen at as specified by the player
-    protected long frozenTime = 0;
-
 
     public TimeService(Plugin owner, FileConfiguration fileConfig){
         loadConfig(fileConfig);
@@ -38,7 +35,6 @@ public class TimeService {
 
     public void setFrozen(boolean frozen){
         this.frozen = frozen;
-        this.frozenTime = getTime();
         updateTime();
     }
 
@@ -59,9 +55,6 @@ public class TimeService {
     }
 
     public void updateTime(World world){
-        if(frozen)
-            world.setTime(frozenTime);
-
         world.setGameRule(GameRule.DO_DAYLIGHT_CYCLE, !(frozen || paused));
     }
 
@@ -70,9 +63,6 @@ public class TimeService {
         for(World world : Bukkit.getWorlds()){
             world.setTime(realTicks);
         }
-
-        if(frozen)
-            frozenTime = ticks;
     }
 
     /**
@@ -113,13 +103,11 @@ public class TimeService {
     public void loadConfig(@Nonnull FileConfiguration src){
         paused = src.getBoolean("time.paused", false);
         frozen = src.getBoolean("time.frozen", false);
-        frozenTime = src.getLong("time.frozenTime", 0);
         updateTime();
     }
 
     public void saveConfig(@Nonnull FileConfiguration dest){
         dest.set("time.paused", paused);
         dest.set("time.frozen", frozen);
-        dest.set("time.frozenTime", frozenTime);
     }
 }
