@@ -8,14 +8,17 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.Plugin;
 
 import javax.annotation.Nonnegative;
+import javax.annotation.Nonnull;
 
 /**
  * Manages the in-game time, not to be confused with TimerService.
  */
 public class TimeService {
 
+    //Whether challenge has been paused, which results in time being temporarily frozen
     protected boolean paused;
 
+    //Wehther the time is manually frozen
     protected boolean frozen;
 
     //The time the world is frozen at as specified by the player
@@ -72,7 +75,10 @@ public class TimeService {
             frozenTime = ticks;
     }
 
-    public void setTime(int hours, int minutes, int seconds){
+    /**
+     * Sets the time in Minecraft hours, minutes and seconds
+     */
+    public void setTime(@Nonnegative int hours, @Nonnegative int minutes, @Nonnegative int seconds){
         double time = (hours * 1000) + (minutes * 16.666666666666667) + (seconds * 0.2777777777777778) + 24000 - 6000;
         setTime(Math.round(time % 24000));
     }
@@ -81,6 +87,10 @@ public class TimeService {
         return Bukkit.getWorlds().get(0).getTime();
     }
 
+    /**
+     * Returns the daytime in Minecraft hours, minutes and seconds in the format HH:MM:SS
+     */
+    @Nonnull
     public String getTimeString(){
         long actualTime = (getTime() + 6000) % 24000;
         long hours = actualTime / 1000;
@@ -92,6 +102,7 @@ public class TimeService {
     /**
      * Returns the daytime in real minutes and seconds in the format MM:SS
      */
+    @Nonnull
     public String getRealTimeString(){
         long time = getTime();
         long minutes = time / 1200;
@@ -99,14 +110,14 @@ public class TimeService {
         return String.format("%02d:%02d", minutes, seconds);
     }
 
-    public void loadConfig(FileConfiguration src){
+    public void loadConfig(@Nonnull FileConfiguration src){
         paused = src.getBoolean("time.paused", false);
         frozen = src.getBoolean("time.frozen", false);
         frozenTime = src.getLong("time.frozenTime", 0);
         updateTime();
     }
 
-    public void saveConfig(FileConfiguration dest){
+    public void saveConfig(@Nonnull FileConfiguration dest){
         dest.set("time.paused", paused);
         dest.set("time.frozen", frozen);
         dest.set("time.frozenTime", frozenTime);
