@@ -89,6 +89,16 @@ public class TimeService {
         return String.format("%02d:%02d:%02d", hours, minutes, seconds);
     }
 
+    /**
+     * Returns the daytime in real minutes and seconds in the format MM:SS
+     */
+    public String getRealTimeString(){
+        long time = getTime();
+        long minutes = time / 1200;
+        long seconds = (time % 1200) / 20;
+        return String.format("%02d:%02d", minutes, seconds);
+    }
+
     public void loadConfig(FileConfiguration src){
         paused = src.getBoolean("time.paused", false);
         frozen = src.getBoolean("time.frozen", false);
