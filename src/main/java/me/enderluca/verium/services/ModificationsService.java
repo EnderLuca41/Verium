@@ -139,6 +139,7 @@ public class ModificationsService {
         gamerules.loadConfig(src);
         goals.loadConfig(src);
         attributes.loadConfig(src);
+        time.loadConfig(src);
     }
 
     public void saveConfig(FileConfiguration dest){
@@ -148,6 +149,7 @@ public class ModificationsService {
         gamerules.saveConfig(dest);
         goals.saveConfig(dest);
         attributes.saveConfig(dest);
+        time.saveConfig(dest);
     }
 
     public void clearWorldSpecificConfig(FileConfiguration dest){
@@ -169,4 +171,8 @@ public class ModificationsService {
     }
 
     public AttributeService getAttributeService(){ return attributes; }
+
+    public TimeService getTimeService(){
+        return time;
+    }
 }
