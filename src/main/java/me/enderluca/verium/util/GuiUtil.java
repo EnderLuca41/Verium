@@ -62,14 +62,6 @@ public final class GuiUtil {
     @Nonnull
     public static ItemStack getChallengeIcon(ChallengeType type){
         switch (type){
-            case NoCrafting -> {
-                ItemStack noCrafting = new ItemStack(Material.CRAFTING_TABLE, 1);
-                ItemMeta meta = noCrafting.getItemMeta();
-                meta.setDisplayName("No Crafting"); //Item cannot be air, so NullPointerException is impossible
-                meta.setLore(List.of("Disables the use of crafting tables."));
-                noCrafting.setItemMeta(meta);
-                return noCrafting;
-            }
             case WolfSurvive -> {
                 ItemStack wolfSurvive = new ItemStack(Material.BONE, 1);
                 ItemMeta meta = wolfSurvive.getItemMeta();
@@ -108,6 +100,15 @@ public final class GuiUtil {
     @Nonnull
     public static ItemStack getGameruleIcon(GameruleType type){
         switch (type){
+            case NoCrafting -> {
+                ItemStack noCrafting = new ItemStack(Material.CRAFTING_TABLE, 1);
+                ItemMeta meta = noCrafting.getItemMeta();
+                meta.setDisplayName("No Crafting"); //Item cannot be air, so NullPointerException is impossible
+                meta.setLore(List.of("Disables the use of crafting tables."));
+                noCrafting.setItemMeta(meta);
+                return noCrafting;
+            }
+
             case NoHunger -> {
                 ItemStack noHunger = new ItemStack(Material.APPLE, 1);
                 ItemMeta meta = noHunger.getItemMeta();

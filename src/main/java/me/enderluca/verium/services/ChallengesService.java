@@ -2,7 +2,6 @@ package me.enderluca.verium.services;
 
 import me.enderluca.verium.*;
 import me.enderluca.verium.interfaces.Challenge;
-import me.enderluca.verium.services.challenges.NoCraftingChallenge;
 import me.enderluca.verium.services.challenges.NoDeathChallenge;
 import me.enderluca.verium.services.challenges.NoFallDamageChallenge;
 import me.enderluca.verium.services.challenges.WolfSurviveChallenge;
@@ -27,7 +26,6 @@ public class ChallengesService {
         challenges = new ArrayList<>();
 
         challenges.add(new WolfSurviveChallenge(owner, fileConfig, this::onFailChallenge));
-        challenges.add(new NoCraftingChallenge(owner, fileConfig));
         challenges.add(new NoFallDamageChallenge(owner, fileConfig, this::onFailChallenge));
         challenges.add(new NoDeathChallenge(owner, fileConfig, this::onFailChallenge));
     }

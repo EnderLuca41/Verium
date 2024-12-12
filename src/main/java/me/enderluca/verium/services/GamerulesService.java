@@ -18,6 +18,7 @@ public class GamerulesService {
     public GamerulesService(Plugin owner, FileConfiguration fileConfig){
         gamerules = new ArrayList<>();
 
+        gamerules.add(new NoCraftingGamerule(owner, fileConfig));
         gamerules.add(new NoHungerGamerule(owner, fileConfig));
         gamerules.add(new PvpGamerule(owner, fileConfig));
         gamerules.add(new UhcGamerule(owner, fileConfig));
