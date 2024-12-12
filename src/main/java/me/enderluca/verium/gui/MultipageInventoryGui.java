@@ -6,6 +6,7 @@ import me.enderluca.verium.gui.widgets.Button;
 import me.enderluca.verium.gui.widgets.Icon;
 import me.enderluca.verium.gui.widgets.Widget;
 import me.enderluca.verium.interfaces.Gui;
+import me.enderluca.verium.interfaces.MultipageGui;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.Sound;
@@ -21,7 +22,7 @@ import javax.annotation.Nullable;
 /**
  * A gui that has multiple inventories (= pages) and a navigation bar to switch between them
  */
-public class MultipageInventoryGui implements Gui {
+public class MultipageInventoryGui implements MultipageGui {
 
     @Nonnull
     protected InventoryGui[] invPages;
