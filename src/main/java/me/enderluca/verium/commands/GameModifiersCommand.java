@@ -1,7 +1,7 @@
 package me.enderluca.verium.commands;
 
-import me.enderluca.verium.gui.GamerulesGui;
-import me.enderluca.verium.services.GamerulesService;
+import me.enderluca.verium.gui.GameModifiersGui;
+import me.enderluca.verium.services.GameModifierService;
 
 import com.comphenix.protocol.ProtocolManager;
 
@@ -13,11 +13,11 @@ import org.bukkit.plugin.Plugin;
 
 import javax.annotation.Nonnull;
 
-public class GameRulesCommand implements CommandExecutor {
-    private final GamerulesGui gamerulesGui;
+public class GameModifiersCommand implements CommandExecutor {
+    private final GameModifiersGui gameModifiersGui;
 
-    public GameRulesCommand(Plugin owner, ProtocolManager manager, GamerulesService service){
-        gamerulesGui = new GamerulesGui(owner, manager, service);
+    public GameModifiersCommand(Plugin owner, ProtocolManager manager, GameModifierService service){
+        gameModifiersGui = new GameModifiersGui(owner, manager, service);
     }
 
     @Override
@@ -28,7 +28,7 @@ public class GameRulesCommand implements CommandExecutor {
         if(!(sender instanceof Player player))
             return false;
 
-        gamerulesGui.show(player);
+        gameModifiersGui.show(player);
 
         return true;
     }

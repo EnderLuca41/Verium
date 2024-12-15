@@ -1,8 +1,8 @@
-package me.enderluca.verium.services.gamerules;
+package me.enderluca.verium.services.modifiers;
 
-import me.enderluca.verium.GameruleType;
-import me.enderluca.verium.interfaces.Gamerule;
-import me.enderluca.verium.listener.gamerules.NoArmorListener;
+import me.enderluca.verium.GameModifierType;
+import me.enderluca.verium.interfaces.GameModifier;
+import me.enderluca.verium.listener.modifiers.NoArmorListener;
 
 import me.enderluca.verium.util.ItemUtil;
 import org.bukkit.Bukkit;
@@ -13,12 +13,12 @@ import org.bukkit.plugin.Plugin;
 
 import java.util.Objects;
 
-public class NoArmorGamerule implements Gamerule {
+public class NoArmorModifier implements GameModifier {
 
     private boolean enabled;
     private boolean paused;
 
-    public NoArmorGamerule(Plugin owner, FileConfiguration fileConfig){
+    public NoArmorModifier(Plugin owner, FileConfiguration fileConfig){
         loadConfig(fileConfig);
 
         Bukkit.getPluginManager().registerEvents(new NoArmorListener(() -> enabled && !paused), owner);
@@ -61,14 +61,14 @@ public class NoArmorGamerule implements Gamerule {
 
     @Override
     public void loadConfig(FileConfiguration src){
-        enabled = src.getBoolean("gamerules.noarmor.enabled", false);
-        paused = src.getBoolean("gamerules.noarmor.paused", false);
+        enabled = src.getBoolean("modifiers.noarmor.enabled", false);
+        paused = src.getBoolean("modifiers.noarmor.paused", false);
     }
 
     @Override
     public void saveConfig(FileConfiguration dest){
-        dest.set("gamerules.noarmor.enabled", enabled);
-        dest.set("gamerules.noarmor.paused", paused);
+        dest.set("modifiers.noarmor.enabled", enabled);
+        dest.set("modifiers.noarmor.paused", paused);
     }
 
     @Override
@@ -102,7 +102,7 @@ public class NoArmorGamerule implements Gamerule {
 
 
     @Override
-    public GameruleType getType(){
-        return GameruleType.NoArmor;
+    public GameModifierType getType(){
+        return GameModifierType.NoArmor;
     }
 }

@@ -43,7 +43,7 @@ public class VeriumPlugin extends JavaPlugin {
         timer = new TimerService(this, sec, timerEnabled);
         logger.log(Level.INFO, "Creating timer complete");
 
-        logger.info("Creating Modifications service to handle challenges, gamerules, goals and attributes");
+        logger.info("Creating Modifications service to handle challenges, modifiers, goals and attributes");
         modifications = new ModificationsService(this, getConfig(), timer);
         logger.info("Creating Modifications service complete");
 
@@ -52,7 +52,7 @@ public class VeriumPlugin extends JavaPlugin {
         getCommand("timer").setExecutor(new TimerCommand(timer));
         getCommand("reset").setExecutor(new ResetCommand(reset));
         getCommand("challenges").setExecutor(new ChallengeCommand(this, protocolManager, modifications.getChallengeService()));
-        getCommand("gamerules").setExecutor(new GameRulesCommand(this, protocolManager, modifications.getGamerulesService()));
+        getCommand("modifiers").setExecutor(new GameModifiersCommand(this, protocolManager, modifications.getGameModifierService()));
         getCommand("pause").setExecutor(new PauseCommand(modifications));
         getCommand("resume").setExecutor(new ResumeCommand(modifications));
         getCommand("goals").setExecutor(new GoalsCommand(this, protocolManager,modifications.getGoalsService()));
@@ -63,7 +63,7 @@ public class VeriumPlugin extends JavaPlugin {
 
     @Override
     public void onDisable() {
-        logger.info("Pausing challenges, gamerules and goals");
+        logger.info("Pausing modifications");
         modifications.pause();
 
         logger.log(Level.INFO, "Saving config");

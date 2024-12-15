@@ -1,6 +1,6 @@
 package me.enderluca.verium;
 
-public enum GameruleType {
+public enum GameModifierType {
     NoCrafting,
     NoHunger,
     Pvp,

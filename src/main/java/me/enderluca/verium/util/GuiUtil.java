@@ -1,7 +1,7 @@
 package me.enderluca.verium.util;
 
 import me.enderluca.verium.ChallengeType;
-import me.enderluca.verium.GameruleType;
+import me.enderluca.verium.GameModifierType;
 import me.enderluca.verium.GoalType;
 
 import net.md_5.bungee.api.ChatColor;
@@ -10,11 +10,9 @@ import org.bukkit.Color;
 import org.bukkit.DyeColor;
 import org.bukkit.Material;
 import org.bukkit.attribute.Attribute;
-import org.bukkit.attribute.AttributeInstance;
 import org.bukkit.block.banner.Pattern;
 import org.bukkit.block.banner.PatternType;
 import org.bukkit.enchantments.Enchantment;
-import org.bukkit.entity.Item;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.BannerMeta;
@@ -95,10 +93,10 @@ public final class GuiUtil {
     }
 
     /**
-     * Gets the item that represents the specified gamerule in the gui
+     * Gets the item that represents the specified game modifier in the gui
      */
     @Nonnull
-    public static ItemStack getGameruleIcon(GameruleType type){
+    public static ItemStack getGameModifierIcon(GameModifierType type){
         switch (type){
             case NoCrafting -> {
                 ItemStack noCrafting = new ItemStack(Material.CRAFTING_TABLE, 1);

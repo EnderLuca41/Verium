@@ -1,4 +1,4 @@
-package me.enderluca.verium.listener.gamerules;
+package me.enderluca.verium.listener.modifiers;
 
 import me.enderluca.verium.util.ItemUtil;
 

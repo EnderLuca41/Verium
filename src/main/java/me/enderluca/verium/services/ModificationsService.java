@@ -18,14 +18,14 @@ import javax.annotation.Nullable;
 //TODO: Find better name for this class
 
 /**
- * Manages challenges, gamerules, goals and attributes
+ * Manages challenges, modifiers, goals and attributes
  */
 public class ModificationsService {
 
     private final TimeService time;
 
     private final ChallengesService challenges;
-    private final GamerulesService gamerules;
+    private final GameModifierService modifiers;
     private final GoalsService goals;
     private final AttributeService attributes;
 
@@ -38,7 +38,7 @@ public class ModificationsService {
 
     public ModificationsService(Plugin owner, FileConfiguration fileConfig, TimerService timer){
         this.time = new TimeService(owner, fileConfig);
-        this.gamerules = new GamerulesService(owner, fileConfig);
+        this.modifiers = new GameModifierService(owner, fileConfig);
         this.challenges = new ChallengesService(owner, fileConfig, this::onChallengeFail);
         this.goals = new GoalsService(owner, fileConfig, this::onAllGoalsComplete);
         this.attributes = new AttributeService(owner, fileConfig);
@@ -52,7 +52,7 @@ public class ModificationsService {
 
         if(allPaused){
             challenges.setPausedAll(true);
-            gamerules.setPausedAll(true);
+            modifiers.setPausedAll(true);
             goals.setPausedAll(true);
             attributes.setPaused(true);
         }
@@ -79,7 +79,7 @@ public class ModificationsService {
     }
 
     /**
-     * Pauses the current active challenges and gamerules, puts all players into spectator <br>
+     * Pauses the current active challenges, modifiers and goals and puts all players into spectator <br>
      * and pauses the timer
      */
     public void pause(){
@@ -92,7 +92,7 @@ public class ModificationsService {
 
         time.setPaused(true);
         challenges.setPausedAll(true);
-        gamerules.setPausedAll(true);
+        modifiers.setPausedAll(true);
         goals.setPausedAll(true);
         attributes.setPaused(true);
 
@@ -105,7 +105,7 @@ public class ModificationsService {
     }
 
     /**
-     * Resumes all challenges and gamerule, reset the failed challenges, puts all players into survival again <br>
+     * Resumes all challenges and modifiers, reset the failed challenges, puts all players into survival again <br>
      * and starts the timer
      */
     public void resume(){
@@ -122,7 +122,7 @@ public class ModificationsService {
         }
 
         time.setPaused(false);
-        gamerules.setPausedAll(false);
+        modifiers.setPausedAll(false);
         challenges.setPausedAll(false);
         goals.setPausedAll(false);
         attributes.setPaused(false);
@@ -134,7 +134,7 @@ public class ModificationsService {
         allPaused = src.getBoolean("modifications.allpaused", true);
 
         challenges.loadConfig(src);
-        gamerules.loadConfig(src);
+        modifiers.loadConfig(src);
         goals.loadConfig(src);
         attributes.loadConfig(src);
         time.loadConfig(src);
@@ -144,7 +144,7 @@ public class ModificationsService {
         dest.set("modifications.allpaused", allPaused);
 
         challenges.saveConfig(dest);
-        gamerules.saveConfig(dest);
+        modifiers.saveConfig(dest);
         goals.saveConfig(dest);
         attributes.saveConfig(dest);
         time.saveConfig(dest);
@@ -152,7 +152,7 @@ public class ModificationsService {
 
     public void clearWorldSpecificConfig(FileConfiguration dest){
         challenges.clearWorldSpecificConfig(dest);
-        gamerules.clearWorldSpecificConfig(dest);
+        modifiers.clearWorldSpecificConfig(dest);
         goals.clearWorldSpecificConfig(dest);
     }
 
@@ -160,8 +160,8 @@ public class ModificationsService {
         return challenges;
     }
 
-    public GamerulesService getGamerulesService(){
-        return gamerules;
+    public GameModifierService getGameModifierService(){
+        return modifiers;
     }
 
     public GoalsService getGoalsService(){

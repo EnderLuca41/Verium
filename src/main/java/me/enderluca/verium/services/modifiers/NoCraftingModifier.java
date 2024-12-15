@@ -1,19 +1,19 @@
-package me.enderluca.verium.services.gamerules;
+package me.enderluca.verium.services.modifiers;
 
-import me.enderluca.verium.GameruleType;
-import me.enderluca.verium.interfaces.Gamerule;
+import me.enderluca.verium.GameModifierType;
+import me.enderluca.verium.interfaces.GameModifier;
 import me.enderluca.verium.listener.challenges.NoCraftingListener;
 
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.Plugin;
 
-public class NoCraftingGamerule implements Gamerule {
+public class NoCraftingModifier implements GameModifier {
 
     private boolean enabled;
     private boolean paused;
 
-    public NoCraftingGamerule(Plugin owner, FileConfiguration fileConfig){
+    public NoCraftingModifier(Plugin owner, FileConfiguration fileConfig){
         loadConfig(fileConfig);
 
         Bukkit.getPluginManager().registerEvents(new NoCraftingListener(() -> enabled && !paused), owner);
@@ -40,20 +40,20 @@ public class NoCraftingGamerule implements Gamerule {
     }
 
     @Override
-    public GameruleType getType() {
-        return GameruleType.NoCrafting;
+    public GameModifierType getType() {
+        return GameModifierType.NoCrafting;
     }
 
     @Override
     public void loadConfig(FileConfiguration src) {
-        enabled = src.getBoolean("gamerules.nocrafting.enabled", false);
-        paused = src.getBoolean("gamerules.nocrafting.paused", false);
+        enabled = src.getBoolean("modifiers.nocrafting.enabled", false);
+        paused = src.getBoolean("modifiers.nocrafting.paused", false);
     }
 
     @Override
     public void saveConfig(FileConfiguration dest) {
-        dest.set("gamerules.nocrafting.enabled", enabled);
-        dest.set("gamerules.nocrafting.paused", paused);
+        dest.set("modifiers.modifiers.enabled", enabled);
+        dest.set("modifiers.modifiers.paused", paused);
     }
 
     @Override
