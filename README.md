@@ -39,6 +39,16 @@ You can find the full list of attributes in the [minecraft wiki](https://minecra
 
 Not only that, but you can also customize to which players these attribute changes apply to with a blacklist or whitelist.
 
+#### Time manager (can be accessed with `/time`):
+
+The time manager allows for changing the time precisecly by inputig in in various formats or based on presets.
+It overwrites the vanilla `/time` command, but still implements all the vanilla functions, the only difference is that using the command with no parameters, will open the time manager gui.
+
+<img src="https://github.com/user-attachments/assets/d233e9f1-e089-4487-a0ad-44bde57aacc5" alt="drawing" width="650"/>
+
+Not only does the GUI make it more easy to change the time, it also allows to freeze it.
+
+
 
 ## How to use Verium
 
