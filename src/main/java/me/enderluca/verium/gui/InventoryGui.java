@@ -1,8 +1,8 @@
 package me.enderluca.verium.gui;
 
 import me.enderluca.verium.gui.widgets.Widget;
-import me.enderluca.verium.interfaces.IInventoryGui;
-import me.enderluca.verium.interfaces.IOnClick;
+import me.enderluca.verium.interfaces.Gui;
+import me.enderluca.verium.interfaces.OnClick;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -23,7 +23,7 @@ import java.util.Objects;
 /**
  * An inventory gui that can be used to create custom guis with widgets
  */
-public class InventoryGui implements IInventoryGui, Listener {
+public class InventoryGui implements Gui, Listener {
 
     @Nonnull
     protected Plugin owner;
@@ -39,7 +39,7 @@ public class InventoryGui implements IInventoryGui, Listener {
     protected Inventory inventory;
 
     @Nullable
-    protected final IInventoryGui parent;
+    protected final Gui parent;
 
     /**
      * Create a new InventoryGui instance
@@ -47,7 +47,7 @@ public class InventoryGui implements IInventoryGui, Listener {
      * @param size Size of the InventoryGui in slots
      * @param parent Parent gui, if this child is closed, the parent will be shown
      */
-    public InventoryGui(Plugin owner, int size, @Nonnull String title, @Nullable IInventoryGui parent){
+    public InventoryGui(Plugin owner, int size, @Nonnull String title, @Nullable Gui parent){
         this.owner = owner;
 
         inventorySize = size;
@@ -78,6 +78,16 @@ public class InventoryGui implements IInventoryGui, Listener {
             if(widgets[i] != null)
                 widgets[i].render(inventory, i);
         }
+    }
+
+    /**
+     *
+     */
+    public void renderWidget(int index){
+        if(widgets[index] != null)
+            widgets[index].render(inventory, index);
+        else
+            inventory.clear(index);
     }
 
     /**
@@ -112,7 +122,7 @@ public class InventoryGui implements IInventoryGui, Listener {
         }
 
         Widget clickedWidget = widgets[event.getSlot()];
-        if(Objects.nonNull(clickedWidget) && clickedWidget instanceof IOnClick clickableWidget){
+        if(Objects.nonNull(clickedWidget) && clickedWidget instanceof OnClick clickableWidget){
             //Widgets exists at the index and can handle the InventoryClickEvent
             clickableWidget.handleOnClick(event);
         }

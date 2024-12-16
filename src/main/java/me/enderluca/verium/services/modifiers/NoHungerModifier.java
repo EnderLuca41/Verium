@@ -1,20 +1,20 @@
-package me.enderluca.verium.services.gamerules;
+package me.enderluca.verium.services.modifiers;
 
-import me.enderluca.verium.GameruleType;
-import me.enderluca.verium.interfaces.Gamerule;
+import me.enderluca.verium.GameModifierType;
+import me.enderluca.verium.interfaces.GameModifier;
 
-import me.enderluca.verium.listener.gamerules.NoHungerListener;
+import me.enderluca.verium.listener.modifiers.NoHungerListener;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
-public class NoHungerGamerule implements Gamerule {
+public class NoHungerModifier implements GameModifier {
 
     private boolean enabled;
     private boolean paused;
 
-    public NoHungerGamerule(Plugin owner, FileConfiguration fileConfig){
+    public NoHungerModifier(Plugin owner, FileConfiguration fileConfig){
         loadConfig(fileConfig);
 
         Bukkit.getPluginManager().registerEvents(new NoHungerListener(() -> enabled && !paused), owner);
@@ -58,21 +58,21 @@ public class NoHungerGamerule implements Gamerule {
 
     @Override
     public void loadConfig(FileConfiguration src){
-        enabled = src.getBoolean("gamerules.nohunger.enabled", false);
-        paused = src.getBoolean("gamerules.nohunger.paused", false);
+        enabled = src.getBoolean("modifiers.nohunger.enabled", false);
+        paused = src.getBoolean("modifiers.nohunger.paused", false);
     }
 
     @Override
     public void saveConfig(FileConfiguration dest){
-        dest.set("gamerules.nohunger.enabled", enabled);
-        dest.set("gamerules.nohunger.paused", paused);
+        dest.set("modifiers.nohunger.enabled", enabled);
+        dest.set("modifiers.nohunger.paused", paused);
     }
 
     @Override
     public void clearWorldSpecificConfig(FileConfiguration dest) { }
 
     @Override
-    public GameruleType getType(){
-        return GameruleType.NoHunger;
+    public GameModifierType getType(){
+        return GameModifierType.NoHunger;
     }
 }

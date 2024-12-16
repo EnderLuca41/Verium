@@ -1,19 +1,21 @@
 package me.enderluca.verium.util;
 
 import me.enderluca.verium.ChallengeType;
-import me.enderluca.verium.GameruleType;
+import me.enderluca.verium.GameModifierType;
 import me.enderluca.verium.GoalType;
 
 import net.md_5.bungee.api.ChatColor;
 
 import org.bukkit.Color;
+import org.bukkit.DyeColor;
 import org.bukkit.Material;
 import org.bukkit.attribute.Attribute;
-import org.bukkit.attribute.AttributeInstance;
+import org.bukkit.block.banner.Pattern;
+import org.bukkit.block.banner.PatternType;
 import org.bukkit.enchantments.Enchantment;
-import org.bukkit.entity.Item;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.BannerMeta;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.PotionMeta;
 
@@ -58,14 +60,6 @@ public final class GuiUtil {
     @Nonnull
     public static ItemStack getChallengeIcon(ChallengeType type){
         switch (type){
-            case NoCrafting -> {
-                ItemStack noCrafting = new ItemStack(Material.CRAFTING_TABLE, 1);
-                ItemMeta meta = noCrafting.getItemMeta();
-                meta.setDisplayName("No Crafting"); //Item cannot be air, so NullPointerException is impossible
-                meta.setLore(List.of("Disables the use of crafting tables."));
-                noCrafting.setItemMeta(meta);
-                return noCrafting;
-            }
             case WolfSurvive -> {
                 ItemStack wolfSurvive = new ItemStack(Material.BONE, 1);
                 ItemMeta meta = wolfSurvive.getItemMeta();
@@ -99,11 +93,20 @@ public final class GuiUtil {
     }
 
     /**
-     * Gets the item that represents the specified gamerule in the gui
+     * Gets the item that represents the specified game modifier in the gui
      */
     @Nonnull
-    public static ItemStack getGameruleIcon(GameruleType type){
+    public static ItemStack getGameModifierIcon(GameModifierType type){
         switch (type){
+            case NoCrafting -> {
+                ItemStack noCrafting = new ItemStack(Material.CRAFTING_TABLE, 1);
+                ItemMeta meta = noCrafting.getItemMeta();
+                meta.setDisplayName("No Crafting"); //Item cannot be air, so NullPointerException is impossible
+                meta.setLore(List.of("Disables the use of crafting tables."));
+                noCrafting.setItemMeta(meta);
+                return noCrafting;
+            }
+
             case NoHunger -> {
                 ItemStack noHunger = new ItemStack(Material.APPLE, 1);
                 ItemMeta meta = noHunger.getItemMeta();
@@ -567,5 +570,165 @@ public final class GuiUtil {
         meta.setLore(List.of(line1, line2, line3));
         changeAttributeValue.setItemMeta(meta);
         return changeAttributeValue;
+    }
+
+    /**
+     * Returns the item used to display the time in minecraft time in the time manager gui
+     */
+    @Nonnull
+    public static ItemStack getTimeIcon(String time){
+        ItemStack timeIcon = new ItemStack(Material.CLOCK, 1);
+        ItemMeta meta = timeIcon.getItemMeta();
+        meta.setDisplayName(ChatColor.RESET + "Time: " + ChatColor.GOLD + time);
+        timeIcon.setItemMeta(meta);
+        return timeIcon;
+    }
+
+    /**
+     * Returns the item used to display the time in ticks in the time manager gui
+     */
+    @Nonnull
+    public static ItemStack getTimeTicksIcon(long ticks){
+        ItemStack timeTicksIcon = new ItemStack(Material.REPEATER, 1);
+        ItemMeta meta = timeTicksIcon.getItemMeta();
+        meta.setDisplayName(ChatColor.RESET + "Time (ticks): " + ChatColor.GOLD + ticks);
+        timeTicksIcon.setItemMeta(meta);
+        return timeTicksIcon;
+    }
+
+    /**
+     * Returns the item used to represent the freeze time switch in the time manager gui in the true state
+     */
+    @Nonnull
+    public static ItemStack getFreezeTrueIcon(){
+        ItemStack freezeTrue = new ItemStack(Material.BLUE_ICE, 1);
+        ItemMeta meta = freezeTrue.getItemMeta();
+        meta.setDisplayName(ChatColor.AQUA + "" + ChatColor.BOLD + "Freeze time (on)");
+        freezeTrue.setItemMeta(meta);
+        return freezeTrue;
+    }
+
+    /**
+     * Returns the item used to represent the freeze time switch in the time manager gui in the false state
+     */
+    @Nonnull
+    public static ItemStack getFreezeFalseIcon(){
+        ItemStack freezeFalse = new ItemStack(Material.LIGHT_GRAY_STAINED_GLASS, 1);
+        ItemMeta meta = freezeFalse.getItemMeta();
+        meta.setDisplayName(ChatColor.BOLD + "" + ChatColor.GRAY + "Freeze time (off)");
+        freezeFalse.setItemMeta(meta);
+        return freezeFalse;
+    }
+
+    /**
+     * Returns the item that represents the change ticks button in the time gui, which sets the current time in ticks
+     */
+    @Nonnull
+    public static ItemStack getChangeTicksIcon(){
+        ItemStack changeTicks = new ItemStack(Material.OAK_SIGN, 1);
+        ItemMeta meta = changeTicks.getItemMeta();
+        meta.setDisplayName(ChatColor.WHITE + "Change time (in ticks)"); //Item cannot be air, so NullPointerException is impossible
+        meta.setLore(List.of("One day has 24000 ticks"));
+        changeTicks.setItemMeta(meta);
+        return changeTicks;
+    }
+
+    /**
+     * Returns the item that represents the change time button in the time gui, which sets the current time in minecraft time
+     */
+    @Nonnull
+    public static ItemStack getChangeTimeIcon(){
+        ItemStack changeTime = new ItemStack(Material.SPRUCE_SIGN, 1);
+        ItemMeta meta = changeTime.getItemMeta();
+        meta.setDisplayName(ChatColor.WHITE + "Change time (ingame time)"); //Item cannot be air, so NullPointerException is impossible
+        meta.setLore(List.of("The format is HH:MM:SS"));
+        changeTime.setItemMeta(meta);
+        return changeTime;
+    }
+
+    /**
+     * Returns the item that represents the change time button in the time gui, which sets the current time in real time
+     */
+    @Nonnull
+    public static ItemStack getChangeTimeRealIcon(){
+        ItemStack changeTimeReal = new ItemStack(Material.DARK_OAK_SIGN, 1);
+        ItemMeta meta = changeTimeReal.getItemMeta();
+        meta.setDisplayName(ChatColor.WHITE + "Change time (real time)"); //Item cannot be air, so NullPointerException is impossible
+        meta.setLore(List.of("The format is MM:SS"));
+        changeTimeReal.setItemMeta(meta);
+        return changeTimeReal;
+    }
+
+    /**
+     * Returns the item that represents the day button in the time gui, which sets the current time to the day preset
+     */
+    @Nonnull
+    public static ItemStack getDayIcon(){
+        ItemStack day = new ItemStack(Material.RED_BANNER, 1);
+        BannerMeta meta = (BannerMeta) day.getItemMeta();
+        meta.addPattern(new Pattern(DyeColor.YELLOW, PatternType.HALF_HORIZONTAL)); //Item cannot be air, so NullPointerException is impossible
+        meta.addPattern(new Pattern(DyeColor.RED, PatternType.FLOWER));
+        meta.addPattern(new Pattern(DyeColor.RED, PatternType.CIRCLE));
+        meta.addPattern(new Pattern(DyeColor.BLUE, PatternType.HALF_HORIZONTAL_BOTTOM));
+        meta.addPattern(new Pattern(DyeColor.ORANGE, PatternType.GRADIENT));
+        meta.setDisplayName(ChatColor.RESET + "" + ChatColor.GOLD + "Day");
+        meta.addItemFlags(ItemFlag.HIDE_ADDITIONAL_TOOLTIP);
+        day.setItemMeta(meta);
+        return day;
+    }
+
+    /**
+     * Returns the item that represents the noon button in the time gui, which sets the current time to the noon preset
+     */
+    @Nonnull
+    public static ItemStack getNoonIcon(){
+        ItemStack noon = new ItemStack(Material.WHITE_BANNER, 1);
+        BannerMeta meta = (BannerMeta) noon.getItemMeta();
+        meta.addPattern(new Pattern(DyeColor.LIGHT_BLUE, PatternType.GRADIENT_UP)); //Item cannot be air, so NullPointerException is impossible
+        meta.addPattern(new Pattern(DyeColor.BLUE, PatternType.GRADIENT));
+        meta.addPattern(new Pattern(DyeColor.YELLOW, PatternType.FLOWER));
+        meta.addPattern(new Pattern(DyeColor.WHITE, PatternType.CIRCLE));
+        meta.setDisplayName(ChatColor.RESET + "" + ChatColor.GOLD + "Noon");
+        meta.addItemFlags(ItemFlag.HIDE_ADDITIONAL_TOOLTIP);
+        noon.setItemMeta(meta);
+        return noon;
+    }
+
+    /**
+     * Returns the item that represents the night button in the time gui, which sets the current time to the night preset
+     */
+    @Nonnull
+    public static ItemStack getNightIcon(){
+        ItemStack night = new ItemStack(Material.GRAY_BANNER, 1);
+        BannerMeta meta = (BannerMeta) night.getItemMeta();
+        meta.addPattern(new Pattern(DyeColor.BLACK, PatternType.GRADIENT)); //Item cannot be air, so NullPointerException is impossible
+        meta.addPattern(new Pattern(DyeColor.MAGENTA, PatternType.GRADIENT));
+        meta.addPattern(new Pattern(DyeColor.BLUE, PatternType.GRADIENT_UP));
+        meta.addPattern(new Pattern(DyeColor.WHITE, PatternType.CIRCLE));
+        meta.addPattern(new Pattern(DyeColor.LIGHT_BLUE, PatternType.HALF_HORIZONTAL_BOTTOM));
+        meta.addPattern(new Pattern(DyeColor.BLUE, PatternType.GRADIENT_UP));
+        meta.setDisplayName(ChatColor.RESET + "" + ChatColor.GOLD + "Night");
+        meta.addItemFlags(ItemFlag.HIDE_ADDITIONAL_TOOLTIP);
+        night.setItemMeta(meta);
+        return night;
+    }
+
+    /**
+     * Returns the item that represents the midnight button in the time gui, which sets the current time to the midnight preset
+     */
+    @Nonnull
+    public static ItemStack getMidnightIcon(){
+        ItemStack midnight = new ItemStack(Material.BLACK_BANNER, 1);
+        BannerMeta meta = (BannerMeta) midnight.getItemMeta();
+        meta.addPattern(new Pattern(DyeColor.LIGHT_GRAY, PatternType.BRICKS)); //Item cannot be air, so NullPointerException is impossible
+        meta.addPattern(new Pattern(DyeColor.BLACK, PatternType.BRICKS));
+        meta.addPattern(new Pattern(DyeColor.BLACK, PatternType.CURLY_BORDER));
+        meta.addPattern(new Pattern(DyeColor.BLACK, PatternType.STRIPE_TOP));
+        meta.addPattern(new Pattern(DyeColor.BLACK, PatternType.STRIPE_BOTTOM));
+        meta.addPattern(new Pattern(DyeColor.WHITE, PatternType.CIRCLE));
+        meta.setDisplayName(ChatColor.RESET + "" + ChatColor.GOLD + "Midnight");
+        meta.addItemFlags(ItemFlag.HIDE_ADDITIONAL_TOOLTIP);
+        midnight.setItemMeta(meta);
+        return midnight;
     }
 }

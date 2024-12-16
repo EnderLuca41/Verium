@@ -3,7 +3,7 @@ package me.enderluca.verium.gui;
 import com.comphenix.protocol.ProtocolManager;
 import me.enderluca.verium.gui.builder.ButtonBuilder;
 import me.enderluca.verium.gui.widgets.Button;
-import me.enderluca.verium.interfaces.IInventoryGui;
+import me.enderluca.verium.interfaces.Gui;
 import me.enderluca.verium.util.AttributeUtil;
 import me.enderluca.verium.util.GuiUtil;
 import org.bukkit.attribute.Attribute;
@@ -16,7 +16,7 @@ import java.util.function.Consumer;
 /**
  * List of attributes in a gui for the player to select from when creating a new attribute change
  */
-public class AttributeListGui implements IInventoryGui {
+public class AttributeListGui implements Gui {
 
     @Nonnull
     private final InventoryGui gui;
@@ -35,7 +35,7 @@ public class AttributeListGui implements IInventoryGui {
      * @param onAttributeSelected Callback when an attribute is selected in the gui
      * @param parent Parent gui, if this child is closed, the parent will be shown
      */
-    public AttributeListGui(@Nonnull Plugin owner, @Nonnull ProtocolManager manager, @Nonnull Consumer<Attribute> onAttributeSelected, @Nonnull IInventoryGui parent){
+    public AttributeListGui(@Nonnull Plugin owner, @Nonnull ProtocolManager manager, @Nonnull Consumer<Attribute> onAttributeSelected, @Nonnull Gui parent){
         this.owner = owner;
         this.protocolManager = manager;
         this.onAttributeSelected = onAttributeSelected;

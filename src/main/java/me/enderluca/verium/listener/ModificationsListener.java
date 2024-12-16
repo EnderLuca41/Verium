@@ -14,11 +14,8 @@ import java.util.function.Consumer;
 public class ModificationsListener implements Listener {
 
     private final BooleanSupplier isActive;
-    private final Consumer<World> onWorldLoad;
-
-    public ModificationsListener(BooleanSupplier isActive, Consumer<World> onWorldLoad){
+    public ModificationsListener(BooleanSupplier isActive){
         this.isActive = isActive;
-        this.onWorldLoad = onWorldLoad;
     }
 
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
@@ -30,10 +27,5 @@ public class ModificationsListener implements Listener {
 
         if(event.getPlayer().getGameMode() == GameMode.SPECTATOR)
             event.getPlayer().setGameMode(GameMode.SURVIVAL);
-    }
-
-    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
-    public void onWorldLoad(WorldLoadEvent event){
-        onWorldLoad.accept(event.getWorld());
     }
 }

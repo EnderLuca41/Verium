@@ -5,7 +5,7 @@ import me.enderluca.verium.gui.widgets.Icon;
 import me.enderluca.verium.gui.widgets.Switch;
 import me.enderluca.verium.gui.builder.SwitchBuilder;
 import me.enderluca.verium.interfaces.Goal;
-import me.enderluca.verium.interfaces.IInventoryGui;
+import me.enderluca.verium.interfaces.Gui;
 import me.enderluca.verium.services.GoalsService;
 import me.enderluca.verium.util.GuiUtil;
 
@@ -20,7 +20,7 @@ import javax.annotation.Nonnull;
 /**
  * A gui that allows the player to toggle goals
  */
-public class GoalsGui implements IInventoryGui {
+public class GoalsGui implements Gui {
 
     @Nonnull
     protected final InventoryGui gui;

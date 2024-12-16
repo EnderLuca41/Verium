@@ -1,8 +1,8 @@
-package me.enderluca.verium.services.gamerules;
+package me.enderluca.verium.services.modifiers;
 
-import me.enderluca.verium.GameruleType;
-import me.enderluca.verium.interfaces.Gamerule;
-import me.enderluca.verium.listener.gamerules.UhcListener;
+import me.enderluca.verium.GameModifierType;
+import me.enderluca.verium.interfaces.GameModifier;
+import me.enderluca.verium.listener.modifiers.UhcListener;
 
 import org.bukkit.Bukkit;
 import org.bukkit.GameRule;
@@ -10,12 +10,12 @@ import org.bukkit.World;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.Plugin;
 
-public class UhcGamerule implements Gamerule {
+public class UhcModifier implements GameModifier {
 
     private boolean enabled;
     private boolean paused;
 
-    public UhcGamerule(Plugin owner, FileConfiguration fileConfig){
+    public UhcModifier(Plugin owner, FileConfiguration fileConfig){
         loadConfig(fileConfig);
 
         Bukkit.getPluginManager().registerEvents(new UhcListener(() -> enabled && !paused), owner);
@@ -54,23 +54,23 @@ public class UhcGamerule implements Gamerule {
 
     @Override
     public void loadConfig(FileConfiguration src){
-        enabled = src.getBoolean("gamerules.uhc.enabled", false);
-        paused = src.getBoolean("gamerules.uhc.paused", false);
+        enabled = src.getBoolean("modifiers.uhc.enabled", false);
+        paused = src.getBoolean("modifiers.uhc.paused", false);
 
         updateWorlds();
     }
 
     @Override
     public void saveConfig(FileConfiguration dest) {
-        dest.set("gamerules.uhc.enabled", enabled);
-        dest.set("gamerules.uhc.paused", paused);
+        dest.set("modifiers.uhc.enabled", enabled);
+        dest.set("modifiers.uhc.paused", paused);
     }
 
     @Override
     public void clearWorldSpecificConfig(FileConfiguration dest) { }
 
     @Override
-    public GameruleType getType() {
-        return GameruleType.Uhc;
+    public GameModifierType getType() {
+        return GameModifierType.Uhc;
     }
 }

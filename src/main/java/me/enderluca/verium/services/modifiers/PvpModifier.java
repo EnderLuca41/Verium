@@ -1,20 +1,20 @@
-package me.enderluca.verium.services.gamerules;
+package me.enderluca.verium.services.modifiers;
 
-import me.enderluca.verium.GameruleType;
-import me.enderluca.verium.interfaces.Gamerule;
+import me.enderluca.verium.GameModifierType;
+import me.enderluca.verium.interfaces.GameModifier;
 
-import me.enderluca.verium.listener.gamerules.PvpListener;
+import me.enderluca.verium.listener.modifiers.PvpListener;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.Plugin;
 
-public class PvpGamerule implements Gamerule {
+public class PvpModifier implements GameModifier {
 
     private boolean enabled;
     private boolean paused;
 
-    public PvpGamerule(Plugin owner, FileConfiguration fileConfig){
+    public PvpModifier(Plugin owner, FileConfiguration fileConfig){
         loadConfig(fileConfig);
 
         Bukkit.getPluginManager().registerEvents(new PvpListener(() -> enabled && !paused), owner);
@@ -54,23 +54,23 @@ public class PvpGamerule implements Gamerule {
 
     @Override
     public void loadConfig(FileConfiguration src){
-        enabled = src.getBoolean("gamerules.pvp.enabled", false);
-        paused = src.getBoolean("gamerules.pvp.paused", false);
+        enabled = src.getBoolean("modifiers.pvp.enabled", false);
+        paused = src.getBoolean("modifiers.pvp.paused", false);
 
         updateWorlds();
     }
 
     @Override
     public void saveConfig(FileConfiguration dest) {
-        dest.set("gamerules.pvp.enabled", enabled);
-        dest.set("gamerules.pvp.paused", paused);
+        dest.set("modifiers.pvp.enabled", enabled);
+        dest.set("modifiers.pvp.paused", paused);
     }
 
     @Override
     public void clearWorldSpecificConfig(FileConfiguration dest) { }
 
     @Override
-    public GameruleType getType() {
-        return GameruleType.Pvp;
+    public GameModifierType getType() {
+        return GameModifierType.Pvp;
     }
 }

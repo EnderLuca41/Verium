@@ -1,19 +1,19 @@
-package me.enderluca.verium.services.gamerules;
+package me.enderluca.verium.services.modifiers;
 
-import me.enderluca.verium.GameruleType;
-import me.enderluca.verium.interfaces.Gamerule;
-import me.enderluca.verium.listener.gamerules.NoVillagerListener;
+import me.enderluca.verium.GameModifierType;
+import me.enderluca.verium.interfaces.GameModifier;
+import me.enderluca.verium.listener.modifiers.NoVillagerListener;
 
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.Plugin;
 
-public class NoVillagerGamerule implements Gamerule {
+public class NoVillagerModifier implements GameModifier {
 
     private boolean enabled;
     private boolean paused;
 
-    public NoVillagerGamerule(Plugin owner, FileConfiguration fileConfig){
+    public NoVillagerModifier(Plugin owner, FileConfiguration fileConfig){
         loadConfig(fileConfig);
 
         Bukkit.getPluginManager().registerEvents(new NoVillagerListener(() -> enabled && !paused), owner);
@@ -43,21 +43,21 @@ public class NoVillagerGamerule implements Gamerule {
 
     @Override
     public void loadConfig(FileConfiguration src){
-        enabled = src.getBoolean("gamerules.novillager.enabled", false);
-        paused = src.getBoolean("gamerules.novillager.paused", false);
+        enabled = src.getBoolean("modifiers.novillager.enabled", false);
+        paused = src.getBoolean("modifiers.novillager.paused", false);
     }
 
     @Override
     public void saveConfig(FileConfiguration dest){
-        dest.set("gamerules.novillager.enabled", enabled);
-        dest.set("gamerules.novillager.paused", paused);
+        dest.set("modifiers.novillager.enabled", enabled);
+        dest.set("modifiers.novillager.paused", paused);
     }
 
     @Override
     public void clearWorldSpecificConfig(FileConfiguration dest){ }
 
     @Override
-    public GameruleType getType(){
-        return GameruleType.NoVillager;
+    public GameModifierType getType(){
+        return GameModifierType.NoVillager;
     }
 }

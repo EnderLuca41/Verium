@@ -17,9 +17,9 @@ commands:
   challenges:
     description: Shows a gui to manage the active challenges
     usage: /challenges
-  gamerules:
-    description: Show a gui to manage active game rules like NoHunger, PvP, etc...
-    usage: /gamerules
+  modifiers:
+    description: Show a gui to manage modifiers which make it harder or easier
+    usage: /modifiers
   pause:
     description: Pauses all challenges
     usage: /pause
@@ -32,3 +32,6 @@ commands:
   attributemanager:
     description: Shows a gui to manage the attributes of all players, for example the max health or the speed
     usage: /attributemanager
+  time:
+    description: Works in the same away as the vanilla time command, except that just /time opens a gui to set and freeze the time
+    usage: /time (set <time> / add <time> / query (daytime / gametime / day))

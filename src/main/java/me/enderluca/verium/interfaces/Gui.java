@@ -2,7 +2,7 @@ package me.enderluca.verium.interfaces;
 
 import org.bukkit.entity.Player;
 
-public interface IInventoryGui {
+public interface Gui {
     void show(Player player);
     void renderWidgets();
 }

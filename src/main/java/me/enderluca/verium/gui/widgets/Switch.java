@@ -1,7 +1,7 @@
 package me.enderluca.verium.gui.widgets;
 
 import me.enderluca.verium.gui.SoundEffect;
-import me.enderluca.verium.interfaces.IOnClick;
+import me.enderluca.verium.interfaces.OnClick;
 import me.enderluca.verium.util.GuiUtil;
 
 import org.bukkit.Sound;
@@ -20,7 +20,7 @@ import java.util.function.Supplier;
 /**
  * A switch widget that can be clicked by the player to toggle a boolean state
  */
-public class Switch extends Widget implements IOnClick {
+public class Switch extends Widget implements OnClick {
 
     @Nonnull
     protected ItemStack trueIcon;

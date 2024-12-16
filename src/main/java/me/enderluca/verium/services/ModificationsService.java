@@ -9,23 +9,23 @@ import net.md_5.bungee.api.chat.BaseComponent;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.GameRule;
-import org.bukkit.World;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 //TODO: Find better name for this class
 
 /**
- * Manages challenges, gamerules, goals and attributes
+ * Manages challenges, modifiers, goals and attributes
  */
 public class ModificationsService {
 
+    private final TimeService time;
+
     private final ChallengesService challenges;
-    private final GamerulesService gamerules;
+    private final GameModifierService modifiers;
     private final GoalsService goals;
     private final AttributeService attributes;
 
@@ -37,7 +37,8 @@ public class ModificationsService {
 
 
     public ModificationsService(Plugin owner, FileConfiguration fileConfig, TimerService timer){
-        this.gamerules = new GamerulesService(owner, fileConfig);
+        this.time = new TimeService(owner, fileConfig);
+        this.modifiers = new GameModifierService(owner, fileConfig);
         this.challenges = new ChallengesService(owner, fileConfig, this::onChallengeFail);
         this.goals = new GoalsService(owner, fileConfig, this::onAllGoalsComplete);
         this.attributes = new AttributeService(owner, fileConfig);
@@ -45,12 +46,13 @@ public class ModificationsService {
         this.owner = owner;
 
         allPaused = fileConfig.getBoolean("modifications.allpaused", false);
+        time.setPaused(allPaused);
 
-        Bukkit.getPluginManager().registerEvents(new ModificationsListener(() -> allPaused, this::onWorldLoad), owner);
+        Bukkit.getPluginManager().registerEvents(new ModificationsListener(() -> allPaused), owner);
 
         if(allPaused){
             challenges.setPausedAll(true);
-            gamerules.setPausedAll(true);
+            modifiers.setPausedAll(true);
             goals.setPausedAll(true);
             attributes.setPaused(true);
         }
@@ -61,13 +63,6 @@ public class ModificationsService {
 
         if(message != null)
             Bukkit.spigot().broadcast(message);
-    }
-
-    /**
-     * Called when a world is loaded by the listener, disables the daylight cycle if allPaused is true
-     */
-    private void onWorldLoad(@Nonnull World world){
-        world.setGameRule(GameRule.DO_DAYLIGHT_CYCLE, !allPaused);
     }
 
     private void onAllGoalsComplete(){
@@ -84,7 +79,7 @@ public class ModificationsService {
     }
 
     /**
-     * Pauses the current active challenges and gamerules, puts all players into spectator <br>
+     * Pauses the current active challenges, modifiers and goals and puts all players into spectator <br>
      * and pauses the timer
      */
     public void pause(){
@@ -95,8 +90,9 @@ public class ModificationsService {
 
         timer.pause();
 
+        time.setPaused(true);
         challenges.setPausedAll(true);
-        gamerules.setPausedAll(true);
+        modifiers.setPausedAll(true);
         goals.setPausedAll(true);
         attributes.setPaused(true);
 
@@ -109,7 +105,7 @@ public class ModificationsService {
     }
 
     /**
-     * Resumes all challenges and gamerule, reset the failed challenges, puts all players into survival again <br>
+     * Resumes all challenges and modifiers, reset the failed challenges, puts all players into survival again <br>
      * and starts the timer
      */
     public void resume(){
@@ -125,7 +121,8 @@ public class ModificationsService {
             p.getWorld().setGameRule(GameRule.DO_DAYLIGHT_CYCLE, true);
         }
 
-        gamerules.setPausedAll(false);
+        time.setPaused(false);
+        modifiers.setPausedAll(false);
         challenges.setPausedAll(false);
         goals.setPausedAll(false);
         attributes.setPaused(false);
@@ -137,23 +134,25 @@ public class ModificationsService {
         allPaused = src.getBoolean("modifications.allpaused", true);
 
         challenges.loadConfig(src);
-        gamerules.loadConfig(src);
+        modifiers.loadConfig(src);
         goals.loadConfig(src);
         attributes.loadConfig(src);
+        time.loadConfig(src);
     }
 
     public void saveConfig(FileConfiguration dest){
         dest.set("modifications.allpaused", allPaused);
 
         challenges.saveConfig(dest);
-        gamerules.saveConfig(dest);
+        modifiers.saveConfig(dest);
         goals.saveConfig(dest);
         attributes.saveConfig(dest);
+        time.saveConfig(dest);
     }
 
     public void clearWorldSpecificConfig(FileConfiguration dest){
         challenges.clearWorldSpecificConfig(dest);
-        gamerules.clearWorldSpecificConfig(dest);
+        modifiers.clearWorldSpecificConfig(dest);
         goals.clearWorldSpecificConfig(dest);
     }
 
@@ -161,8 +160,8 @@ public class ModificationsService {
         return challenges;
     }
 
-    public GamerulesService getGamerulesService(){
-        return gamerules;
+    public GameModifierService getGameModifierService(){
+        return modifiers;
     }
 
     public GoalsService getGoalsService(){
@@ -170,4 +169,8 @@ public class ModificationsService {
     }
 
     public AttributeService getAttributeService(){ return attributes; }
+
+    public TimeService getTimeService(){
+        return time;
+    }
 }

@@ -1,11 +1,10 @@
 package me.enderluca.verium.gui.widgets;
 
 import me.enderluca.verium.gui.SoundEffect;
-import me.enderluca.verium.interfaces.IOnClick;
+import me.enderluca.verium.interfaces.OnClick;
 
 import org.bukkit.Material;
 import org.bukkit.Sound;
-import org.bukkit.SoundCategory;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -21,7 +20,7 @@ import java.util.function.Consumer;
 /**
  * A button widget that when clicked by the player executes a given action
  */
-public class Button extends Widget implements IOnClick {
+public class Button extends Widget implements OnClick {
 
     @Nonnull
     protected SoundEffect clickSound;
