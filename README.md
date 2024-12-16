@@ -8,15 +8,17 @@ Because it is a server plugin, you can also play these challenges with your frie
 
  - A timer that can be used with `/timer` to measure how well you performed and beat your last record 🚀
  - `/reset` to reset the current world and retry 🔁
- - With `/pause` and `/resume`, you can pause the timer, active challenges, gameModifier and goals, set everyone into spectator and pauses the time
+ - With `/pause` and `/resume`, you can pause the timer, active challenges, modifiers and goals, set everyone into spectator and pauses the time
    
 #### Challenges (can be managed with `/challenges`):
+Challenges can fail and easily end you run so be careful.
 - No Death: Challenge will fail if a player dies 💀
 - No Crafting: Disables the use of crafting tables 🛠️
 - Wolf Survive: Every player receives a wolf that must survive at all cost 🦴
 - No Fall Damage: Receiving fall damage, even 1HP, will end the challenge 🪶
 
 #### Game modifiers (can be managed with `/modifiers`):
+Modifiers do not give you any task and cannot end you run, they only make the game easier or harder.
 - No hunger: disable the ability to lose hunger 🍗
 - PvP: Enables the possibility to hit and kill other players ⚔️
 - UHC: Disables natural regeneration of HP ❤️
@@ -25,6 +27,7 @@ Because it is a server plugin, you can also play these challenges with your frie
 - No Armor: Disables the ability of equipping armor 🛡️
 
 #### Goals (can be managed with `/goals`):
+Goals give you tasks to complete, if you want to end your run with success, you need to complete the activiated goals.
 - Kill Enderdragon: Beat the enderdragon to complete this goal 💜
 - Kill Wither: Beat the mighty boss made of wither skulls and soul sand 💀
 - Kill Elder guardian: Defeat the boss of the ocean monument 🏯
@@ -46,7 +49,7 @@ It overwrites the vanilla `/time` command, but still implements all the vanilla 
 
 <img src="https://github.com/user-attachments/assets/d233e9f1-e089-4487-a0ad-44bde57aacc5" alt="drawing" width="650"/>
 
-Not only does the GUI make it more easy to change the time, it also allows to freeze it.
+Not only does the GUI make it more easy to change the time, it also allows to freeze it. 🧊
 
 
 
