@@ -673,6 +673,7 @@ public final class GuiUtil {
         meta.addPattern(new Pattern(DyeColor.ORANGE, PatternType.GRADIENT));
         meta.setDisplayName(ChatColor.RESET + "" + ChatColor.GOLD + "Day");
         meta.addItemFlags(ItemFlag.HIDE_ADDITIONAL_TOOLTIP);
+        meta.setLore(List.of("Sets the time to 7:00 or 1000 ticks"));
         day.setItemMeta(meta);
         return day;
     }
@@ -690,6 +691,7 @@ public final class GuiUtil {
         meta.addPattern(new Pattern(DyeColor.WHITE, PatternType.CIRCLE));
         meta.setDisplayName(ChatColor.RESET + "" + ChatColor.GOLD + "Noon");
         meta.addItemFlags(ItemFlag.HIDE_ADDITIONAL_TOOLTIP);
+        meta.setLore(List.of("Sets the time to 12:00 or 6000 ticks"));
         noon.setItemMeta(meta);
         return noon;
     }
@@ -709,6 +711,7 @@ public final class GuiUtil {
         meta.addPattern(new Pattern(DyeColor.BLUE, PatternType.GRADIENT_UP));
         meta.setDisplayName(ChatColor.RESET + "" + ChatColor.GOLD + "Night");
         meta.addItemFlags(ItemFlag.HIDE_ADDITIONAL_TOOLTIP);
+        meta.setLore(List.of("Sets the time to 19:00 or 13000 ticks"));
         night.setItemMeta(meta);
         return night;
     }
@@ -728,6 +731,7 @@ public final class GuiUtil {
         meta.addPattern(new Pattern(DyeColor.WHITE, PatternType.CIRCLE));
         meta.setDisplayName(ChatColor.RESET + "" + ChatColor.GOLD + "Midnight");
         meta.addItemFlags(ItemFlag.HIDE_ADDITIONAL_TOOLTIP);
+        meta.setLore(List.of("Sets the time to 0:00 or 18000 ticks"));
         midnight.setItemMeta(meta);
         return midnight;
     }
