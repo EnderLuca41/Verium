@@ -58,6 +58,7 @@ public class TimeGui implements Gui {
         clockTask = Bukkit.getScheduler().runTaskTimer(owner, () -> {
             gui.addWidget(new Icon(GuiUtil.getTimeIcon(service.getTimeString())), 0);
             gui.addWidget(new Icon(GuiUtil.getTimeTicksIcon(service.getTime())), 1);
+            gui.addWidget(new Icon(GuiUtil.getTimeRealIcon(service.getRealTimeString())), 2);
         }, 0, 5);
 
         gui.addWidget(createChangeTicksInput(), 5);

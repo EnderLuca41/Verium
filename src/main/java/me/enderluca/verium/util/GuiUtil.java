@@ -596,6 +596,15 @@ public final class GuiUtil {
         return timeTicksIcon;
     }
 
+    @Nonnull
+    public static ItemStack getTimeRealIcon(String realTime){
+        ItemStack timeRealIcon = new ItemStack(Material.SUNFLOWER, 1);
+        ItemMeta meta = timeRealIcon.getItemMeta();
+        meta.setDisplayName(ChatColor.RESET + "Time (real): " + ChatColor.GOLD + realTime);
+        timeRealIcon.setItemMeta(meta);
+        return timeRealIcon;
+    }
+
     /**
      * Returns the item used to represent the freeze time switch in the time manager gui in the true state
      */
