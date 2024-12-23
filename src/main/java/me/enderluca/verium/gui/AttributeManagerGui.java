@@ -215,6 +215,7 @@ public class AttributeManagerGui implements Gui {
             }
         })
         .callOnValidationFail(true)
+        .addPreEnteredText(() -> Double.toString(change.getValue()))
         .addClickSound(new SoundEffect(Sound.BLOCK_BARREL_OPEN))
         .addSuccessSound(inputSuccessSound)
         .addFailSound(inputErrorSound)
