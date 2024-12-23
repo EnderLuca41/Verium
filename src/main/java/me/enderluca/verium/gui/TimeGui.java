@@ -61,9 +61,9 @@ public class TimeGui implements Gui {
             gui.addWidget(new Icon(GuiUtil.getTimeRealIcon(service.getRealTimeString())), 2);
         }, 0, 5);
 
-        gui.addWidget(createChangeTicksInput(), 5);
+        gui.addWidget(createChangeTimeInput(), 5);
 
-        gui.addWidget(createChangeTimeInput(), 6);
+        gui.addWidget(createChangeTicksInput(), 6);
 
         gui.addWidget(createChangeTimeRealInput(), 7);
 
