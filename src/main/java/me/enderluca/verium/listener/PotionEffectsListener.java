@@ -58,17 +58,5 @@ public class PotionEffectsListener implements Listener {
             event.setCancelled(true);
             return;
         }
-
-//        if((event.getAction() == EntityPotionEffectEvent.Action.CLEARED || event.getAction() == EntityPotionEffectEvent.Action.REMOVED)) {
-//            Bukkit.getLogger().info(event.getCause().toString());
-//            event.setCancelled(true);
-//        }
-//        else if(event.getAction() == EntityPotionEffectEvent.Action.CHANGED || event.getAction() == EntityPotionEffectEvent.Action.ADDED) {
-//            //NullPointerException impossible since getNewEffect() is only null if the action is CLEARED or REMOVED
-//            if(event.getNewEffect().getAmplifier() == effect.getAmplifier())
-//                return;
-//
-//            event.setCancelled(true);
-//        }
     }
 }
