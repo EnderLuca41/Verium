@@ -58,6 +58,7 @@ public class VeriumPlugin extends JavaPlugin {
         getCommand("goals").setExecutor(new GoalsCommand(this, protocolManager,modifications.getGoalsService()));
         getCommand("attributemanager").setExecutor(new AttributeManagerCommand(this, protocolManager, modifications.getAttributeService()));
         getCommand("time").setExecutor(new TimeCommand(this, protocolManager, modifications.getTimeService()));
+        getCommand("potioneffects").setExecutor(new PotionEffectsCommand(this, protocolManager, modifications.getPotionEffectsService()));
         logger.log(Level.INFO, "Creating commands complete");
     }
 
