@@ -1,6 +1,7 @@
 package me.enderluca.verium.services;
 
 import me.enderluca.verium.listener.ModificationsListener;
+import me.enderluca.verium.listener.PotionEffectsListener;
 import me.enderluca.verium.util.FireworkUtil;
 import me.enderluca.verium.util.MessageUtil;
 
@@ -28,6 +29,7 @@ public class ModificationsService {
     private final GameModifierService modifiers;
     private final GoalsService goals;
     private final AttributeService attributes;
+    private final PotionEffectsService potionEffects;
 
     private final TimerService timer;
 
@@ -42,6 +44,7 @@ public class ModificationsService {
         this.challenges = new ChallengesService(owner, fileConfig, this::onChallengeFail);
         this.goals = new GoalsService(owner, fileConfig, this::onAllGoalsComplete);
         this.attributes = new AttributeService(owner, fileConfig);
+        this.potionEffects = new PotionEffectsService(owner, fileConfig);
         this.timer = timer;
         this.owner = owner;
 
@@ -55,6 +58,7 @@ public class ModificationsService {
             modifiers.setPausedAll(true);
             goals.setPausedAll(true);
             attributes.setPaused(true);
+            potionEffects.setPaused(true);
         }
     }
 
@@ -95,6 +99,7 @@ public class ModificationsService {
         modifiers.setPausedAll(true);
         goals.setPausedAll(true);
         attributes.setPaused(true);
+        potionEffects.setPaused(true);
 
         for(Player p : Bukkit.getOnlinePlayers()){
             p.setGameMode(GameMode.SPECTATOR);
@@ -126,6 +131,7 @@ public class ModificationsService {
         challenges.setPausedAll(false);
         goals.setPausedAll(false);
         attributes.setPaused(false);
+        potionEffects.setPaused(false);
 
         timer.start();
     }
@@ -138,6 +144,7 @@ public class ModificationsService {
         goals.loadConfig(src);
         attributes.loadConfig(src);
         time.loadConfig(src);
+        potionEffects.loadConfig(src);
     }
 
     public void saveConfig(FileConfiguration dest){
@@ -148,6 +155,7 @@ public class ModificationsService {
         goals.saveConfig(dest);
         attributes.saveConfig(dest);
         time.saveConfig(dest);
+        potionEffects.saveConfig(dest);
     }
 
     public void clearWorldSpecificConfig(FileConfiguration dest){
@@ -172,5 +180,9 @@ public class ModificationsService {
 
     public TimeService getTimeService(){
         return time;
+    }
+
+    public PotionEffectsService getPotionEffectsService(){
+        return potionEffects;
     }
 }
