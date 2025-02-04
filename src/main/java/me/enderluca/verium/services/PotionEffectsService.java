@@ -12,6 +12,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.potion.PotionEffectType;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.*;
 import java.util.regex.Pattern;
 
@@ -25,9 +27,10 @@ public class PotionEffectsService {
     /**
      * Stores the potion effects and to which player they apply
      */
+    @Nonnull
     private final List<PotionEffect> potionEffects;
 
-    public PotionEffectsService(Plugin owner, FileConfiguration fileConfig) {
+    public PotionEffectsService(@Nonnull Plugin owner, @Nonnull FileConfiguration fileConfig) {
         potionEffects = new ArrayList<>();
 
         loadConfig(fileConfig);
@@ -36,13 +39,14 @@ public class PotionEffectsService {
         owner.getServer().getPluginManager().registerEvents(listener, owner);
     }
 
-    private void onPlayerLeave(Player player){
+    private void onPlayerLeave(@Nonnull Player player){
         for(PotionEffect effect : potionEffects)
             if(effect.isAffected(player.getUniqueId()))
                 player.removePotionEffect(effect.getEffectType());
     }
 
-    private PotionEffect getEffect(PotionEffectType potionEffectType) {
+    @Nullable
+    private PotionEffect getEffect(@Nonnull PotionEffectType potionEffectType) {
         for(PotionEffect effect : potionEffects)
             if(effect.getEffectType().equals(potionEffectType))
                 return effect;
@@ -52,21 +56,25 @@ public class PotionEffectsService {
     /**
      * Returns an immutable list of all potion effects
      */
+    @Nonnull
     public List<PotionEffect> getEffects(){
         return Collections.unmodifiableList(potionEffects);
     }
 
-    public void addEffect(PotionEffectType potionEffectType, int amplifier, boolean hideParticles) {
+    public void addEffect(@Nonnull PotionEffectType potionEffectType, int amplifier, boolean hideParticles) {
         PotionEffect effect = new PotionEffect(potionEffectType, amplifier, hideParticles, e -> applyEffects());
         potionEffects.add(effect);
         applyEffects();
     }
 
-    public void removeEffect(PotionEffect effect){
+    public void removeEffect(@Nonnull PotionEffect effect){
         potionEffects.remove(effect);
         applyEffects();
     }
 
+    /**
+     * Applies potion effects to all players
+     */
     public void applyEffects() {
         for(Player p : Bukkit.getOnlinePlayers())
             for(org.bukkit.potion.PotionEffect effect : p.getActivePotionEffects())
@@ -82,7 +90,7 @@ public class PotionEffectsService {
                     effect.apply(p);
     }
 
-    public void applyEffects(Player player) {
+    public void applyEffects(@Nonnull Player player) {
         for(org.bukkit.potion.PotionEffect effect : player.getActivePotionEffects())
             if(effect.isInfinite())
                 player.removePotionEffect(effect.getType());
@@ -96,7 +104,7 @@ public class PotionEffectsService {
     }
 
 
-    public void loadConfig(FileConfiguration src) {
+    public void loadConfig(@Nonnull FileConfiguration src) {
         paused = src.getBoolean("potioneffects.paused", false);
 
         potionEffects.clear();
@@ -133,7 +141,7 @@ public class PotionEffectsService {
         }
     }
 
-    public void saveConfig(FileConfiguration dest) {
+    public void saveConfig(@Nonnull FileConfiguration dest) {
         dest.set("potioneffects", null);
 
         dest.set("potioneffects.paused", paused);
