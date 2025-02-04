@@ -1,7 +1,6 @@
 package me.enderluca.verium.listener;
 
 import me.enderluca.verium.PotionEffect;
-import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -11,21 +10,23 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.potion.PotionEffectType;
 
+import javax.annotation.Nonnull;
 import java.util.Objects;
-import java.util.function.BiPredicate;
 import java.util.function.Consumer;
 import java.util.function.Function;
-import java.util.function.Predicate;
 
 public class PotionEffectsListener implements Listener {
 
+    @Nonnull
     private final Consumer<Player> onPlayerLeave;
 
+    @Nonnull
     private final Consumer<Player> onPlayerJoin;
 
+    @Nonnull
     private final Function<PotionEffectType, PotionEffect> getEffect;
 
-    public PotionEffectsListener(Consumer<Player> onPlayerLeave, Consumer<Player> onPlayerJoin, Function<PotionEffectType, PotionEffect> getEffect) {
+    public PotionEffectsListener(@Nonnull Consumer<Player> onPlayerLeave, @Nonnull Consumer<Player> onPlayerJoin, @Nonnull Function<PotionEffectType, PotionEffect> getEffect) {
         this.onPlayerLeave = onPlayerLeave;
         this.onPlayerJoin = onPlayerJoin;
         this.getEffect = getEffect;
