@@ -273,4 +273,9 @@ public class PotionEffectGui implements MultipageGui {
     public void renderWidgets(){
         gui.renderWidgets();
     }
+
+    @Override
+    public void clearWidgets(){
+        throw new UnsupportedOperationException("Potion effect gui is read only");
+    }
 }

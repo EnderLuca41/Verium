@@ -251,4 +251,9 @@ public class TimeGui implements Gui {
     public void renderWidgets() {
         gui.renderWidgets();
     }
+
+    @Override
+    public void clearWidgets() {
+        throw new UnsupportedOperationException("Time gui is read-only");
+    }
 }

@@ -54,4 +54,9 @@ public class GameModifiersGui implements Gui {
     public void renderWidgets() {
         gui.renderWidgets();
     }
+
+    @Override
+    public void clearWidgets(){
+        throw new UnsupportedOperationException("Game modifiers gui is read-only");
+    }
 }

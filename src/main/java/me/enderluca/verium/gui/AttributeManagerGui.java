@@ -271,4 +271,8 @@ public class AttributeManagerGui implements Gui {
         renderWidgets();
         gui.show(player);
     }
+
+    public void clearWidgets(){
+        throw new UnsupportedOperationException("Attribute manager gui is read-only");
+    }
 }

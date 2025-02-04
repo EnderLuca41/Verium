@@ -57,4 +57,9 @@ public class PotionEffectsListGui implements Gui {
     public void renderWidgets(){
         gui.renderWidgets();
     }
+
+    @Override
+    public void clearWidgets(){
+        throw new UnsupportedOperationException("Potion effects list gui is read-only");
+    }
 }
