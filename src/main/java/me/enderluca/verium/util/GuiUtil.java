@@ -1019,7 +1019,7 @@ public final class GuiUtil {
         else if(type == PotionEffectType.WITHER){
             ItemStack icon = new ItemStack(Material.WITHER_ROSE, 1);
             ItemMeta meta = icon.getItemMeta();
-            meta.setLore(List.of("Deals damage to the player over time and gives health to the shooter."));
+            meta.setLore(List.of("Deals damage to the player over time."));
             meta.setDisplayName(ChatColor.WHITE + "Wither");
             icon.setItemMeta(meta);
             return icon;
