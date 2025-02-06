@@ -925,6 +925,7 @@ public final class GuiUtil {
             ItemMeta meta = icon.getItemMeta();
             meta.setLore(List.of("Decreases damage dealt to the player."));
             meta.setDisplayName(ChatColor.WHITE + "Resistance");
+            meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
             icon.setItemMeta(meta);
             return icon;
         }
@@ -965,6 +966,7 @@ public final class GuiUtil {
             ItemMeta meta = icon.getItemMeta();
             meta.setLore(List.of("Increases damage dealt."));
             meta.setDisplayName(ChatColor.WHITE + "Strength");
+            meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
             icon.setItemMeta(meta);
             return icon;
         }
@@ -997,6 +999,7 @@ public final class GuiUtil {
             ItemMeta meta = icon.getItemMeta();
             meta.setLore(List.of("Decreases damage dealt."));
             meta.setDisplayName(ChatColor.WHITE + "Weakness");
+            meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
             icon.setItemMeta(meta);
             return icon;
         }
