@@ -734,7 +734,7 @@ public final class GuiUtil {
         else if(type == PotionEffectType.DARKNESS){
             ItemStack icon = new ItemStack(Material.SCULK, 1);
             ItemMeta meta = icon.getItemMeta();
-            meta.setLore(List.of("Causes the player's vision to dim occasionally."));
+            meta.setLore(List.of("Causes the player's vision to dim as it happens when being chased by a warden."));
             meta.setDisplayName(ChatColor.WHITE + "Darkness");
             icon.setItemMeta(meta);
             return icon;
@@ -758,7 +758,7 @@ public final class GuiUtil {
         else if(type == PotionEffectType.GLOWING){
             ItemStack icon = new ItemStack(Material.GLOWSTONE_DUST, 1);
             ItemMeta meta = icon.getItemMeta();
-            meta.setLore(List.of("Outlines the player so that it can be seed from afar."));
+            meta.setLore(List.of("Puts a glowing outline around the player."));
             meta.setDisplayName(ChatColor.WHITE + "Glowing");
             icon.setItemMeta(meta);
             return icon;
@@ -775,7 +775,7 @@ public final class GuiUtil {
         else if(type == PotionEffectType.HEALTH_BOOST){
             ItemStack icon = new ItemStack(Material.APPLE, 1);
             ItemMeta meta = icon.getItemMeta();
-            meta.setLore(List.of("Increases maximum health of a player."));
+            meta.setLore(List.of("Increases maximum health of the player."));
             meta.setDisplayName(ChatColor.WHITE + "Health boost");
             icon.setItemMeta(meta);
             return icon;
@@ -783,7 +783,7 @@ public final class GuiUtil {
         else if(type == PotionEffectType.HERO_OF_THE_VILLAGE){
             ItemStack icon = new ItemStack(Material.TOTEM_OF_UNDYING, 1);
             ItemMeta meta = icon.getItemMeta();
-            meta.setLore(List.of("Reduces the cost of villgaer trades."));
+            meta.setLore(List.of("Reduces the cost of villager trades."));
             meta.setDisplayName(ChatColor.WHITE + "Hero of the village");
             icon.setItemMeta(meta);
             return icon;
@@ -809,7 +809,7 @@ public final class GuiUtil {
             PotionMeta meta = (PotionMeta) icon.getItemMeta();
             meta.addCustomEffect(new PotionEffect(PotionEffectType.INSTANT_DAMAGE, 1, 1), true);
             meta.addItemFlags(ItemFlag.HIDE_ADDITIONAL_TOOLTIP);
-            meta.setLore(List.of("Hurts an player."));
+            meta.setLore(List.of("Hurts the player."));
             meta.setDisplayName(ChatColor.WHITE + "Instant damage");
             icon.setItemMeta(meta);
             return icon;
@@ -819,7 +819,7 @@ public final class GuiUtil {
             PotionMeta meta = (PotionMeta) icon.getItemMeta();
             meta.addCustomEffect(new PotionEffect(PotionEffectType.INSTANT_HEALTH, 1, 1), true);
             meta.addItemFlags(ItemFlag.HIDE_ADDITIONAL_TOOLTIP);
-            meta.setLore(List.of("Heals an player."));
+            meta.setLore(List.of("Heals the player."));
             meta.setDisplayName(ChatColor.WHITE + "Instant health");
             icon.setItemMeta(meta);
             return icon;
@@ -883,7 +883,7 @@ public final class GuiUtil {
         else if(type == PotionEffectType.OOZING){
             ItemStack icon = new ItemStack(Material.SLIME_BALL, 1);
             ItemMeta meta = icon.getItemMeta();
-            meta.setLore(List.of("Causes slimes to spawn upon death."));
+            meta.setLore(List.of("Causes the player to emit green slime particles and spawns slimes upon death."));
             meta.setDisplayName(ChatColor.WHITE + "Oozing");
             icon.setItemMeta(meta);
             return icon;
@@ -914,7 +914,7 @@ public final class GuiUtil {
             return icon;
         }
         else if(type == PotionEffectType.REGENERATION){
-            ItemStack icon = new ItemStack(Material.APPLE, 1);
+            ItemStack icon = new ItemStack(Material.GLISTERING_MELON_SLICE, 1);
             ItemMeta meta = icon.getItemMeta();
             meta.setLore(List.of("Regenerates health."));
             meta.setDisplayName(ChatColor.WHITE + "Regeneration");
@@ -1007,7 +1007,7 @@ public final class GuiUtil {
         else if(type == PotionEffectType.WEAVING){
             ItemStack icon = new ItemStack(Material.COBWEB, 1);
             ItemMeta meta = icon.getItemMeta();
-            meta.setLore(List.of("Creates cobwebs upon death."));
+            meta.setLore(List.of("Creates cobwebs upon death and decreases speed penalty when moving through cobwebs."));
             meta.setDisplayName(ChatColor.WHITE + "Weaving");
             icon.setItemMeta(meta);
             return icon;
