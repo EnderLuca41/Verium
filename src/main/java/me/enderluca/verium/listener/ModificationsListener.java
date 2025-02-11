@@ -4,6 +4,7 @@ import org.bukkit.GameMode;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntitySpawnEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 
 import java.util.function.BooleanSupplier;
@@ -24,5 +25,13 @@ public class ModificationsListener implements Listener {
 
         if(event.getPlayer().getGameMode() == GameMode.SPECTATOR)
             event.getPlayer().setGameMode(GameMode.SURVIVAL);
+    }
+
+    @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
+    public void onEntitySpawn(EntitySpawnEvent event){
+        if(!isActive.getAsBoolean())
+            return;
+
+        event.setCancelled(true);
     }
 }
