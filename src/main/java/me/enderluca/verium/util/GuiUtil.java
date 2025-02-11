@@ -909,6 +909,7 @@ public final class GuiUtil {
             meta.addPattern(new Pattern(DyeColor.BLACK, PatternType.BORDER));
             meta.setLore(List.of("Triggers a raid when a player enters a village."));
             meta.setDisplayName(ChatColor.WHITE + "Raid omen");
+            meta.addItemFlags(ItemFlag.HIDE_ADDITIONAL_TOOLTIP);
             icon.setItemMeta(meta);
             return icon;
         }
