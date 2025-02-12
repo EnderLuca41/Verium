@@ -110,10 +110,7 @@ public class ModificationsService {
 
         for(Player p : Bukkit.getOnlinePlayers()){
             p.setGameMode(GameMode.SPECTATOR);
-            p.getWorld().setGameRule(GameRule.DO_DAYLIGHT_CYCLE, false);
         }
-
-
     }
 
     /**
@@ -129,7 +126,6 @@ public class ModificationsService {
 
         for(Player p : Bukkit.getOnlinePlayers()){
             p.setGameMode(GameMode.SURVIVAL);
-            p.getWorld().setGameRule(GameRule.DO_DAYLIGHT_CYCLE, true);
         }
 
         time.setPaused(false);
