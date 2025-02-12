@@ -1,11 +1,13 @@
 package me.enderluca.verium.listener;
 
 import org.bukkit.GameMode;
+import org.bukkit.GameRule;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntitySpawnEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.world.WorldLoadEvent;
 
 import java.util.function.BooleanSupplier;
 
@@ -33,5 +35,14 @@ public class ModificationsListener implements Listener {
             return;
 
         event.setCancelled(true);
+    }
+
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
+    public void onWorldLoaded(WorldLoadEvent event){
+        if(!isActive.getAsBoolean())
+            return;
+
+        //Ensure random tick speed is 0, because worlds can be altered when the server is shutdown for example with NBTExplorer
+        event.getWorld().setGameRule(GameRule.RANDOM_TICK_SPEED, 0);
     }
 }

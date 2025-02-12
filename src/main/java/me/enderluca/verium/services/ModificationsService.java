@@ -9,6 +9,7 @@ import net.md_5.bungee.api.chat.BaseComponent;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.GameRule;
+import org.bukkit.World;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
@@ -111,6 +112,10 @@ public class ModificationsService {
         for(Player p : Bukkit.getOnlinePlayers()){
             p.setGameMode(GameMode.SPECTATOR);
         }
+
+        for(World w : Bukkit.getWorlds()){
+            w.setGameRule(GameRule.RANDOM_TICK_SPEED, 0);
+        }
     }
 
     /**
@@ -126,6 +131,10 @@ public class ModificationsService {
 
         for(Player p : Bukkit.getOnlinePlayers()){
             p.setGameMode(GameMode.SURVIVAL);
+        }
+
+        for(World w : Bukkit.getWorlds()){
+            w.setGameRule(GameRule.RANDOM_TICK_SPEED, 3);
         }
 
         time.setPaused(false);
