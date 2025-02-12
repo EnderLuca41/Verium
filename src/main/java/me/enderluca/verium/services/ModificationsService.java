@@ -1,7 +1,6 @@
 package me.enderluca.verium.services;
 
 import me.enderluca.verium.listener.ModificationsListener;
-import me.enderluca.verium.listener.PotionEffectsListener;
 import me.enderluca.verium.util.FireworkUtil;
 import me.enderluca.verium.util.MessageUtil;
 
@@ -14,31 +13,39 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 //TODO: Find better name for this class
 
 /**
- * Manages challenges, modifiers, goals and attributes
+ * Manages challenges, modifiers, goals, attributes, time and potion effects
  */
 public class ModificationsService {
 
+    @Nonnull
     private final TimeService time;
-
+    @Nonnull
     private final ChallengesService challenges;
+    @Nonnull
     private final GameModifierService modifiers;
+    @Nonnull
     private final GoalsService goals;
+    @Nonnull
     private final AttributeService attributes;
+    @Nonnull
     private final PotionEffectsService potionEffects;
 
+    @Nonnull
     private final TimerService timer;
 
+    @Nonnull
     private final Plugin owner;
 
     private boolean allPaused;
 
 
-    public ModificationsService(Plugin owner, FileConfiguration fileConfig, TimerService timer){
+    public ModificationsService(@Nonnull Plugin owner, @Nonnull FileConfiguration fileConfig, @Nonnull TimerService timer){
         this.time = new TimeService(owner, fileConfig);
         this.modifiers = new GameModifierService(owner, fileConfig);
         this.challenges = new ChallengesService(owner, fileConfig, this::onChallengeFail);
@@ -53,6 +60,7 @@ public class ModificationsService {
 
         Bukkit.getPluginManager().registerEvents(new ModificationsListener(() -> allPaused), owner);
 
+        //Ensure all services are actually paused
         if(allPaused){
             challenges.setPausedAll(true);
             modifiers.setPausedAll(true);
@@ -83,8 +91,7 @@ public class ModificationsService {
     }
 
     /**
-     * Pauses the current active challenges, modifiers and goals and puts all players into spectator <br>
-     * and pauses the timer
+     * Pauses all services and puts all players into spectator and pauses the timer
      */
     public void pause(){
         if(allPaused)
@@ -110,8 +117,7 @@ public class ModificationsService {
     }
 
     /**
-     * Resumes all challenges and modifiers, reset the failed challenges, puts all players into survival again <br>
-     * and starts the timer
+     * Resumes all services, puts all players into survival again and starts the timer
      */
     public void resume(){
         if(!allPaused)
@@ -136,7 +142,7 @@ public class ModificationsService {
         timer.start();
     }
 
-    public void loadConfig(FileConfiguration src){
+    public void loadConfig(@Nonnull FileConfiguration src){
         allPaused = src.getBoolean("modifications.allpaused", true);
 
         challenges.loadConfig(src);
@@ -147,7 +153,7 @@ public class ModificationsService {
         potionEffects.loadConfig(src);
     }
 
-    public void saveConfig(FileConfiguration dest){
+    public void saveConfig(@Nonnull FileConfiguration dest){
         dest.set("modifications.allpaused", allPaused);
 
         challenges.saveConfig(dest);
@@ -158,31 +164,31 @@ public class ModificationsService {
         potionEffects.saveConfig(dest);
     }
 
-    public void clearWorldSpecificConfig(FileConfiguration dest){
+    /**
+     * Clears all entries of the config that is linked to the current world, <br>
+     * mainly used when the current world is deleted
+     */
+    public void clearWorldSpecificConfig(@Nonnull FileConfiguration dest){
         challenges.clearWorldSpecificConfig(dest);
         modifiers.clearWorldSpecificConfig(dest);
         goals.clearWorldSpecificConfig(dest);
     }
 
-    public ChallengesService getChallengeService(){
-        return challenges;
-    }
+    @Nonnull
+    public ChallengesService getChallengeService(){ return challenges; }
 
-    public GameModifierService getGameModifierService(){
-        return modifiers;
-    }
+    @Nonnull
+    public GameModifierService getGameModifierService(){ return modifiers; }
 
-    public GoalsService getGoalsService(){
-        return goals;
-    }
+    @Nonnull
+    public GoalsService getGoalsService(){ return goals; }
 
+    @Nonnull
     public AttributeService getAttributeService(){ return attributes; }
 
-    public TimeService getTimeService(){
-        return time;
-    }
+    @Nonnull
+    public TimeService getTimeService(){ return time; }
 
-    public PotionEffectsService getPotionEffectsService(){
-        return potionEffects;
-    }
+    @Nonnull
+    public PotionEffectsService getPotionEffectsService(){ return potionEffects; }
 }
