@@ -31,7 +31,7 @@ public class TimeCommand implements TabExecutor {
             return true;
         }
 
-        Bukkit.dispatchCommand(sender, "time " + String.join(" ", args));
+        Bukkit.dispatchCommand(sender, "minecraft:time " + String.join(" ", args));
         return true;
     }
 
