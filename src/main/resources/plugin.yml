@@ -1,6 +1,6 @@
 name: Verium
 author: EnderLuca
-version: 0.1.1.0
+version: 0.1.2.0
 main: me.enderluca.verium.VeriumPlugin
 api-version: 1.21.3
 load: STARTUP
@@ -35,3 +35,6 @@ commands:
   time:
     description: Works in the same away as the vanilla time command, except that just /time opens a gui to set and freeze the time
     usage: /time (set <time> / add <time> / query (daytime / gametime / day))
+  potioneffects:
+    description: Shows a gui to manage potion effects with an infinite duration
+    usage: /potioneffects

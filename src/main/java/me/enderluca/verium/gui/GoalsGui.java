@@ -57,4 +57,9 @@ public class GoalsGui implements Gui {
     public void renderWidgets() {
         gui.renderWidgets();
     }
+
+    @Override
+    public void clearWidgets() {
+        throw new UnsupportedOperationException("Goals gui is read-only");
+    }
 }

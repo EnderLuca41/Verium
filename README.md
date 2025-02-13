@@ -13,12 +13,12 @@ Because it is a server plugin, you can also play these challenges with your frie
 #### Challenges (can be managed with `/challenges`):
 Challenges can fail and easily end you run so be careful.
 - No Death: Challenge will fail if a player dies 💀
-- No Crafting: Disables the use of crafting tables 🛠️
 - Wolf Survive: Every player receives a wolf that must survive at all cost 🦴
 - No Fall Damage: Receiving fall damage, even 1HP, will end the challenge 🪶
 
 #### Game modifiers (can be managed with `/modifiers`):
 Modifiers do not give you any task and cannot end you run, they only make the game easier or harder.
+- No Crafting: Disables the use of crafting tables 🛠️
 - No hunger: disable the ability to lose hunger 🍗
 - PvP: Enables the possibility to hit and kill other players ⚔️
 - UHC: Disables natural regeneration of HP ❤️
@@ -47,9 +47,15 @@ Not only that, but you can also customize to which players these attribute chang
 The time manager allows for changing the time precisecly by inputig in in various formats or based on presets.
 It overwrites the vanilla `/time` command, but still implements all the vanilla functions, the only difference is that using the command with no parameters, will open the time manager gui.
 
-<img src="https://github.com/user-attachments/assets/d233e9f1-e089-4487-a0ad-44bde57aacc5" alt="drawing" width="650"/>
+<img src="https://github.com/user-attachments/assets/70490d19-5213-44de-bde6-2f6642818961" alt="drawing" width="650"/>
 
 Not only does the GUI make it more easy to change the time, it also allows to freeze it. 🧊
+
+#### Potion effects manager (can be accessed with `/potioneffects`):
+
+The potion effects manager functions similar to the attribute manager, it provides a GUI to give players potion effects with an infinite duration.
+Blacklists or whitelists can be used to customize to who the infinite effects apply to.
+The GUI does not explain each effect with all details, you can find detailed information about every potion effect in the [minecraft wiki](https://minecraft.wiki/w/Effect).
 
 
 

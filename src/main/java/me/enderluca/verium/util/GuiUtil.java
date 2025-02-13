@@ -18,6 +18,8 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.BannerMeta;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.PotionMeta;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 
 import javax.annotation.Nonnull;
 import java.util.List;
@@ -491,58 +493,6 @@ public final class GuiUtil {
     }
 
     /**
-     * Return the item used to represent the switch to switch between blacklist and whitelist in the gui, set on whitelist
-     * @param playerList List of all players contained in the access list, used to list them in the lore
-     */
-    @Nonnull
-    public static ItemStack getWhitelistIcon(String playerList){
-        ItemStack whitelist = new ItemStack(Material.WHITE_STAINED_GLASS, 1);
-        ItemMeta meta = whitelist.getItemMeta();
-        meta.setDisplayName(ChatColor.WHITE + "Whitelist"); //Item cannot be air, so NullPointerException is impossible
-        meta.setLore(List.of(playerList));
-        whitelist.setItemMeta(meta);
-        return whitelist;
-    }
-
-    /**
-     * Return the item used to represent the switch to switch between blacklist and whitelist in the gui, set on blacklist
-     * @param playerList List of all players contained in the access list, used to list them in the lore
-     */
-    @Nonnull
-    public static ItemStack getBlacklistIcon(String playerList){
-        ItemStack blacklist = new ItemStack(Material.BLACK_STAINED_GLASS, 1);
-        ItemMeta meta = blacklist.getItemMeta();
-        meta.setDisplayName(ChatColor.GRAY + "Blacklist"); //Item cannot be air, so NullPointerException is impossible
-        meta.setLore(List.of(playerList));
-        blacklist.setItemMeta(meta);
-        return blacklist;
-    }
-
-    /**
-     * Returns the item used to represent the add player input in the attribute manager gui, to add a new player to the access list
-     */
-    @Nonnull
-    public static ItemStack getAddPlayerInputIcon(){
-        ItemStack addPlayerInput = new ItemStack(Material.BIRCH_SIGN, 1);
-        ItemMeta meta = addPlayerInput.getItemMeta();
-        meta.setDisplayName(ChatColor.WHITE + "Add player"); //Item cannot be air, so NullPointerException is impossible
-        addPlayerInput.setItemMeta(meta);
-        return addPlayerInput;
-    }
-
-    /**
-     * Returns the item used to represent the remove player input in the attribute manager gui, to remove a player from the access list
-     */
-    @Nonnull
-    public static ItemStack getRemovePlayerInputIcon(){
-        ItemStack removePlayerInput = new ItemStack(Material.SPRUCE_SIGN, 1);
-        ItemMeta meta = removePlayerInput.getItemMeta();
-        meta.setDisplayName(ChatColor.WHITE + "Remove player"); //Item cannot be air, so NullPointerException is impossible
-        removePlayerInput.setItemMeta(meta);
-        return removePlayerInput;
-    }
-
-    /**
      * Returns the item used to represent the remove attribute button in the attribute manager gui, which removes an attribute change from the attribute manager
      */
     @Nonnull
@@ -594,6 +544,15 @@ public final class GuiUtil {
         meta.setDisplayName(ChatColor.RESET + "Time (ticks): " + ChatColor.GOLD + ticks);
         timeTicksIcon.setItemMeta(meta);
         return timeTicksIcon;
+    }
+
+    @Nonnull
+    public static ItemStack getTimeRealIcon(String realTime){
+        ItemStack timeRealIcon = new ItemStack(Material.SUNFLOWER, 1);
+        ItemMeta meta = timeRealIcon.getItemMeta();
+        meta.setDisplayName(ChatColor.RESET + "Time (real): " + ChatColor.GOLD + realTime);
+        timeRealIcon.setItemMeta(meta);
+        return timeRealIcon;
     }
 
     /**
@@ -673,6 +632,7 @@ public final class GuiUtil {
         meta.addPattern(new Pattern(DyeColor.ORANGE, PatternType.GRADIENT));
         meta.setDisplayName(ChatColor.RESET + "" + ChatColor.GOLD + "Day");
         meta.addItemFlags(ItemFlag.HIDE_ADDITIONAL_TOOLTIP);
+        meta.setLore(List.of("Sets the time to 7:00 or 1000 ticks"));
         day.setItemMeta(meta);
         return day;
     }
@@ -690,6 +650,7 @@ public final class GuiUtil {
         meta.addPattern(new Pattern(DyeColor.WHITE, PatternType.CIRCLE));
         meta.setDisplayName(ChatColor.RESET + "" + ChatColor.GOLD + "Noon");
         meta.addItemFlags(ItemFlag.HIDE_ADDITIONAL_TOOLTIP);
+        meta.setLore(List.of("Sets the time to 12:00 or 6000 ticks"));
         noon.setItemMeta(meta);
         return noon;
     }
@@ -709,6 +670,7 @@ public final class GuiUtil {
         meta.addPattern(new Pattern(DyeColor.BLUE, PatternType.GRADIENT_UP));
         meta.setDisplayName(ChatColor.RESET + "" + ChatColor.GOLD + "Night");
         meta.addItemFlags(ItemFlag.HIDE_ADDITIONAL_TOOLTIP);
+        meta.setLore(List.of("Sets the time to 19:00 or 13000 ticks"));
         night.setItemMeta(meta);
         return night;
     }
@@ -728,7 +690,458 @@ public final class GuiUtil {
         meta.addPattern(new Pattern(DyeColor.WHITE, PatternType.CIRCLE));
         meta.setDisplayName(ChatColor.RESET + "" + ChatColor.GOLD + "Midnight");
         meta.addItemFlags(ItemFlag.HIDE_ADDITIONAL_TOOLTIP);
+        meta.setLore(List.of("Sets the time to 0:00 or 18000 ticks"));
         midnight.setItemMeta(meta);
         return midnight;
     }
+
+
+    @Nonnull
+    public static ItemStack getPotionEffectIcon(PotionEffectType type){
+        if(type == PotionEffectType.ABSORPTION){
+            ItemStack icon = new ItemStack(Material.GOLDEN_APPLE, 1);
+            ItemMeta meta = icon.getItemMeta();
+            meta.setLore(List.of("Gives the player 4 hp per amplifier level that connot regenerate."));
+            meta.setDisplayName(ChatColor.WHITE + "Absorption");
+            icon.setItemMeta(meta);
+            return icon;
+        }
+        else if(type == PotionEffectType.BAD_OMEN){
+            ItemStack icon = new ItemStack(Material.OMINOUS_BOTTLE, 1);
+            ItemMeta meta = icon.getItemMeta();
+            meta.addItemFlags(ItemFlag.HIDE_ADDITIONAL_TOOLTIP);
+            meta.setLore(List.of("Triggers an ominous event when the player enters a village or trial chambers."));
+            meta.setDisplayName(ChatColor.WHITE + "Bad omen");
+            icon.setItemMeta(meta);
+            return icon;
+        }
+        else if(type == PotionEffectType.BLINDNESS){
+            ItemStack icon = new ItemStack(Material.BLACK_DYE, 1);
+            ItemMeta meta = icon.getItemMeta();
+            meta.setLore(List.of("Blinds the player."));
+            meta.setDisplayName(ChatColor.WHITE + "Blindness");
+            icon.setItemMeta(meta);
+            return icon;
+        }
+        else if(type == PotionEffectType.CONDUIT_POWER){
+            ItemStack icon = new ItemStack(Material.CONDUIT, 1);
+            ItemMeta meta = icon.getItemMeta();
+            meta.setLore(List.of("Effects granted by a nearby conduit."));
+            meta.setDisplayName(ChatColor.WHITE + "Conduit power");
+            icon.setItemMeta(meta);
+            return icon;
+        }
+        else if(type == PotionEffectType.DARKNESS){
+            ItemStack icon = new ItemStack(Material.SCULK, 1);
+            ItemMeta meta = icon.getItemMeta();
+            meta.setLore(List.of("Causes the player's vision to dim as it happens when being chased by a warden."));
+            meta.setDisplayName(ChatColor.WHITE + "Darkness");
+            icon.setItemMeta(meta);
+            return icon;
+        }
+        else if(type == PotionEffectType.DOLPHINS_GRACE){
+            ItemStack icon = new ItemStack(Material.TUBE_CORAL, 1);
+            ItemMeta meta = icon.getItemMeta();
+            meta.setLore(List.of("Increases underwater movement speed."));
+            meta.setDisplayName(ChatColor.WHITE + "Dolphins grace");
+            icon.setItemMeta(meta);
+            return icon;
+        }
+        else if(type == PotionEffectType.FIRE_RESISTANCE){
+            ItemStack icon = new ItemStack(Material.FIRE_CHARGE, 1);
+            ItemMeta meta = icon.getItemMeta();
+            meta.setLore(List.of("Stops fire damage."));
+            meta.setDisplayName(ChatColor.WHITE + "Fire resistance");
+            icon.setItemMeta(meta);
+            return icon;
+        }
+        else if(type == PotionEffectType.GLOWING){
+            ItemStack icon = new ItemStack(Material.GLOWSTONE_DUST, 1);
+            ItemMeta meta = icon.getItemMeta();
+            meta.setLore(List.of("Puts a glowing outline around the player."));
+            meta.setDisplayName(ChatColor.WHITE + "Glowing");
+            icon.setItemMeta(meta);
+            return icon;
+        }
+        else if(type == PotionEffectType.HASTE){
+            ItemStack icon = new ItemStack(Material.GOLDEN_PICKAXE, 1);
+            ItemMeta meta = icon.getItemMeta();
+            meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
+            meta.setLore(List.of("Increases dig speed."));
+            meta.setDisplayName(ChatColor.WHITE + "Haste");
+            icon.setItemMeta(meta);
+            return icon;
+        }
+        else if(type == PotionEffectType.HEALTH_BOOST){
+            ItemStack icon = new ItemStack(Material.APPLE, 1);
+            ItemMeta meta = icon.getItemMeta();
+            meta.setLore(List.of("Increases maximum health of the player."));
+            meta.setDisplayName(ChatColor.WHITE + "Health boost");
+            icon.setItemMeta(meta);
+            return icon;
+        }
+        else if(type == PotionEffectType.HERO_OF_THE_VILLAGE){
+            ItemStack icon = new ItemStack(Material.TOTEM_OF_UNDYING, 1);
+            ItemMeta meta = icon.getItemMeta();
+            meta.setLore(List.of("Reduces the cost of villager trades."));
+            meta.setDisplayName(ChatColor.WHITE + "Hero of the village");
+            icon.setItemMeta(meta);
+            return icon;
+        }
+        else if(type == PotionEffectType.HUNGER){
+            ItemStack icon = new ItemStack(Material.ROTTEN_FLESH, 1);
+            ItemMeta meta = icon.getItemMeta();
+            meta.setLore(List.of("Increases hunger."));
+            meta.setDisplayName(ChatColor.WHITE + "Hunger");
+            icon.setItemMeta(meta);
+            return icon;
+        }
+        else if(type == PotionEffectType.INFESTED){
+            ItemStack icon = new ItemStack(Material.SILVERFISH_SPAWN_EGG, 1);
+            ItemMeta meta = icon.getItemMeta();
+            meta.setLore(List.of("Chance of spawning silverfish when hurt."));
+            meta.setDisplayName(ChatColor.WHITE + "Infested");
+            icon.setItemMeta(meta);
+            return icon;
+        }
+        else if(type == PotionEffectType.INSTANT_DAMAGE){
+            ItemStack icon = new ItemStack(Material.SPLASH_POTION, 1);
+            PotionMeta meta = (PotionMeta) icon.getItemMeta();
+            meta.addCustomEffect(new PotionEffect(PotionEffectType.INSTANT_DAMAGE, 1, 1), true);
+            meta.addItemFlags(ItemFlag.HIDE_ADDITIONAL_TOOLTIP);
+            meta.setLore(List.of("Hurts the player."));
+            meta.setDisplayName(ChatColor.WHITE + "Instant damage");
+            icon.setItemMeta(meta);
+            return icon;
+        }
+        else if(type == PotionEffectType.INSTANT_HEALTH){
+            ItemStack icon = new ItemStack(Material.SPLASH_POTION, 1);
+            PotionMeta meta = (PotionMeta) icon.getItemMeta();
+            meta.addCustomEffect(new PotionEffect(PotionEffectType.INSTANT_HEALTH, 1, 1), true);
+            meta.addItemFlags(ItemFlag.HIDE_ADDITIONAL_TOOLTIP);
+            meta.setLore(List.of("Heals the player."));
+            meta.setDisplayName(ChatColor.WHITE + "Instant health");
+            icon.setItemMeta(meta);
+            return icon;
+        }
+        else if(type == PotionEffectType.INVISIBILITY){
+            ItemStack icon = new ItemStack(Material.WHITE_STAINED_GLASS, 1);
+            ItemMeta meta = icon.getItemMeta();
+            meta.setLore(List.of("Grants invisibility."));
+            meta.setDisplayName(ChatColor.WHITE + "Invisibility");
+            icon.setItemMeta(meta);
+            return icon;
+        }
+        else if(type == PotionEffectType.JUMP_BOOST){
+            ItemStack icon = new ItemStack(Material.RABBIT_FOOT, 1);
+            ItemMeta meta = icon.getItemMeta();
+            meta.setLore(List.of("Increases jump height."));
+            meta.setDisplayName(ChatColor.WHITE + "Jump boost");
+            icon.setItemMeta(meta);
+            return icon;
+        }
+        else if(type == PotionEffectType.LEVITATION){
+            ItemStack icon = new ItemStack(Material.FEATHER, 1);
+            ItemMeta meta = icon.getItemMeta();
+            meta.setLore(List.of("Causes the player to float in the air."));
+            meta.setDisplayName(ChatColor.WHITE + "Levitation");
+            icon.setItemMeta(meta);
+            return icon;
+        }
+        else if(type == PotionEffectType.LUCK){
+            ItemStack icon = new ItemStack(Material.GOLD_NUGGET, 1);
+            ItemMeta meta = icon.getItemMeta();
+            meta.setLore(List.of("Increases loot table luck."));
+            meta.setDisplayName(ChatColor.WHITE + "Luck");
+            icon.setItemMeta(meta);
+            return icon;
+        }
+        else if(type == PotionEffectType.MINING_FATIGUE){
+            ItemStack icon = new ItemStack(Material.BEDROCK, 1);
+            ItemMeta meta = icon.getItemMeta();
+            meta.setLore(List.of("Decreases dig speed."));
+            meta.setDisplayName(ChatColor.WHITE + "Mining fatigue");
+            icon.setItemMeta(meta);
+            return icon;
+        }
+        else if(type == PotionEffectType.NAUSEA){
+            ItemStack icon = new ItemStack(Material.FERMENTED_SPIDER_EYE, 1);
+            ItemMeta meta = icon.getItemMeta();
+            meta.setLore(List.of("Warps vision of the player."));
+            meta.setDisplayName(ChatColor.WHITE + "Nausea");
+            icon.setItemMeta(meta);
+            return icon;
+        }
+        else if(type == PotionEffectType.NIGHT_VISION){
+            ItemStack icon = new ItemStack(Material.LANTERN, 1);
+            ItemMeta meta = icon.getItemMeta();
+            meta.setLore(List.of("Allows the player to see in the dark."));
+            meta.setDisplayName(ChatColor.WHITE + "Night vision");
+            icon.setItemMeta(meta);
+            return icon;
+        }
+        else if(type == PotionEffectType.OOZING){
+            ItemStack icon = new ItemStack(Material.SLIME_BALL, 1);
+            ItemMeta meta = icon.getItemMeta();
+            meta.setLore(List.of("Causes the player to emit green slime particles and spawns slimes upon death."));
+            meta.setDisplayName(ChatColor.WHITE + "Oozing");
+            icon.setItemMeta(meta);
+            return icon;
+        }
+        else if(type == PotionEffectType.POISON){
+            ItemStack icon = new ItemStack(Material.POISONOUS_POTATO, 1);
+            ItemMeta meta = icon.getItemMeta();
+            meta.setLore(List.of("Deals damage to the player over time."));
+            meta.setDisplayName(ChatColor.WHITE + "Poison");
+            icon.setItemMeta(meta);
+            return icon;
+        }
+        else if(type == PotionEffectType.RAID_OMEN){
+            ItemStack icon = new ItemStack(Material.WHITE_BANNER, 1);
+            BannerMeta meta = (BannerMeta) icon.getItemMeta();
+            meta.addPattern(new Pattern(DyeColor.CYAN, PatternType.RHOMBUS));
+            meta.addPattern(new Pattern(DyeColor.LIGHT_GRAY, PatternType.STRIPE_BOTTOM));
+            meta.addPattern(new Pattern(DyeColor.GRAY, PatternType.STRIPE_CENTER));
+            meta.addPattern(new Pattern(DyeColor.LIGHT_GRAY, PatternType.BORDER));
+            meta.addPattern(new Pattern(DyeColor.BLACK, PatternType.STRIPE_MIDDLE));
+            meta.addPattern(new Pattern(DyeColor.LIGHT_GRAY, PatternType.HALF_HORIZONTAL));
+            meta.addPattern(new Pattern(DyeColor.LIGHT_GRAY, PatternType.CIRCLE));
+            meta.addPattern(new Pattern(DyeColor.BLACK, PatternType.BORDER));
+            meta.setLore(List.of("Triggers a raid when a player enters a village."));
+            meta.setDisplayName(ChatColor.WHITE + "Raid omen");
+            meta.addItemFlags(ItemFlag.HIDE_ADDITIONAL_TOOLTIP);
+            icon.setItemMeta(meta);
+            return icon;
+        }
+        else if(type == PotionEffectType.REGENERATION){
+            ItemStack icon = new ItemStack(Material.GLISTERING_MELON_SLICE, 1);
+            ItemMeta meta = icon.getItemMeta();
+            meta.setLore(List.of("Regenerates health."));
+            meta.setDisplayName(ChatColor.WHITE + "Regeneration");
+            icon.setItemMeta(meta);
+            return icon;
+        }
+        else if(type == PotionEffectType.RESISTANCE){
+            ItemStack icon = new ItemStack(Material.IRON_CHESTPLATE, 1);
+            ItemMeta meta = icon.getItemMeta();
+            meta.setLore(List.of("Decreases damage dealt to the player."));
+            meta.setDisplayName(ChatColor.WHITE + "Resistance");
+            meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
+            icon.setItemMeta(meta);
+            return icon;
+        }
+        else if(type == PotionEffectType.SATURATION){
+            ItemStack icon = new ItemStack(Material.COOKED_BEEF, 1);
+            ItemMeta meta = icon.getItemMeta();
+            meta.setLore(List.of("Increases the food level of the player each tick."));
+            meta.setDisplayName(ChatColor.WHITE + "Saturation");
+            icon.setItemMeta(meta);
+            return icon;
+        }
+        else if(type == PotionEffectType.SLOW_FALLING){
+            ItemStack icon = new ItemStack(Material.FEATHER, 1);
+            ItemMeta meta = icon.getItemMeta();
+            meta.setLore(List.of("Slows the fall rate."));
+            meta.setDisplayName(ChatColor.WHITE + "Slow falling");
+            icon.setItemMeta(meta);
+            return icon;
+        }
+        else if(type == PotionEffectType.SLOWNESS){
+            ItemStack icon = new ItemStack(Material.SOUL_SAND, 1);
+            ItemMeta meta = icon.getItemMeta();
+            meta.setLore(List.of("Decreases movement speed."));
+            meta.setDisplayName(ChatColor.WHITE + "Slowness");
+            icon.setItemMeta(meta);
+            return icon;
+        }
+        else if(type == PotionEffectType.SPEED){
+            ItemStack icon = new ItemStack(Material.SUGAR, 1);
+            ItemMeta meta = icon.getItemMeta();
+            meta.setLore(List.of("Increases movement speed."));
+            meta.setDisplayName(ChatColor.WHITE + "Speed");
+            icon.setItemMeta(meta);
+            return icon;
+        }
+        else if(type == PotionEffectType.STRENGTH){
+            ItemStack icon = new ItemStack(Material.IRON_SWORD, 1);
+            ItemMeta meta = icon.getItemMeta();
+            meta.setLore(List.of("Increases damage dealt."));
+            meta.setDisplayName(ChatColor.WHITE + "Strength");
+            meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
+            icon.setItemMeta(meta);
+            return icon;
+        }
+        else if(type == PotionEffectType.TRIAL_OMEN){
+            ItemStack icon = new ItemStack(Material.TRIAL_SPAWNER, 1);
+            ItemMeta meta = icon.getItemMeta();
+            meta.setLore(List.of("Causes trial spawners to become ominous."));
+            meta.setDisplayName(ChatColor.WHITE + "Trial omen");
+            icon.setItemMeta(meta);
+            return icon;
+        }
+        else if(type == PotionEffectType.UNLUCK){
+            ItemStack icon = new ItemStack(Material.COAL, 1);
+            ItemMeta meta = icon.getItemMeta();
+            meta.setLore(List.of("Loot table unluck."));
+            meta.setDisplayName(ChatColor.WHITE + "Unluck");
+            icon.setItemMeta(meta);
+            return icon;
+        }
+        else if(type == PotionEffectType.WATER_BREATHING){
+            ItemStack icon = new ItemStack(Material.WATER_BUCKET, 1);
+            ItemMeta meta = icon.getItemMeta();
+            meta.setLore(List.of("Allows breathing underwater."));
+            meta.setDisplayName(ChatColor.WHITE + "Water breathing");
+            icon.setItemMeta(meta);
+            return icon;
+        }
+        else if(type == PotionEffectType.WEAKNESS){
+            ItemStack icon = new ItemStack(Material.WOODEN_SWORD, 1);
+            ItemMeta meta = icon.getItemMeta();
+            meta.setLore(List.of("Decreases damage dealt."));
+            meta.setDisplayName(ChatColor.WHITE + "Weakness");
+            meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
+            icon.setItemMeta(meta);
+            return icon;
+        }
+        else if(type == PotionEffectType.WEAVING){
+            ItemStack icon = new ItemStack(Material.COBWEB, 1);
+            ItemMeta meta = icon.getItemMeta();
+            meta.setLore(List.of("Creates cobwebs upon death and decreases speed penalty when moving through cobwebs."));
+            meta.setDisplayName(ChatColor.WHITE + "Weaving");
+            icon.setItemMeta(meta);
+            return icon;
+        }
+        else if(type == PotionEffectType.WIND_CHARGED){
+            ItemStack icon = new ItemStack(Material.BREEZE_ROD, 1);
+            ItemMeta meta = icon.getItemMeta();
+            meta.setLore(List.of("Emits a wind burst upon death."));
+            meta.setDisplayName(ChatColor.WHITE + "Wind charged");
+            icon.setItemMeta(meta);
+            return icon;
+        }
+        else if(type == PotionEffectType.WITHER){
+            ItemStack icon = new ItemStack(Material.WITHER_ROSE, 1);
+            ItemMeta meta = icon.getItemMeta();
+            meta.setLore(List.of("Deals damage to the player over time."));
+            meta.setDisplayName(ChatColor.WHITE + "Wither");
+            icon.setItemMeta(meta);
+            return icon;
+        }
+        else
+            return new ItemStack(Material.AIR); //Should never happen
+    }
+
+    /**
+     * Returns the item that represents the change amplifier input in the potion effect gui
+     */
+    public static ItemStack getChangeAmplifierIcon(int currentAmplifier){
+        ItemStack icon = new ItemStack(Material.COMPARATOR);
+        ItemMeta meta = icon.getItemMeta();
+        meta.setDisplayName(ChatColor.WHITE + "Change amplifier");
+        meta.setLore(List.of("Current: " + currentAmplifier, "Range: 0 - 127"));
+        icon.setItemMeta(meta);
+        return icon;
+    }
+
+    /**
+     * Returns the item that represents the particles switch in the potion effect gui, set to true
+     */
+    public static ItemStack getParticlesSwitchIconTrue(){
+        ItemStack icon = new ItemStack(Material.FIREWORK_STAR);
+        ItemMeta meta = icon.getItemMeta();
+        meta.setDisplayName(ChatColor.AQUA + "Particles");
+        meta.addEnchant(Enchantment.UNBREAKING, 1, true);
+        meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+        icon.setItemMeta(meta);
+        return icon;
+    }
+
+    /**
+     * Returns the item that represents the particles switch in the potion effect gui, set to false
+     */
+    public static ItemStack getParticlesSwitchIconFalse(){
+        ItemStack icon = new ItemStack(Material.FIREWORK_STAR);
+        ItemMeta meta = icon.getItemMeta();
+        meta.setDisplayName(ChatColor.GRAY + "Particles");
+        icon.setItemMeta(meta);
+        return icon;
+    }
+
+    /**
+     * Returns the item that represents the remove potion effect button in the potion effect gui
+     */
+    public static ItemStack getRemovePotionEffectIcon(){
+        ItemStack icon = new ItemStack(Material.BARRIER);
+        ItemMeta meta = icon.getItemMeta();
+        meta.setDisplayName(ChatColor.RED + "" + ChatColor.BOLD + "Remove effect");
+        icon.setItemMeta(meta);
+        return icon;
+    }
+
+    /**
+     * Returns the item that represents the add potion effect button in the potion effect gui
+     */
+    public static ItemStack getAddPotionEffectIcon(){
+        ItemStack addAttribute = new ItemStack(Material.LIME_DYE, 1);
+        ItemMeta meta = addAttribute.getItemMeta();
+        meta.addEnchant(Enchantment.SHARPNESS, 1, true); //Item cannot be air, so NullPointerException is impossible
+        meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+        meta.setDisplayName(ChatColor.WHITE + "Add potion effect");
+        addAttribute.setItemMeta(meta);
+        return addAttribute;
+    }
+
+    /**
+     * Return the item used to represent the switch to switch between blacklist and whitelist in a gui, set on whitelist
+     * @param playerList List of all players contained in the access list, used to list them in the lore
+     */
+    @Nonnull
+    public static ItemStack getWhitelistIcon(String playerList){
+        ItemStack whitelist = new ItemStack(Material.WHITE_STAINED_GLASS, 1);
+        ItemMeta meta = whitelist.getItemMeta();
+        meta.setDisplayName(ChatColor.WHITE + "Whitelist"); //Item cannot be air, so NullPointerException is impossible
+        meta.setLore(List.of(playerList));
+        whitelist.setItemMeta(meta);
+        return whitelist;
+    }
+
+    /**
+     * Return the item used to represent the switch to switch between blacklist and whitelist in a gui, set on blacklist
+     * @param playerList List of all players contained in the access list, used to list them in the lore
+     */
+    @Nonnull
+    public static ItemStack getBlacklistIcon(String playerList){
+        ItemStack blacklist = new ItemStack(Material.BLACK_STAINED_GLASS, 1);
+        ItemMeta meta = blacklist.getItemMeta();
+        meta.setDisplayName(ChatColor.GRAY + "Blacklist"); //Item cannot be air, so NullPointerException is impossible
+        meta.setLore(List.of(playerList));
+        blacklist.setItemMeta(meta);
+        return blacklist;
+    }
+
+    /**
+     * Returns the item used to represent the add player input in a gui, to add a new player to the access list
+     */
+    @Nonnull
+    public static ItemStack getAddPlayerInputIcon(){
+        ItemStack addPlayerInput = new ItemStack(Material.BIRCH_SIGN, 1);
+        ItemMeta meta = addPlayerInput.getItemMeta();
+        meta.setDisplayName(ChatColor.WHITE + "Add player"); //Item cannot be air, so NullPointerException is impossible
+        addPlayerInput.setItemMeta(meta);
+        return addPlayerInput;
+    }
+
+    /**
+     * Returns the item used to represent the remove player input in a gui, to remove a player from the access list
+     */
+    @Nonnull
+    public static ItemStack getRemovePlayerInputIcon(){
+        ItemStack removePlayerInput = new ItemStack(Material.SPRUCE_SIGN, 1);
+        ItemMeta meta = removePlayerInput.getItemMeta();
+        meta.setDisplayName(ChatColor.WHITE + "Remove player"); //Item cannot be air, so NullPointerException is impossible
+        removePlayerInput.setItemMeta(meta);
+        return removePlayerInput;
+    }
+
 }

@@ -72,4 +72,8 @@ public class AttributeListGui implements Gui {
     public void renderWidgets(){
         gui.renderWidgets();
     }
+
+    public void clearWidgets(){
+        throw new UnsupportedOperationException("Attribute list gui isr read-only");
+    }
 }

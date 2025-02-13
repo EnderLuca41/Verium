@@ -84,7 +84,7 @@ public class AttributeService {
 
     @Nonnull
     public List<AttributeChange> getAttributeChanges(){
-        return attributeChanges;
+        return Collections.unmodifiableList(attributeChanges);
     }
 
     public void loadConfig(FileConfiguration src){
