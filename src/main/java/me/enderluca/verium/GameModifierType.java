@@ -7,5 +7,6 @@ public enum GameModifierType {
     Uhc,
     Uuhc,
     NoVillager,
-    NoArmor
+    NoArmor,
+    Soup
 }

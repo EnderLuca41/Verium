@@ -165,6 +165,15 @@ public final class GuiUtil {
                 return noArmor;
             }
 
+            case Soup -> {
+                ItemStack soup = new ItemStack(Material.MUSHROOM_STEW, 1);
+                ItemMeta meta = soup.getItemMeta();
+                meta.setDisplayName("Soup PVP"); //Item cannot be air, so NullPointerException is impossible
+                meta.setLore(List.of("Mushrooms stews no heal players when consumed."));
+                soup.setItemMeta(meta);
+                return soup;
+            }
+
             default -> {return new ItemStack(Material.AIR);} //Should never happen
         }
     }
