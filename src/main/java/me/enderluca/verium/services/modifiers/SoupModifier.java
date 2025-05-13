@@ -3,7 +3,6 @@ package me.enderluca.verium.services.modifiers;
 import me.enderluca.verium.GameModifierType;
 import me.enderluca.verium.interfaces.GameModifier;
 import me.enderluca.verium.listener.modifiers.SoupListener;
-import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
@@ -18,11 +17,10 @@ public class SoupModifier implements GameModifier {
     private boolean enabled;
     private boolean paused;
 
-    public final int HEAL_AMOUNT = 4;
+    public final int HEAL_AMOUNT = 4; //Amount on soup heals
 
     public SoupModifier(Plugin owner, FileConfiguration fileConfig){
         loadConfig(fileConfig);
-        Bukkit.getLogger().info("Soup modifier");
         owner.getServer().getPluginManager().registerEvents(new SoupListener(() -> enabled && !paused, this::onSoupConsumed), owner);
     }
 
