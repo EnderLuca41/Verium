@@ -8,5 +8,6 @@ public enum GameModifierType {
     Uuhc,
     NoVillager,
     NoArmor,
-    Soup
+    Soup,
+    AnvilRain
 }

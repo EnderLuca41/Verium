@@ -26,6 +26,7 @@ public class GameModifierService {
         gameModifiers.add(new NoVillagerModifier(owner, fileConfig));
         gameModifiers.add(new NoArmorModifier(owner, fileConfig));
         gameModifiers.add(new SoupModifier(owner, fileConfig));
+        gameModifiers.add(new AnvilRainModifier(owner, fileConfig));
     }
 
     public void loadConfig(FileConfiguration src){

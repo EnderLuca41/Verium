@@ -174,6 +174,15 @@ public final class GuiUtil {
                 return soup;
             }
 
+            case AnvilRain -> {
+                ItemStack anvilRain = new ItemStack(Material.ANVIL, 1);
+                ItemMeta meta = anvilRain.getItemMeta();
+                meta.setDisplayName("Anvil Rain"); //Item cannot be air, so NullPointerException is impossible
+                meta.setLore(List.of("Anvils will fall from the sky around every player."));
+                anvilRain.setItemMeta(meta);
+                return anvilRain;
+            }
+
             default -> {return new ItemStack(Material.AIR);} //Should never happen
         }
     }
