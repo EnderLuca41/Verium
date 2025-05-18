@@ -3,6 +3,7 @@ package me.enderluca.verium.services.modifiers;
 import me.enderluca.verium.GameModifierType;
 import me.enderluca.verium.interfaces.GameModifier;
 import me.enderluca.verium.listener.modifiers.SoupListener;
+import me.enderluca.verium.util.PlayerUtil;
 import org.bukkit.Material;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
@@ -26,10 +27,7 @@ public class SoupModifier implements GameModifier {
 
     void onSoupConsumed(Player player, int slot){
         player.getInventory().setItem(slot, new ItemStack(Material.BOWL));
-        double newHealth = player.getHealth() + HEAL_AMOUNT;
-        if(newHealth > player.getHealthScale())
-            newHealth = player.getHealthScale();
-        player.setHealth(newHealth);
+        PlayerUtil.heal(player, HEAL_AMOUNT);
     }
 
     @Override

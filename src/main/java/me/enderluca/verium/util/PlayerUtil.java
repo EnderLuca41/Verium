@@ -6,6 +6,8 @@ import com.google.gson.JsonParser;
 
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
+import org.bukkit.attribute.Attribute;
+import org.bukkit.entity.Player;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -119,5 +121,14 @@ public final class PlayerUtil {
         catch (Exception e) {
             return null;
         }
+    }
+    
+    public static void heal(Player player, double amount){
+        double newHealth = player.getHealth() + amount;
+        double maxHealth = player.getAttribute(Attribute.MAX_HEALTH).getValue();
+        if(maxHealth < newHealth){
+            newHealth = maxHealth;
+        }
+        player.setHealth(newHealth);
     }
 }
