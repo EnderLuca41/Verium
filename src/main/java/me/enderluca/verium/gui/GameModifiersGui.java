@@ -39,8 +39,8 @@ public class GameModifiersGui implements Gui {
                                .addFalseSound(new SoundEffect(Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1, 0.7f))
                                .build();
 
-            gui.addWidget(icon, i + ((i / 9) * 18));
-            gui.addWidget(sw, i + 9 + ((i / 9) * 18));
+            gui.addWidget(icon, i + ((i / 9) * 9));
+            gui.addWidget(sw, i + 9 + ((i / 9) * 9));
             i++;
         }
     }
