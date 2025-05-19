@@ -131,4 +131,24 @@ public final class PlayerUtil {
         }
         player.setHealth(newHealth);
     }
+
+    /**
+     * Calculates the fall time based on th ue block fallen and returns the result in ticks
+     */
+    public static int fallTime(int height){
+        final double GRAVITY = 0.08;
+        final double DRAG = 0.98;
+        double velocity = 0;
+        double position = 0;
+        double ticks = 0;
+
+        while(position < height){
+            velocity += GRAVITY;
+            velocity *= DRAG;
+            position += velocity;
+            ticks++;
+        }
+
+        return (int) Math.ceil(ticks);
+    }
 }

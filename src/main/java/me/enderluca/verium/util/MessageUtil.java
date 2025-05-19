@@ -240,4 +240,21 @@ public final class MessageUtil {
 
         return builder.create();
     }
+
+    public static BaseComponent[] buildMlgFail(String playerName){
+        ComponentBuilder builder = new ComponentBuilder();
+        builder.append("Player ").color(ChatColor.RED);
+        builder.append(playerName).color(ChatColor.GOLD);
+        builder.append(" failed his MLG.").color(ChatColor.RED);
+        return builder.create();
+    }
+
+    public static BaseComponent[] buildMlgSuccess(){
+        ComponentBuilder builder = new ComponentBuilder();
+        builder.append("All players successfully completed their ").color(ChatColor.GREEN);
+        builder.append("MLG").color(ChatColor.DARK_GREEN);
+        builder.append("!\n").color(ChatColor.GREEN);
+        builder.append("But my hope will never die! *dubstep*").color(ChatColor.GREEN);
+        return builder.create();
+    }
 }

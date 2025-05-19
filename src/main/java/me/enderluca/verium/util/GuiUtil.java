@@ -90,6 +90,15 @@ public final class GuiUtil {
                 return noDeath;
             }
 
+            case Mlg -> {
+                ItemStack mlg = new ItemStack(Material.WATER_BUCKET, 1);
+                ItemMeta meta = mlg.getItemMeta();
+                meta.setDisplayName("MLG"); //Item cannot be air, so NullPointerException is impossible
+                meta.setLore(List.of("Players need to do an MLG every once in a while."));
+                mlg.setItemMeta(meta);
+                return mlg;
+            }
+
             default -> {return new ItemStack(Material.AIR);} //Should never happen
         }
     }
