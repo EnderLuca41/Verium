@@ -192,6 +192,16 @@ public final class GuiUtil {
                 return anvilRain;
             }
 
+            case SharedDamage -> {
+                ItemStack sharedDamage = new ItemStack(Material.DIAMOND_SWORD, 1);
+                ItemMeta meta = sharedDamage.getItemMeta();
+                meta.setDisplayName("Shared Damage"); //Item cannot be air, so NullPointerException is impossible
+                meta.setLore(List.of("If one player takes damage, all players will take the same amount of damage."));
+                meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
+                sharedDamage.setItemMeta(meta);
+                return sharedDamage;
+            }
+
             default -> {return new ItemStack(Material.AIR);} //Should never happen
         }
     }

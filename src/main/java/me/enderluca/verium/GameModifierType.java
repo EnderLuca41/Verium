@@ -9,5 +9,6 @@ public enum GameModifierType {
     NoVillager,
     NoArmor,
     Soup,
-    AnvilRain
+    AnvilRain,
+    SharedDamage
 }
