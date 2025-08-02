@@ -202,6 +202,15 @@ public final class GuiUtil {
                 return sharedDamage;
             }
 
+            case NoMobDrop -> {
+                ItemStack noMobDrop = new ItemStack(Material.COW_SPAWN_EGG, 1);
+                ItemMeta meta = noMobDrop.getItemMeta();
+                meta.setDisplayName("No Mob Drop"); //Item cannot be air, so NullPointerException is impossible
+                meta.setLore(List.of("If a mob dies, it will not drop any items."));
+                noMobDrop.setItemMeta(meta);
+                return noMobDrop;
+            }
+
             default -> {return new ItemStack(Material.AIR);} //Should never happen
         }
     }

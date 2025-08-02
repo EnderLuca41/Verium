@@ -10,5 +10,6 @@ public enum GameModifierType {
     NoArmor,
     Soup,
     AnvilRain,
-    SharedDamage
+    SharedDamage,
+    NoMobDrop,
 }
