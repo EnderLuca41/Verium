@@ -29,6 +29,7 @@ public class GameModifierService {
         gameModifiers.add(new AnvilRainModifier(owner, fileConfig));
         gameModifiers.add(new SharedDamageModifier(owner, fileConfig));
         gameModifiers.add(new NoMobDropModifier(owner, fileConfig));
+        gameModifiers.add(new GravestoneModifier(owner, fileConfig));
     }
 
     public void loadConfig(FileConfiguration src){

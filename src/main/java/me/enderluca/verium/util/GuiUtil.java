@@ -211,6 +211,15 @@ public final class GuiUtil {
                 return noMobDrop;
             }
 
+            case Gravestone -> {
+                ItemStack gravestones = new ItemStack(Material.CHEST, 1);
+                ItemMeta meta = gravestones.getItemMeta();
+                meta.setDisplayName("Gravestones");
+                meta.setLore(List.of("If a player dies, a chest will appear at the death location containing all their items."));
+                gravestones.setItemMeta(meta);
+                return gravestones;
+            }
+
             default -> {return new ItemStack(Material.AIR);} //Should never happen
         }
     }

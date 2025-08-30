@@ -12,4 +12,5 @@ public enum GameModifierType {
     AnvilRain,
     SharedDamage,
     NoMobDrop,
+    Gravestone,
 }
