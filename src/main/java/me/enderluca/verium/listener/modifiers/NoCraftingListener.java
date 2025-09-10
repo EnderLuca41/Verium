@@ -1,4 +1,4 @@
-package me.enderluca.verium.listener.challenges;
+package me.enderluca.verium.listener.modifiers;
 
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
