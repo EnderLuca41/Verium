@@ -2,11 +2,17 @@ package me.enderluca.verium.services.modifiers;
 
 import me.enderluca.verium.GameModifierType;
 import me.enderluca.verium.interfaces.GameModifier;
-import me.enderluca.verium.listener.modifiers.NoMobDropListener;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
+import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.plugin.Plugin;
 
-public class NoMobDropModifier implements GameModifier {
+import javax.annotation.Nonnull;
+
+public class NoMobDropModifier implements GameModifier, Listener {
 
     private boolean enabled;
     private boolean paused;
@@ -14,7 +20,7 @@ public class NoMobDropModifier implements GameModifier {
     public NoMobDropModifier(Plugin owner, FileConfiguration fileConfig){
         loadConfig(fileConfig);
 
-        owner.getServer().getPluginManager().registerEvents(new NoMobDropListener(() -> enabled && !paused), owner);
+        owner.getServer().getPluginManager().registerEvents(this, owner);
     }
 
     @Override
@@ -56,5 +62,16 @@ public class NoMobDropModifier implements GameModifier {
     @Override
     public GameModifierType getType() {
         return GameModifierType.NoMobDrop;
+    }
+
+    @EventHandler(ignoreCancelled = true, priority = EventPriority.HIGH)
+    public void onEntityDeath(@Nonnull EntityDeathEvent event){
+        if(enabled && !paused)
+            return;
+        if(event.getEntity() instanceof Player)
+            return;
+        event.getDrops().clear();
+
+        //NOTE: EntityDropItemEvent is not usable because it also called when items are dropped for example when trading with piglins
     }
 }

@@ -3,13 +3,17 @@ package me.enderluca.verium.services.modifiers;
 import me.enderluca.verium.GameModifierType;
 import me.enderluca.verium.interfaces.GameModifier;
 
-import me.enderluca.verium.listener.modifiers.NoHungerListener;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
+import org.bukkit.event.Listener;
+import org.bukkit.event.entity.FoodLevelChangeEvent;
+import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.plugin.Plugin;
 
-public class NoHungerModifier implements GameModifier {
+public class NoHungerModifier implements GameModifier, Listener {
 
     private boolean enabled;
     private boolean paused;
@@ -17,7 +21,7 @@ public class NoHungerModifier implements GameModifier {
     public NoHungerModifier(Plugin owner, FileConfiguration fileConfig){
         loadConfig(fileConfig);
 
-        Bukkit.getPluginManager().registerEvents(new NoHungerListener(() -> enabled && !paused), owner);
+        Bukkit.getPluginManager().registerEvents(this, owner);
     }
 
     @Override
@@ -74,5 +78,22 @@ public class NoHungerModifier implements GameModifier {
     @Override
     public GameModifierType getType(){
         return GameModifierType.NoHunger;
+    }
+
+    @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
+    public void onFoodLevelChange(FoodLevelChangeEvent event){
+        if(enabled && !paused)
+            return;
+
+        event.setCancelled(true);
+        event.getEntity().setFoodLevel(20); //Just to be sure
+    }
+
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
+    public void onPlayerJoin(PlayerJoinEvent event){
+        if(enabled && !paused)
+            return;
+
+        event.getPlayer().setFoodLevel(20);
     }
 }

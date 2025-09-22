@@ -2,12 +2,17 @@ package me.enderluca.verium.services.modifiers;
 
 import me.enderluca.verium.GameModifierType;
 import me.enderluca.verium.interfaces.GameModifier;
-import me.enderluca.verium.listener.modifiers.UuhcListener;
+
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
+import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityRegainHealthEvent;
 import org.bukkit.plugin.Plugin;
 
-public class UuhcModifier implements GameModifier {
+public class UuhcModifier implements GameModifier, Listener {
 
     private boolean enabled;
     private boolean paused;
@@ -15,7 +20,7 @@ public class UuhcModifier implements GameModifier {
     public UuhcModifier(Plugin owner, FileConfiguration fileConfig){
         loadConfig(fileConfig);
 
-        Bukkit.getPluginManager().registerEvents(new UuhcListener(() -> enabled && !paused), owner);
+        Bukkit.getPluginManager().registerEvents(this, owner);
     }
 
 
@@ -59,5 +64,16 @@ public class UuhcModifier implements GameModifier {
     @Override
     public GameModifierType getType(){
         return GameModifierType.Uuhc;
+    }
+
+    @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
+    public void onEntityHeal(EntityRegainHealthEvent event){
+        if(enabled && !paused)
+            return;
+
+        if(!(event.getEntity() instanceof Player))
+            return;
+
+        event.setCancelled(true);
     }
 }

@@ -2,16 +2,21 @@ package me.enderluca.verium.services.challenges;
 
 import me.enderluca.verium.ChallengeType;
 import me.enderluca.verium.interfaces.Challenge;
-import me.enderluca.verium.listener.challenges.NoDeathListener;
+import me.enderluca.verium.util.MessageUtil;
 import net.md_5.bungee.api.chat.BaseComponent;
+import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
+import org.bukkit.event.Listener;
+import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.plugin.Plugin;
 
 import javax.annotation.Nullable;
 import java.util.function.Consumer;
 
-public class NoDeathChallenge implements Challenge {
+public class NoDeathChallenge implements Challenge, Listener {
 
     private boolean enabled;
     private boolean paused;
@@ -27,13 +32,7 @@ public class NoDeathChallenge implements Challenge {
 
         loadConfig(fileConfig);
 
-        Bukkit.getPluginManager().registerEvents(new NoDeathListener(() -> enabled && !paused && !failed, this::onChallengeFail), owner);
-    }
-
-    public void onChallengeFail(@Nullable BaseComponent[] message){
-        failedMessage = message;
-
-        onFail.accept(message);
+        Bukkit.getPluginManager().registerEvents(this, owner);
     }
 
     @Override
@@ -94,5 +93,16 @@ public class NoDeathChallenge implements Challenge {
     @Override
     public ChallengeType getType() {
         return ChallengeType.NoDeath;
+    }
+
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
+    public void onPlayerDeath(PlayerDeathEvent event){
+        if(enabled && !paused && !failed)
+            return;
+
+        BaseComponent[] deathMessage = MessageUtil.buildDeathMessage(event.getEntity().getDisplayName(), event.getDeathMessage());
+        event.setDeathMessage(TextComponent.toLegacyText(deathMessage));
+        this.failedMessage = deathMessage;
+        onFail.accept(null); //Since we already replaced the death message, we don't need to pass the message
     }
 }

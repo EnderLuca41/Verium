@@ -2,15 +2,18 @@ package me.enderluca.verium.services.modifiers;
 
 import me.enderluca.verium.GameModifierType;
 import me.enderluca.verium.interfaces.GameModifier;
-import me.enderluca.verium.listener.modifiers.UhcListener;
 
 import org.bukkit.Bukkit;
 import org.bukkit.GameRule;
 import org.bukkit.World;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
+import org.bukkit.event.Listener;
+import org.bukkit.event.world.WorldLoadEvent;
 import org.bukkit.plugin.Plugin;
 
-public class UhcModifier implements GameModifier {
+public class UhcModifier implements GameModifier, Listener {
 
     private boolean enabled;
     private boolean paused;
@@ -18,7 +21,7 @@ public class UhcModifier implements GameModifier {
     public UhcModifier(Plugin owner, FileConfiguration fileConfig){
         loadConfig(fileConfig);
 
-        Bukkit.getPluginManager().registerEvents(new UhcListener(() -> enabled && !paused), owner);
+        Bukkit.getPluginManager().registerEvents(this, owner);
     }
 
     @Override
@@ -72,5 +75,10 @@ public class UhcModifier implements GameModifier {
     @Override
     public GameModifierType getType() {
         return GameModifierType.Uhc;
+    }
+
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
+    public void onWorldLoad(WorldLoadEvent event){
+        event.getWorld().setGameRule(GameRule.NATURAL_REGENERATION, enabled && !paused);
     }
 }

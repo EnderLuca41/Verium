@@ -2,13 +2,17 @@ package me.enderluca.verium.services.modifiers;
 
 import me.enderluca.verium.GameModifierType;
 import me.enderluca.verium.interfaces.GameModifier;
-import me.enderluca.verium.listener.challenges.NoCraftingListener;
 
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
+import org.bukkit.event.Listener;
+import org.bukkit.event.inventory.InventoryOpenEvent;
+import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.plugin.Plugin;
 
-public class NoCraftingModifier implements GameModifier {
+public class NoCraftingModifier implements GameModifier, Listener {
 
     private boolean enabled;
     private boolean paused;
@@ -16,7 +20,7 @@ public class NoCraftingModifier implements GameModifier {
     public NoCraftingModifier(Plugin owner, FileConfiguration fileConfig){
         loadConfig(fileConfig);
 
-        Bukkit.getPluginManager().registerEvents(new NoCraftingListener(() -> enabled && !paused), owner);
+        Bukkit.getPluginManager().registerEvents(this, owner);
     }
 
     @Override
@@ -58,4 +62,13 @@ public class NoCraftingModifier implements GameModifier {
 
     @Override
     public void clearWorldSpecificConfig(FileConfiguration dest) { }
+
+    @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true) //High priority to ensure the player cannot open the workbench but also allow other plugins to cancel the event
+    public void onOpenInventory(InventoryOpenEvent event){
+        if(enabled && !paused)
+            return;
+
+        if(event.getInventory().getType() == InventoryType.WORKBENCH)
+            event.setCancelled(true);
+    }
 }

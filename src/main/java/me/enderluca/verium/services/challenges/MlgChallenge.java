@@ -7,15 +7,22 @@ import me.enderluca.verium.runnable.MlgRunnable;
 import me.enderluca.verium.util.MessageUtil;
 import me.enderluca.verium.util.PlayerUtil;
 import net.md_5.bungee.api.chat.BaseComponent;
-import org.bukkit.Bukkit;
+import org.bukkit.*;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
+import org.bukkit.event.Listener;
+import org.bukkit.event.block.BlockPlaceEvent;
+import org.bukkit.event.entity.PlayerDeathEvent;
+import org.bukkit.event.player.PlayerBucketEmptyEvent;
+import org.bukkit.event.server.ServerLoadEvent;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitTask;
 
 import javax.annotation.Nullable;
 import java.util.function.Consumer;
 
-public class MlgChallenge implements Challenge {
+public class MlgChallenge implements Challenge, Listener {
 
     private final int COOLDOWN = 300; //Amount of seconds between each MLG
     private final int COOLDOWN_VARIATION = 60;
@@ -43,17 +50,7 @@ public class MlgChallenge implements Challenge {
         this.onFail = onFail;
         loadConfig(config);
 
-        Bukkit.getPluginManager().registerEvents(new MlgListener(owner, HEIGHT + HEIGHT_VARIATION, () -> mlgActive, player -> {
-
-            Bukkit.getScheduler().scheduleSyncDelayedTask(owner, () -> {
-                runnable.resetPlayers(); //Delay because the server does not have respawned the dead player yet
-            },  1);
-
-            failed = true;
-            failedMessage = MessageUtil.buildMlgFail(player.getDisplayName());
-            deactivate();
-            onFail.accept(failedMessage);
-        }), owner);
+        Bukkit.getPluginManager().registerEvents(this, owner);
     }
 
     private void activate(){
@@ -161,5 +158,51 @@ public class MlgChallenge implements Challenge {
     @Override
     public void clearWorldSpecificConfig(FileConfiguration dest) {
         dest.set("challenges.mlg.failed", false);
+    }
+
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
+    public void onPlayerDeath(PlayerDeathEvent event){
+        if(!mlgActive)
+            return;
+
+        Bukkit.getScheduler().scheduleSyncDelayedTask(owner, () -> {
+            runnable.resetPlayers(); //Delay because the server does not have respawned the dead player yet
+        },  1);
+
+        failed = true;
+        failedMessage = MessageUtil.buildMlgFail(event.getEntity().getDisplayName());
+        deactivate();
+        onFail.accept(failedMessage);
+    }
+
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
+    public void onServerLoad(ServerLoadEvent event){
+        WorldCreator creator = new WorldCreator("mlg");
+        creator.generateStructures(false);
+        creator.type(WorldType.FLAT);
+        World world = Bukkit.getServer().createWorld(creator);
+        world.setGameRule(GameRule.DO_MOB_SPAWNING, false);
+        world.setGameRule(GameRule.DO_IMMEDIATE_RESPAWN, true);
+        world.setAutoSave(false);
+    }
+
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
+    public void onBlackPlace(BlockPlaceEvent event){
+        if(!event.getPlayer().getWorld().getName().equals("mlg"))
+            return;
+
+        Bukkit.getScheduler().scheduleSyncDelayedTask(owner, () -> {
+            event.getBlockPlaced().setType(Material.AIR);
+        }, 60);
+    }
+
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
+    public void onEmptyBucket(PlayerBucketEmptyEvent event){
+        if(!event.getPlayer().getWorld().getName().equals("mlg"))
+            return;
+
+        Bukkit.getScheduler().scheduleSyncDelayedTask(owner, () -> {
+            event.getBlock().setType(Material.AIR);
+        },  60);
     }
 }

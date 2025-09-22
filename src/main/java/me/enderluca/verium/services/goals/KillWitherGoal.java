@@ -2,19 +2,25 @@ package me.enderluca.verium.services.goals;
 
 import me.enderluca.verium.GoalType;
 import me.enderluca.verium.interfaces.Goal;
-import me.enderluca.verium.listener.goals.KillWitherListener;
 
+import me.enderluca.verium.util.MessageUtil;
 import net.md_5.bungee.api.chat.BaseComponent;
 
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.entity.EntityType;
+import org.bukkit.entity.Wither;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
+import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.plugin.Plugin;
 
 import javax.annotation.Nullable;
 import java.util.function.Consumer;
 
 
-public class KillWitherGoal implements Goal {
+public class KillWitherGoal implements Goal, Listener {
 
     private boolean enabled;
     private boolean paused;
@@ -30,14 +36,7 @@ public class KillWitherGoal implements Goal {
 
         loadConfig(fileConfig);
 
-        Bukkit.getPluginManager().registerEvents(new KillWitherListener(() -> enabled && !paused && !completed, this::onGoalComplete), owner);
-    }
-
-    public void onGoalComplete(@Nullable BaseComponent[] message){
-        completed = true;
-        completeMessage = message;
-
-        onGoalComplete.accept(message);
+        Bukkit.getPluginManager().registerEvents(this, owner);
     }
 
     @Override
@@ -100,5 +99,20 @@ public class KillWitherGoal implements Goal {
 
     public GoalType getType(){
         return GoalType.KillWither;
+    }
+
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
+    public void onEntityDeath(EntityDeathEvent event){
+        if(enabled && !paused && !completed)
+            return;
+
+        if(event.getEntity().getType() != EntityType.WITHER)
+            return;
+
+        Wither wither = (Wither) event.getEntity();
+        BaseComponent[] message = MessageUtil.buildKillWitherComplete(wither.getKiller());
+        completed = true;
+        completeMessage = message;
+        onGoalComplete.accept(message);
     }
 }

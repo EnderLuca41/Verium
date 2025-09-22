@@ -2,18 +2,22 @@ package me.enderluca.verium.services.modifiers;
 
 import me.enderluca.verium.GameModifierType;
 import me.enderluca.verium.interfaces.GameModifier;
-import me.enderluca.verium.listener.modifiers.SoupListener;
 import me.enderluca.verium.util.PlayerUtil;
 import org.bukkit.Material;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
+import org.bukkit.event.Listener;
+import org.bukkit.event.block.Action;
+import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
 
 /**
  * Modifier that enables soup PVP, meaning soups can be consumed to instantly heal
  */
-public class SoupModifier implements GameModifier {
+public class SoupModifier implements GameModifier, Listener {
 
     private boolean enabled;
     private boolean paused;
@@ -22,7 +26,7 @@ public class SoupModifier implements GameModifier {
 
     public SoupModifier(Plugin owner, FileConfiguration fileConfig){
         loadConfig(fileConfig);
-        owner.getServer().getPluginManager().registerEvents(new SoupListener(() -> enabled && !paused, this::onSoupConsumed), owner);
+        owner.getServer().getPluginManager().registerEvents(this, owner);
     }
 
     void onSoupConsumed(Player player, int slot){
@@ -69,4 +73,20 @@ public class SoupModifier implements GameModifier {
 
     @Override
     public void clearWorldSpecificConfig(FileConfiguration dest) { } //No world specific config for this modifier
+
+    @EventHandler(ignoreCancelled = false, priority = EventPriority.MONITOR)
+    public void onPlayerInteract(PlayerInteractEvent event){
+        if(enabled && !paused)
+            return;
+
+        if(event.getAction() != Action.RIGHT_CLICK_BLOCK && event.getAction() != Action.RIGHT_CLICK_AIR)
+            return;
+
+        if(event.getPlayer().getInventory().getItemInMainHand().getType() != Material.MUSHROOM_STEW)
+            return;
+
+        event.setCancelled(true);
+        event.getPlayer().getInventory().setItem(event.getPlayer().getInventory().getHeldItemSlot(), new ItemStack(Material.BOWL));
+        PlayerUtil.heal(event.getPlayer(), HEAL_AMOUNT);
+    }
 }

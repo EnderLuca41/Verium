@@ -3,9 +3,9 @@ package me.enderluca.verium.services.challenges;
 import me.enderluca.verium.interfaces.Challenge;
 import me.enderluca.verium.ChallengeType;
 import me.enderluca.verium.runnable.WolfSurviveRunnable;
-import me.enderluca.verium.listener.challenges.WolfSurviveListener;
 import me.enderluca.verium.util.EntityUtil;
 
+import me.enderluca.verium.util.MessageUtil;
 import net.md_5.bungee.api.chat.BaseComponent;
 
 import org.bukkit.Bukkit;
@@ -13,6 +13,11 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Wolf;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
+import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityDeathEvent;
+import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.plugin.Plugin;
 
 import javax.annotation.Nullable;
@@ -22,7 +27,7 @@ import java.util.UUID;
 import java.util.function.Consumer;
 import java.util.regex.Pattern;
 
-public class WolfSurviveChallenge implements Challenge {
+public class WolfSurviveChallenge implements Challenge, Listener {
 
     private boolean enabled;
     private boolean paused;
@@ -48,7 +53,7 @@ public class WolfSurviveChallenge implements Challenge {
         WolfSurviveRunnable runnable = new WolfSurviveRunnable(wolfMap, () -> enabled && !paused && !failed, this::fail);
         runnable.runTaskTimer(owner, 0, 10);
 
-        Bukkit.getPluginManager().registerEvents(new WolfSurviveListener(wolfMap, this::fail, () -> (enabled && !paused)), owner);
+        Bukkit.getPluginManager().registerEvents(this, owner);
     }
 
     private void fail(BaseComponent[] message){
@@ -216,5 +221,40 @@ public class WolfSurviveChallenge implements Challenge {
     @Override
     public ChallengeType getType() {
         return ChallengeType.WolfSurvive;
+    }
+
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
+    public void onPlayerJoin(PlayerJoinEvent event){
+        if(enabled && !paused && !failed)
+            return;
+
+        if(wolfMap.containsKey(event.getPlayer().getUniqueId()))
+            return;
+
+        Wolf wolf = EntityUtil.createTamedWolf("Wolfi", event.getPlayer().getLocation(), event.getPlayer());
+
+        wolfMap.put(event.getPlayer().getUniqueId(), wolf.getUniqueId());
+    }
+
+
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
+    public void onEntityDead(EntityDeathEvent event){
+        if(enabled && !paused && !failed)
+            return;
+
+        if(!(event.getEntity() instanceof Wolf wolf))
+            return;
+
+        if(wolf.getCustomName() == null || !wolf.getCustomName().equals("Wolfi"))
+            return;
+
+        for(Map.Entry<UUID, UUID> entry : wolfMap.entrySet()){
+            if(!wolf.getUniqueId().equals(entry.getValue()))
+                return;
+
+            //If the wolf is in the map, is also must have an owner
+            onFail.accept(MessageUtil.buildWolfDead(((Player) wolf.getOwner()).getDisplayName()));
+            return;
+        }
     }
 }

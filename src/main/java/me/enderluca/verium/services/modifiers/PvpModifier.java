@@ -3,13 +3,16 @@ package me.enderluca.verium.services.modifiers;
 import me.enderluca.verium.GameModifierType;
 import me.enderluca.verium.interfaces.GameModifier;
 
-import me.enderluca.verium.listener.modifiers.PvpListener;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
+import org.bukkit.event.Listener;
+import org.bukkit.event.world.WorldLoadEvent;
 import org.bukkit.plugin.Plugin;
 
-public class PvpModifier implements GameModifier {
+public class PvpModifier implements GameModifier, Listener {
 
     private boolean enabled;
     private boolean paused;
@@ -17,7 +20,7 @@ public class PvpModifier implements GameModifier {
     public PvpModifier(Plugin owner, FileConfiguration fileConfig){
         loadConfig(fileConfig);
 
-        Bukkit.getPluginManager().registerEvents(new PvpListener(() -> enabled && !paused), owner);
+        Bukkit.getPluginManager().registerEvents(this, owner);
     }
 
     @Override
@@ -72,5 +75,10 @@ public class PvpModifier implements GameModifier {
     @Override
     public GameModifierType getType() {
         return GameModifierType.Pvp;
+    }
+
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
+    public void onWorldLoad(WorldLoadEvent event){
+        event.getWorld().setPVP(enabled && !paused);
     }
 }

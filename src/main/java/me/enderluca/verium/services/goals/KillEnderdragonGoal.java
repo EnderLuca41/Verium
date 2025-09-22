@@ -2,18 +2,25 @@ package me.enderluca.verium.services.goals;
 
 import me.enderluca.verium.GoalType;
 import me.enderluca.verium.interfaces.Goal;
-import me.enderluca.verium.listener.goals.KillEnderdragonListener;
 
+import me.enderluca.verium.util.MessageUtil;
 import net.md_5.bungee.api.chat.BaseComponent;
 
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.entity.EnderDragon;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.EntityType;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
+import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.plugin.Plugin;
 
 import javax.annotation.Nullable;
 import java.util.function.Consumer;
 
-public class KillEnderdragonGoal implements Goal {
+public class KillEnderdragonGoal implements Goal, Listener {
 
     private boolean enabled;
     private boolean paused;
@@ -30,16 +37,8 @@ public class KillEnderdragonGoal implements Goal {
 
         loadConfig(fileConfig);
 
-        Bukkit.getPluginManager().registerEvents(new KillEnderdragonListener(() -> enabled && !paused && !completed, this::onGoalComplete), owner);
+        Bukkit.getPluginManager().registerEvents(this, owner);
     }
-
-    public void onGoalComplete(@Nullable BaseComponent[] message){
-        completed = true;
-        completeMessage = message;
-
-        onGoalComplete.accept(completeMessage);
-    }
-
 
     @Override
     public void reset() {
@@ -105,5 +104,23 @@ public class KillEnderdragonGoal implements Goal {
     @Override
     public GoalType getType() {
         return GoalType.KillEnderdragon;
+    }
+
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
+    public void onEntityDeath(EntityDeathEvent event){
+        if(enabled && !paused && !completed)
+            return;
+
+        Entity entity = event.getEntity();
+
+        if(entity.getType() != EntityType.ENDER_DRAGON)
+            return;
+
+        EnderDragon dragon = (EnderDragon) entity;
+        BaseComponent[] message = MessageUtil.buildKillEnderdragonComplete(dragon.getKiller());
+        completed = true;
+        completeMessage = message;
+        onGoalComplete.accept(message);
+
     }
 }

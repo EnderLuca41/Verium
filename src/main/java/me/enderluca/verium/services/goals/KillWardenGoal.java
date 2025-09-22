@@ -2,18 +2,24 @@ package me.enderluca.verium.services.goals;
 
 import me.enderluca.verium.GoalType;
 import me.enderluca.verium.interfaces.Goal;
+import me.enderluca.verium.util.MessageUtil;
 
-import me.enderluca.verium.listener.goals.KillWardenListener;
 import net.md_5.bungee.api.chat.BaseComponent;
 
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.Warden;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
+import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.plugin.Plugin;
 
 import javax.annotation.Nullable;
 import java.util.function.Consumer;
 
-public class KillWardenGoal implements Goal {
+public class KillWardenGoal implements Goal, Listener {
 
 
     private boolean enabled;
@@ -30,16 +36,8 @@ public class KillWardenGoal implements Goal {
 
         loadConfig(fileConfig);
 
-        Bukkit.getPluginManager().registerEvents(new KillWardenListener(() -> enabled && !paused && !completed, this::onGoalComplete), owner);
+        Bukkit.getPluginManager().registerEvents(this, owner);
     }
-
-    private void onGoalComplete(BaseComponent[] message){
-        completeMessage = message;
-        completed = true;
-
-        onGoalComplete.accept(message);
-    }
-
 
     @Override
     public void reset(){
@@ -103,5 +101,21 @@ public class KillWardenGoal implements Goal {
     @Override
     public GoalType getType(){
         return GoalType.KillWarden;
+    }
+
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
+    public void onEntityDeath(EntityDeathEvent event){
+        if(enabled && !paused && !completed)
+            return;
+
+        Entity entity = event.getEntity();
+
+        if(!(entity instanceof Warden warden))
+            return;
+
+        BaseComponent[] message = MessageUtil.buildKillWardenComplete(warden.getKiller());
+        completed = true;
+        completeMessage = message;
+        onGoalComplete.accept(message);
     }
 }

@@ -2,11 +2,16 @@ package me.enderluca.verium.services.modifiers;
 
 import me.enderluca.verium.GameModifierType;
 import me.enderluca.verium.interfaces.GameModifier;
-import me.enderluca.verium.listener.modifiers.SharedDamageListener;
+import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
+import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.plugin.Plugin;
 
-public class SharedDamageModifier implements GameModifier {
+public class SharedDamageModifier implements GameModifier, Listener {
 
     private boolean enabled;
     private boolean paused;
@@ -14,7 +19,7 @@ public class SharedDamageModifier implements GameModifier {
     public SharedDamageModifier(Plugin owner, FileConfiguration config){
         loadConfig(config);
 
-        owner.getServer().getPluginManager().registerEvents(new SharedDamageListener(() -> enabled && !paused), owner);
+        owner.getServer().getPluginManager().registerEvents(this, owner);
     }
 
     @Override
@@ -55,5 +60,24 @@ public class SharedDamageModifier implements GameModifier {
     @Override
     public GameModifierType getType() {
         return GameModifierType.SharedDamage;
+    }
+
+    @EventHandler(ignoreCancelled = true, priority = EventPriority.MONITOR)
+    public void onPlayerDamage(EntityDamageEvent event){
+        if(enabled && !paused)
+            return;
+
+        if(!(event.getEntity() instanceof Player player))
+            return;
+
+        for(Player p : Bukkit.getOnlinePlayers()){
+            if(p.getUniqueId() == player.getUniqueId())
+                continue;
+
+            double newHealth = p.getHealth() - event.getFinalDamage();
+            if (newHealth < 0)
+                newHealth = 0;
+            p.setHealth(newHealth); //Does not invoke damage event
+        }
     }
 }
