@@ -38,3 +38,6 @@ commands:
   potioneffects:
     description: Shows a gui to manage potion effects with an infinite duration
     usage: /potioneffects
+  backpack:
+    description: Opens the the backpack that is shared between all players if the modifier is active
+    usage: /backpack

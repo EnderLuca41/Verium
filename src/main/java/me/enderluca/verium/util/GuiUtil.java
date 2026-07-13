@@ -220,6 +220,15 @@ public final class GuiUtil {
                 return gravestones;
             }
 
+            case Backpack -> {
+                ItemStack backpack = new ItemStack(Material.CHEST, 1);
+                ItemMeta meta = backpack.getItemMeta();
+                meta.setDisplayName("Backpack");
+                meta.setLore(List.of("Enables the /backpack command which opens a shared storage between all players"));
+                backpack.setItemMeta(meta);
+                return backpack;
+            }
+
             default -> {return new ItemStack(Material.AIR);} //Should never happen
         }
     }

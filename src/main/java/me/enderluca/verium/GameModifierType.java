@@ -13,4 +13,5 @@ public enum GameModifierType {
     SharedDamage,
     NoMobDrop,
     Gravestone,
+    Backpack
 }
